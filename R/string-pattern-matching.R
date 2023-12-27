@@ -17,20 +17,4 @@ str_detect_match <- function(string, pattern) {
   grepl(pattern, string, perl = TRUE)
 }
 
-#' Find matching indices
-#'
-#' @param string A character vector of strings to search in.
-#' @param pattern The pattern to look for.
-#'
-#' @return An integer vector of matching indices in string.
-#' @export
-#'
-#' @examples
-#' str_which(letters, "[aeiou]")
-#' #> [1]  1  5  9 15 21
-str_which <- function(string, pattern) {
-  grep(pattern, string)
-}
-
-
 
