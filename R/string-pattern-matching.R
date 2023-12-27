@@ -103,3 +103,14 @@ str_locate_all <- function(string, pattern) {
   return(matches)
 }
 
+
+
+# str_extract ---------------------------------------------------
+
+str_extract_first <- function(string, pattern) {
+  regmatches(string, regexpr(pattern, string, perl= TRUE))
+}
+
+str_extract_all <- function(string, pattern) {
+  regmatches(string, gregexpr(pattern, string, perl = TRUE))
+}
