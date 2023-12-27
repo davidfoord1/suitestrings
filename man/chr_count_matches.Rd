@@ -2,7 +2,7 @@
 % Please edit documentation in R/vector-pattern-matching.R
 \name{chr_count_matches}
 \alias{chr_count_matches}
-\title{Count matching indices}
+\title{Count matching indices in character vector}
 \usage{
 chr_count_matches(string, pattern)
 }
@@ -15,7 +15,7 @@ chr_count_matches(string, pattern)
 A single integer representing the number of matches found
 }
 \description{
-Count matching indices
+Count matching indices in character vector
 }
 \examples{
 chr_count_matches(letters, "[aeiou]")

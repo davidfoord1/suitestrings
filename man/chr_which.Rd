@@ -2,7 +2,7 @@
 % Please edit documentation in R/vector-pattern-matching.R
 \name{chr_which}
 \alias{chr_which}
-\title{Find matching indices}
+\title{Find matching indices in character vector}
 \usage{
 chr_which(string, pattern)
 }
@@ -15,7 +15,7 @@ chr_which(string, pattern)
 An integer vector of matching indices in string.
 }
 \description{
-Find matching indices
+Find matching indices in character vector
 }
 \examples{
 chr_which(letters, "[aeiou]")
