@@ -68,7 +68,7 @@ str_detect_match <- function(string, pattern) {
 #' @export
 str_locate_first <- function(string, pattern) {
   # Get the match info
-  match_info <- regexpr(pattern, string)
+  match_info <- regexpr(pattern, string, perl = TRUE)
   match_length <- attr(match_info, "match.length")
   match_end <- match_info + match_length - 1L
 
@@ -85,7 +85,7 @@ str_locate_first <- function(string, pattern) {
 #' @export
 str_locate_all <- function(string, pattern) {
   find_matches_in_string <- function(string) {
-    match_info <- gregexpr(pattern, string)[[1]]
+    match_info <- gregexpr(pattern, string, perl = TRUE)[[1]]
     ends <- match_info + attr(match_info, "match.length") - 1L
 
     # If there are no matches, store as NA NA
