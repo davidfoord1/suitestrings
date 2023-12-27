@@ -19,7 +19,7 @@ str_detect_match <- function(string, pattern) {
 
 # str_locate ----------------------------------------------------
 
-#' Locate Pattern Occurrences in Strings
+#' Locate pattern matches in strings
 #'
 #' @description
 #' These functions find occurrences of a pattern in strings.
@@ -107,10 +107,64 @@ str_locate_all <- function(string, pattern) {
 
 # str_extract ---------------------------------------------------
 
+
+#' Extract complete matches from strings.
+#' @description
+#' These functions extract parts of strings based on a pattern.
+#'
+#' `str_extract_first()` extracts the first occurrence of a pattern in each string.
+#' `str_extract_all()` extracts all occurrences of a pattern in each string.
+#'
+#' @param string A character vector of strings to search in.
+#' @param pattern A character string containing a regular expression.
+#'
+#' @return
+#' `str_extract_first()` returns a character vector with the extracted portion of the string
+#' corresponding to the first match of the pattern. If no match is found, returns `NA` or an
+#' empty string.
+#'
+#' `str_extract_all()` returns a list of character vectors, where each list element corresponds
+#' to a string in the input vector. Each element is a character vector of all matches in that string.
+#' If no matches are found in a string, the corresponding list element is an empty character vector.
+#'
+#' @export
+#' @rdname str_extract
+#'
+#' @examples
+#' str_extract_first(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
+#' #> [1] "mat" "bat" NA    "cat"
+#'
+#' str_extract_all(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
+#' #> [1] "mat"
+#' #>
+#' #> [[2]]
+#' #> [1] "bat"
+#' #>
+#' #> [[3]]
+#' #> character(0)
+#' #>
+#' #> [[4]]
+#' #> [1] "cat" "hat"
 str_extract_first <- function(string, pattern) {
-  regmatches(string, regexpr(pattern, string, perl= TRUE))
+  matches <- regexpr(pattern, string, perl = TRUE)
+
+  extracted <- character(length(string))
+
+  for (index in seq_along(string)) {
+    if (matches[[index]] == -1) {
+      extracted[[index]] <- NA_character_
+    } else {
+      index_match <- matches[[index]]
+      attr(index_match, "match.length") <- attr(matches, "match.length")[[index]]
+      extracted[[index]] <- regmatches(string[[index]], index_match)
+    }
+  }
+
+  extracted
 }
 
+#' @rdname str_extract
+#' @export
 str_extract_all <- function(string, pattern) {
   regmatches(string, gregexpr(pattern, string, perl = TRUE))
 }

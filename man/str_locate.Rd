@@ -3,7 +3,7 @@
 \name{str_locate_first}
 \alias{str_locate_first}
 \alias{str_locate_all}
-\title{Locate Pattern Occurrences in Strings}
+\title{Locate pattern matches in strings}
 \usage{
 str_locate_first(string, pattern)
 
