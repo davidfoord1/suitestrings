@@ -13,27 +13,36 @@ chr_split_all(string, pattern)
 \arguments{
 \item{string}{A character vector of strings to be split.}
 
-\item{pattern}{A character string containing a regular expression (or a fixed string) to split the input \code{string} by.}
+\item{pattern}{A character string containing a regular expression (or a fixed string) to split the input \code{string} by.
+See \code{\link{regexp}} for a details on regular expressions in base R.}
 }
 \value{
-For \code{str_split}: A list of the same length as \code{string}, with each element being a vector of substrings obtained by splitting the corresponding element of \code{string}.
+\code{str_split_all()}: A list of the same length as \code{string}, with each element being a vector of substrings obtained by splitting the corresponding element of \code{string}.
 
-For \code{chr_split}: A single character vector containing all substrings obtained by splitting each element of \code{string} and concatenating them.
+\code{chr_split_all()}: A single character vector containing all substrings obtained by splitting each element of \code{string} and concatenating them.
+
+\code{str_split_first()}: A character vector the same length as \code{string}, with each element being the first substring obtained by splitting the corresponding element of \code{string}.
 }
 \description{
-\code{str_split} splits each string in the input vector into substrings based on a pattern.
-\code{chr_split} splits all strings in the input vector and concatenates the results into a single character vector.
+\code{str_split_all()} splits each string in the input vector into substrings based on a pattern.
+
+\code{chr_split_all()} splits all strings in the input vector and concatenates the results into a single character vector.
+
+\code{str_split_first()} takes the first result of splitting each string in the input vector based on a pattern.
 }
 \examples{
-str_split(c("one,two,three", "abc,def,ghi"), ",")
+str_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #> [[1]]
 #> [1] "one"   "two"   "three"
 #>
 #> [[2]]
 #> [1] "abc" "def" "ghi"
 
-chr_split(c("one,two,three", "abc,def,ghi"), ",")
+chr_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #> [1] "one"   "two"   "three" "abc"   "def"   "ghi"
+
+str_split_first(c("", "a b c"), " ")
+#> [1] NA  "a"
 
 }
 \seealso{

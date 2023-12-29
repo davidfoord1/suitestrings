@@ -246,27 +246,35 @@ str_remove_all <- function(string, pattern) {
 #' Split strings by a pattern
 #'
 #' @description
-#' `str_split` splits each string in the input vector into substrings based on a pattern.
-#' `chr_split` splits all strings in the input vector and concatenates the results into a single character vector.
+#' `str_split_all()` splits each string in the input vector into substrings based on a pattern.
+#'
+#' `chr_split_all()` splits all strings in the input vector and concatenates the results into a single character vector.
+#'
+#' `str_split_first()` takes the first result of splitting each string in the input vector based on a pattern.
 #'
 #' @param string A character vector of strings to be split.
 #' @param pattern A character string containing a regular expression (or a fixed string) to split the input `string` by.
-#'
+#' See \code{\link{regexp}} for a details on regular expressions in base R.
 #' @return
-#' For `str_split`: A list of the same length as `string`, with each element being a vector of substrings obtained by splitting the corresponding element of `string`.
+#' `str_split_all()`: A list of the same length as `string`, with each element being a vector of substrings obtained by splitting the corresponding element of `string`.
 #'
-#' For `chr_split`: A single character vector containing all substrings obtained by splitting each element of `string` and concatenating them.
+#' `chr_split_all()`: A single character vector containing all substrings obtained by splitting each element of `string` and concatenating them.
+#'
+#' `str_split_first()`: A character vector the same length as `string`, with each element being the first substring obtained by splitting the corresponding element of `string`.
 #'
 #' @examples
-#' str_split(c("one,two,three", "abc,def,ghi"), ",")
+#' str_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #' #> [[1]]
 #' #> [1] "one"   "two"   "three"
 #' #>
 #' #> [[2]]
 #' #> [1] "abc" "def" "ghi"
 #'
-#' chr_split(c("one,two,three", "abc,def,ghi"), ",")
+#' chr_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #' #> [1] "one"   "two"   "three" "abc"   "def"   "ghi"
+#'
+#' str_split_first(c("", "a b c"), " ")
+#' #> [1] NA  "a"
 #'
 #' @seealso
 #' \code{\link{strsplit}} for the base R function.
@@ -275,5 +283,10 @@ str_remove_all <- function(string, pattern) {
 #' @export
 str_split_all <- function(string, pattern) {
   strsplit(string, pattern, perl = TRUE)
+}
+
+str_split_first <- function(string, pattern) {
+  split_string <- strsplit(string, pattern, perl = TRUE)
+  sapply(split_string, \(x) ifelse(length(x) > 1, x[[1]], x))
 }
 
