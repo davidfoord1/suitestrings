@@ -38,6 +38,24 @@ chr_split_all <- function(string, pattern) {
 
 # chr_subset ----------------------------------------------------
 
+#' Get matching elements
+#'
+#' @description
+#' `chr_subset` returns a subset of the input character vector, containing only the elements that match a specified pattern.
+#'
+#' @param string A character vector from which elements are to be subset.
+#' @param pattern A character string containing a regular expression (or a fixed string) to match against each element of `string`.
+#'
+#' @return
+#' A character vector containing only the elements of `string` that match the specified `pattern`. If no matches are found, an empty character vector is returned.
+#'
+#' @examples
+#' chr_subset(c("apple", "banana", "cherry", "date"), "a")
+#' #> [1] "apple" "banana" "date"
+#' chr_subset(c("apple", "banana", "cherry", "date"), "^a")
+#' #> [1] "apple"
+#'
+#' @export
 chr_subset <- function(string, pattern) {
   grep(pattern, string, value = TRUE, perl = TRUE)
 }
