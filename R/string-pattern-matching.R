@@ -240,3 +240,10 @@ str_remove_first <- function(string, pattern) {
 str_remove_all <- function(string, pattern) {
   gsub(pattern, "", string, perl = TRUE)
 }
+
+# str_split -----------------------------------------------------
+
+str_split <- function(string, pattern) {
+  strsplit(string, pattern, perl = TRUE)
+}
+
