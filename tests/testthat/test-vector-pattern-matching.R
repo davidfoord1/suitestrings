@@ -34,3 +34,22 @@ test_that("chr_split_all handles multiple strings", {
   expect_equal(chr_split_all(c("a,b,c", "d,e"), ","), c("a", "b", "c", "d", "e"))
 })
 
+
+# chr_subset ----------------------------------------------------
+
+test_that("chr_subset returns elements matching the pattern", {
+  expect_equal(chr_subset(c("apple", "banana", "cherry", "date"), "a"), c("apple", "banana", "date"))
+  expect_equal(chr_subset(c("apple", "banana", "cherry", "date"), "^a"), c("apple"))
+})
+
+test_that("chr_subset handles no matches", {
+  expect_equal(chr_subset(c("apple", "banana", "cherry", "date"), "z"), character(0))
+})
+
+test_that("chr_subset handles empty pattern", {
+  expect_equal(chr_subset(c("apple", "banana", "cherry", "date"), ""), c("apple", "banana", "cherry", "date"))
+})
+
+test_that("chr_subset handles empty string vector", {
+  expect_equal(chr_subset(character(0), "a"), character(0))
+})
