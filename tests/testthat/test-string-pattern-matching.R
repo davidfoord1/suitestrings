@@ -211,6 +211,7 @@ test_that("str_remove_all handles repeated patterns", {
 })
 
 # str_split -----------------------------------------------------
+## str_split_all -----------------------------------------------
 
 test_that("str_split_all splits each string correctly", {
   expect_equal(str_split_all("a,b,c", ","), list(c("a", "b", "c")))
@@ -233,5 +234,30 @@ test_that("str_split_all handles multiple strings", {
   expect_equal(str_split_all(c("a,b,c", "d,e"), ","), list(c("a", "b", "c"), c("d", "e")))
 })
 
+## str_split_first ---------------------------------------------
 
+test_that("str_split_first splits at the first occurrence correctly", {
+  expect_equal(str_split_first("a,b,c", ","), "a")
+  expect_equal(str_split_first("hello world", " "), "hello")
+})
 
+test_that("str_split_first handles no matches", {
+  expect_equal(str_split_first("hello", ","), "hello")
+})
+
+test_that("str_split_first handles empty pattern", {
+  expect_equal(str_split_first("abc", ""), "a")
+})
+
+test_that("str_split_first handles empty string", {
+  expect_equal(str_split_first("", ","), NA_character_)
+})
+
+test_that("str_split_first handles multiple strings", {
+  expect_equal(str_split_first(c("a,b,c", "d,e,f", "g,h"), ","), c("a", "d", "g"))
+})
+
+test_that("str_split_first handles strings with no delimiter", {
+  input <- c("apple", "banana", "cherry")
+  expect_equal(str_split_first(input, ","), input)
+})
