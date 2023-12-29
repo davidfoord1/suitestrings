@@ -103,48 +103,56 @@ str_locate_all <- function(string, pattern) {
   return(matches)
 }
 
-
-
 # str_extract ---------------------------------------------------
 
-
-#' Extract complete matches from strings.
+#' Extract complete matches from strings
+#'
 #' @description
 #' These functions extract parts of strings based on a pattern.
 #'
 #' `str_extract_first()` extracts the first occurrence of a pattern in each string.
 #' `str_extract_all()` extracts all occurrences of a pattern in each string.
+#' `str_extract_nth()` extracts the nth occurrence of a pattern in each string.
+#' `str_extract_last()` extracts the last occurrence of a pattern in each string.
 #'
 #' @param string A character vector of strings to search in.
 #' @param pattern A character string containing a regular expression.
+#' @param n (For `str_extract_nth` only) Integer, the nth occurrence of the pattern to extract.
+#'     Negative values count from the end.
 #'
 #' @return
 #' `str_extract_first()` returns a character vector with the extracted portion of the string
-#' corresponding to the first match of the pattern. If no match is found, returns `NA` or an
-#' empty string.
+#' corresponding to the first match of the pattern. If no match is found, returns `NA`.
 #'
 #' `str_extract_all()` returns a list of character vectors, where each list element corresponds
 #' to a string in the input vector. Each element is a character vector of all matches in that string.
 #' If no matches are found in a string, the corresponding list element is an empty character vector.
 #'
-#' @export
-#' @rdname str_extract
+#' `str_extract_nth()` returns a character vector with the nth match of the pattern in each string.
+#' If the nth match does not exist, returns `NA`.
+#'
+#' `str_extract_last()` returns a character vector with the last match of the pattern in each string.
+#' If no match is found, returns `NA`.
 #'
 #' @examples
 #' str_extract_first(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
 #' #> [1] "mat" "bat" NA    "cat"
 #'
 #' str_extract_all(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
-#' #> [1] "mat"
-#' #>
-#' #> [[2]]
-#' #> [1] "bat"
-#' #>
-#' #> [[3]]
-#' #> character(0)
-#' #>
-#' #> [[4]]
-#' #> [1] "cat" "hat"
+#' #> [[1]] "mat"
+#' #> [[2]] "bat"
+#' #> [[3]] character(0)
+#' #> [[4]] c("cat", "hat")
+#'
+#' str_extract_nth(c("mat", "bat", "pig", "cat-in-a-hat"), ".at", 2)
+#' #> [1] NA NA NA "hat"
+#'
+#' str_extract_last(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
+#' #> [1] "mat" "bat" NA    "hat"
+#'
+#' @export
+#' @rdname str_extract
+
 str_extract_first <- function(string, pattern) {
   matches <- regexpr(pattern, string, perl = TRUE)
 
@@ -167,6 +175,28 @@ str_extract_first <- function(string, pattern) {
 #' @export
 str_extract_all <- function(string, pattern) {
   regmatches(string, gregexpr(pattern, string, perl = TRUE))
+}
+
+#' @rdname str_extract
+#' @export
+str_extract_nth <- function(string, pattern, n) {
+  vapply(str_extract_all(string, pattern),
+         function(matches) {
+           len <- length(matches)
+           index <- if (n > 0) n else len + n + 1
+           if (index >= 1 && index <= len) matches[index] else NA_character_
+         },
+         FUN.VALUE = character(1))
+}
+
+#' @rdname str_extract
+#' @export
+str_extract_last <- function(string, pattern) {
+  vapply(str_extract_all(string, pattern),
+         function(matches) {
+           if (length(matches) > 0) tail(matches, n = 1) else NA_character_
+         },
+         FUN.VALUE = character(1))
 }
 
 # str_replace ---------------------------------------------------
