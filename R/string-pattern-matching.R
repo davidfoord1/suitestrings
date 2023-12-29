@@ -203,3 +203,12 @@ str_replace_all <- function(string, pattern, replacement) {
   gsub(pattern, replacement, string, perl = TRUE)
 }
 
+# str_remove ----------------------------------------------------
+
+str_remove_first <- function(string, pattern) {
+  sub(pattern, "", string, perl = TRUE)
+}
+
+str_remove_all <- function(string, pattern) {
+  gsub(pattern, "", string, perl = TRUE)
+}
