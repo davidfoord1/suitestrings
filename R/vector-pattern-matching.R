@@ -10,7 +10,7 @@
 #' chr_which(letters, "[aeiou]")
 #' #> [1]  1  5  9 15 21
 chr_which <- function(string, pattern) {
-  grep(pattern, string)
+  grep(pattern, string, perl = TRUE)
 }
 
 #' Count matching indices in character vector
@@ -25,9 +25,8 @@ chr_which <- function(string, pattern) {
 #' chr_count_matches(letters, "[aeiou]")
 #' #> [1] 5
 chr_count_matches <- function(string, pattern) {
-  length(grep(pattern, string))
+  length(grep(pattern, string, perl = TRUE))
 }
-
 
 # chr_split -----------------------------------------------------
 
@@ -35,5 +34,11 @@ chr_count_matches <- function(string, pattern) {
 #' @export
 chr_split_all <- function(string, pattern) {
   unlist(strsplit(string, pattern, perl = TRUE))
+}
+
+# chr_subset ----------------------------------------------------
+
+chr_subset <- function(string, pattern) {
+  grep(pattern, string, value = TRUE, perl = TRUE)
 }
 
