@@ -159,6 +159,37 @@ test_that("str_replace_all handles empty replacement", {
 })
 
 
+# str_remove ----------------------------------------------------
+# str_remove_first ----------------------------------------------
+
+test_that("str_remove_first removes the first match correctly", {
+  expect_equal(str_remove_first("Hello world", "o"), "Hell world")
+  expect_equal(str_remove_first("Hello world", "l"), "Helo world")
+})
+
+test_that("str_remove_first handles no match", {
+  expect_equal(str_remove_first("Hello world", "xyz"), "Hello world")
+})
+
+test_that("str_remove_first handles empty pattern", {
+  expect_equal(str_remove_first("Hello world", ""), "Hello world")
+})
+
+test_that("str_remove_first handles empty string", {
+  expect_equal(str_remove_first("", "pattern"), "")
+})
+
+test_that("str_remove_first handles pattern at start", {
+  expect_equal(str_remove_first("Hello world", "He"), "llo world")
+})
+
+test_that("str_remove_first handles pattern at end", {
+  expect_equal(str_remove_first("Hello world", "ld"), "Hello wor")
+})
+
+
+
+
 
 
 
