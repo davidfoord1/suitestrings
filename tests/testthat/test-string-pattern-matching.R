@@ -113,6 +113,26 @@ test_that("str_extract_all handles empty string", {
 # str_replace ---------------------------------------------------
 ## str_replace_first -------------------------------------------
 
+test_that("str_replace_first replaces the first match correctly", {
+  expect_equal(str_replace_first("Hello world", "o", "O"), "HellO world")
+  expect_equal(str_replace_first("abcdef", "cd", "CD"), "abCDef")
+})
+
+test_that("str_replace_first handles no match", {
+  expect_equal(str_replace_first("Hello world", "xyz", "XYZ"), "Hello world")
+})
+
+test_that("str_replace_first handles empty pattern", {
+  expect_equal(str_replace_first("Hello world", "", "X"), "XHello world")
+})
+
+test_that("str_replace_first handles empty string", {
+  expect_equal(str_replace_first("", "pattern", "replacement"), "")
+})
+
+test_that("str_replace_first handles empty replacement", {
+  expect_equal(str_replace_first("Hello world", "o", ""), "Hell world")
+})
 
 
 
