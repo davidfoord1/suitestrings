@@ -28,6 +28,15 @@ chr_count_matches <- function(string, pattern) {
   length(grep(pattern, string, perl = TRUE))
 }
 
+
+# chr_extract ---------------------------------------------------
+
+#' @rdname str_extract
+#' @export
+chr_extract_all <- function(string, pattern) {
+  unlist(regmatches(string, gregexpr(pattern, string, perl = TRUE)))
+}
+
 # chr_split -----------------------------------------------------
 
 #' @rdname str_split
