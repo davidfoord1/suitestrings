@@ -205,10 +205,38 @@ str_replace_all <- function(string, pattern, replacement) {
 
 # str_remove ----------------------------------------------------
 
+#' Remove Patterns from Strings
+#'
+#' @description
+#' `str_remove_first()` removes the first occurrence of a pattern in each string.
+#' `str_remove_all()` removes all occurrences of a pattern in each string.
+#'
+#' @param string A character vector or a single string.
+#' @param pattern A character string containing a regular expression (or a fixed string to be matched).
+#'
+#' @return
+#' A character vector of the same length as `string`, with the specified pattern removed.
+#' For `str_remove_first()`, only the first occurrence of the pattern in each string is removed.
+#' For `str_remove_all()`, all occurrences of the pattern in each string are removed.
+#'
+#' @examples
+#' str_remove_first("Hello world", "o")
+#' #> [1] "Hell world"
+#'
+#' str_remove_all("Hello world", "o")
+#' #> [1] "Hell wrld"
+#'
+#' @seealso
+#' \code{\link{str_replace_first}}, \code{\link{str_replace_all}} for replacing patterns with specific text.
+#'
+#' @rdname str_remove
+#' @export
 str_remove_first <- function(string, pattern) {
   sub(pattern, "", string, perl = TRUE)
 }
 
+#' @rdname str_remove
+#' @export
 str_remove_all <- function(string, pattern) {
   gsub(pattern, "", string, perl = TRUE)
 }
