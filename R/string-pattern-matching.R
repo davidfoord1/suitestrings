@@ -194,7 +194,7 @@ str_extract_nth <- function(string, pattern, n) {
 str_extract_last <- function(string, pattern) {
   vapply(str_extract_all(string, pattern),
          function(matches) {
-           if (length(matches) > 0) tail(matches, n = 1) else NA_character_
+           if (length(matches) > 0) matches[[length(matches)]] else NA_character_
          },
          FUN.VALUE = character(1))
 }
