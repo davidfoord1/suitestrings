@@ -168,3 +168,38 @@ str_extract_first <- function(string, pattern) {
 str_extract_all <- function(string, pattern) {
   regmatches(string, gregexpr(pattern, string, perl = TRUE))
 }
+
+# str_replace ---------------------------------------------------
+
+#' Replace parts of a string with new text.
+#'
+#' @param string A character vector of strings to edit.
+#' @param pattern A single string containing a regular expression pattern to match.
+#' @param replacement A single string containing the text to replace the pattern with.
+#'
+#' @return
+#' `str_replace()` Returns an altered character vector of equal length to `string`,
+#' with the first match in each string replaced.
+#'
+#' `str_replace_all()` Returns an altered character vector of equal length to `string`,
+#' with every match in each string replaced. Regular expression matches are non-overlapping.
+#'
+#' @examples
+#' str_replace_first("Hello world!", "o", "ooo")
+#' #> [1] "Hellooo world!"
+#'
+#' str_replace_all("Hello world!", "o", "ooo")
+#' #> [1] "Hellooo wooorld!"
+#'
+#' @rdname str_replace
+#' @export
+str_replace_first <- function(string, pattern, replacement) {
+  sub(pattern, replacement, string, perl = TRUE)
+}
+
+#' @rdname str_replace
+#' @export
+str_replace_all <- function(string, pattern, replacement) {
+  gsub(pattern, replacement, string, perl = TRUE)
+}
+

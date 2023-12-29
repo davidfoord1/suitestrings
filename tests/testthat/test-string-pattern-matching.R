@@ -110,3 +110,9 @@ test_that("str_extract_all handles empty string", {
 })
 
 
+# str_replace ---------------------------------------------------
+## str_replace_first -------------------------------------------
+
+
+
+
