@@ -315,6 +315,8 @@ str_split_all <- function(string, pattern) {
   strsplit(string, pattern, perl = TRUE)
 }
 
+#' @rdname str_split
+#' @export
 str_split_first <- function(string, pattern) {
   split_string <- strsplit(string, pattern, perl = TRUE)
   sapply(split_string, \(x) ifelse(length(x) > 1, x[[1]], x))

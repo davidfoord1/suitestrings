@@ -3,10 +3,13 @@
 %   R/vector-pattern-matching.R
 \name{str_split_all}
 \alias{str_split_all}
+\alias{str_split_first}
 \alias{chr_split_all}
 \title{Split strings by a pattern}
 \usage{
 str_split_all(string, pattern)
+
+str_split_first(string, pattern)
 
 chr_split_all(string, pattern)
 }
