@@ -31,6 +31,8 @@ chr_count_matches <- function(string, pattern) {
 
 # chr_split -----------------------------------------------------
 
+#' @rdname str_split
+#' @export
 chr_split_all <- function(string, pattern) {
   unlist(strsplit(string, pattern, perl = TRUE))
 }
