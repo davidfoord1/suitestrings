@@ -14,10 +14,12 @@ str_split_first(string, pattern)
 chr_split_all(string, pattern)
 }
 \arguments{
-\item{string}{A character vector of strings to be split.}
+\item{string}{A character vector. Each element of this vector is a string that the function will process.}
 
-\item{pattern}{A character string containing a regular expression (or a fixed string) to split the input \code{string} by.
-See \code{\link{regexp}} for a details on regular expressions in base R.}
+\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{string}.
+The regex used in \code{{suitestrings}} are Perl-like, for the extended features and syntax.
+This is achieved by setting \code{perl = TRUE} in the underlying base R pattern matching functions.
+See \code{\link{regex}} in R's base documentation for more details.}
 }
 \value{
 \code{str_split_all()}: A list of the same length as \code{string}, with each element being a vector of substrings obtained by splitting the corresponding element of \code{string}.

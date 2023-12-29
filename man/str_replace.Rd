@@ -10,9 +10,12 @@ str_replace_first(string, pattern, replacement)
 str_replace_all(string, pattern, replacement)
 }
 \arguments{
-\item{string}{A character vector of strings to edit.}
+\item{string}{A character vector. Each element of this vector is a string that the function will process.}
 
-\item{pattern}{A single string containing a regular expression pattern to match.}
+\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{string}.
+The regex used in \code{{suitestrings}} are Perl-like, for the extended features and syntax.
+This is achieved by setting \code{perl = TRUE} in the underlying base R pattern matching functions.
+See \code{\link{regex}} in R's base documentation for more details.}
 
 \item{replacement}{A single string containing the text to replace the pattern with.}
 }

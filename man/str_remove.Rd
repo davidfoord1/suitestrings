@@ -10,9 +10,12 @@ str_remove_first(string, pattern)
 str_remove_all(string, pattern)
 }
 \arguments{
-\item{string}{A character vector or a single string.}
+\item{string}{A character vector. Each element of this vector is a string that the function will process.}
 
-\item{pattern}{A character string containing a regular expression (or a fixed string to be matched).}
+\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{string}.
+The regex used in \code{{suitestrings}} are Perl-like, for the extended features and syntax.
+This is achieved by setting \code{perl = TRUE} in the underlying base R pattern matching functions.
+See \code{\link{regex}} in R's base documentation for more details.}
 }
 \value{
 A character vector of the same length as \code{string}, with the specified pattern removed.

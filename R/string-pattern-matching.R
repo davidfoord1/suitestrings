@@ -110,49 +110,66 @@ str_locate_all <- function(string, pattern) {
 #' @description
 #' These functions extract parts of strings based on a pattern.
 #'
-#' `str_extract_first()` extracts the first occurrence of a pattern in each string.
-#' `str_extract_all()` extracts all occurrences of a pattern in each string.
-#' `str_extract_nth()` extracts the nth occurrence of a pattern in each string.
-#' `str_extract_last()` extracts the last occurrence of a pattern in each string.
+#' `str_extract_first()`, `str_extract_nth()` and `str_extract_last()` extract
+#'  the first, nth and last occurrence of a pattern in each string,
+#'  into a character vector the same length as `string`.
 #'
-#' @param string A character vector of strings to search in.
-#' @param pattern A character string containing a regular expression.
+#' `str_extract_all()` extracts all occurrences of a pattern in each string,
+#' into a list of character vectors the same length as `string`.
+#'
+#' `chr_extract_all()` extracts all occurrences of a pattern from a character vector.
+#'
+#' @param string A character vector. Each element of this vector is a string that the function will process.
+#' @param pattern A single character string containing a regular expression (regex) pattern to match against the elements in `string`.
+#' The regex used in `{suitestrings}` are Perl-like, for the extended features and syntax.
+#' This is achieved by setting `perl = TRUE` in the underlying base R pattern matching functions.
+#' See \code{\link{regex}} in R's base documentation for more details.
 #' @param n (For `str_extract_nth` only) Integer, the nth occurrence of the pattern to extract.
-#'     Negative values count from the end.
+#' Negative values count from the end.
 #'
 #' @return
-#' `str_extract_first()` returns a character vector with the extracted portion of the string
-#' corresponding to the first match of the pattern. If no match is found, returns `NA`.
+#' `str_extract_first()`, `str_extract_nth()` and `str_extract_last()`
+#' each return a character vector the same length as the input vector `string`.
+#' It contains the extracted portion of the string, corresponding to
+#' the first, nth and last match of the pattern, respectively. Strings
+#' with no corresponding match are represented as NA values.
 #'
-#' `str_extract_all()` returns a list of character vectors, where each list element corresponds
+#' `str_extract_all()`: returns a list of character vectors, where each list element corresponds
 #' to a string in the input vector. Each element is a character vector of all matches in that string.
 #' If no matches are found in a string, the corresponding list element is an empty character vector.
+#' The list is the same length as the input vector `string`.
 #'
-#' `str_extract_nth()` returns a character vector with the nth match of the pattern in each string.
-#' If the nth match does not exist, returns `NA`.
-#'
-#' `str_extract_last()` returns a character vector with the last match of the pattern in each string.
-#' If no match is found, returns `NA`.
+#' `chr_extract_all()`: returns a character vector containing every single match in the input vector.
+#' Non-matches are ignored. This is equivalent to using calling `unlist()` on the output of `str_extract_all()`.
 #'
 #' @examples
 #' str_extract_first(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
 #' #> [1] "mat" "bat" NA    "cat"
 #'
 #' str_extract_all(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
-#' #> [[1]] "mat"
-#' #> [[2]] "bat"
-#' #> [[3]] character(0)
-#' #> [[4]] c("cat", "hat")
+#' #> [[1]]
+#' #> [1] "mat"
+#' #>
+#' #> [[2]]
+#' #> [1] "bat"
+#' #>
+#' #> [[3]]
+#' #> character(0)
+#' #>
+#' #> [[4]]
+#' #> [1] "cat" "hat"
 #'
 #' str_extract_nth(c("mat", "bat", "pig", "cat-in-a-hat"), ".at", 2)
-#' #> [1] NA NA NA "hat"
+#' #> [1] NA    NA    NA    "hat"
 #'
 #' str_extract_last(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
 #' #> [1] "mat" "bat" NA    "hat"
 #'
+#' chr_extract_all(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
+#' #> [1] "mat" "bat" "cat" "hat"
+#'
 #' @export
 #' @rdname str_extract
-
 str_extract_first <- function(string, pattern) {
   matches <- regexpr(pattern, string, perl = TRUE)
 
@@ -203,8 +220,11 @@ str_extract_last <- function(string, pattern) {
 
 #' Replace parts of a string with new text.
 #'
-#' @param string A character vector of strings to edit.
-#' @param pattern A single string containing a regular expression pattern to match.
+#' @param string A character vector. Each element of this vector is a string that the function will process.
+#' @param pattern A single character string containing a regular expression (regex) pattern to match against the elements in `string`.
+#' The regex used in `{suitestrings}` are Perl-like, for the extended features and syntax.
+#' This is achieved by setting `perl = TRUE` in the underlying base R pattern matching functions.
+#' See \code{\link{regex}} in R's base documentation for more details.
 #' @param replacement A single string containing the text to replace the pattern with.
 #'
 #' @return
@@ -241,8 +261,11 @@ str_replace_all <- function(string, pattern, replacement) {
 #' `str_remove_first()` removes the first occurrence of a pattern in each string.
 #' `str_remove_all()` removes all occurrences of a pattern in each string.
 #'
-#' @param string A character vector or a single string.
-#' @param pattern A character string containing a regular expression (or a fixed string to be matched).
+#' @param string A character vector. Each element of this vector is a string that the function will process.
+#' @param pattern A single character string containing a regular expression (regex) pattern to match against the elements in `string`.
+#' The regex used in `{suitestrings}` are Perl-like, for the extended features and syntax.
+#' This is achieved by setting `perl = TRUE` in the underlying base R pattern matching functions.
+#' See \code{\link{regex}} in R's base documentation for more details.
 #'
 #' @return
 #' A character vector of the same length as `string`, with the specified pattern removed.
@@ -282,9 +305,12 @@ str_remove_all <- function(string, pattern) {
 #'
 #' `str_split_first()` takes the first result of splitting each string in the input vector based on a pattern.
 #'
-#' @param string A character vector of strings to be split.
-#' @param pattern A character string containing a regular expression (or a fixed string) to split the input `string` by.
-#' See \code{\link{regexp}} for a details on regular expressions in base R.
+#' @param string A character vector. Each element of this vector is a string that the function will process.
+#' @param pattern A single character string containing a regular expression (regex) pattern to match against the elements in `string`.
+#' The regex used in `{suitestrings}` are Perl-like, for the extended features and syntax.
+#' This is achieved by setting `perl = TRUE` in the underlying base R pattern matching functions.
+#' See \code{\link{regex}} in R's base documentation for more details.
+#'
 #' @return
 #' `str_split_all()`: A list of the same length as `string`, with each element being a vector of substrings obtained by splitting the corresponding element of `string`.
 #'
