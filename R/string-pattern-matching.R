@@ -243,6 +243,36 @@ str_remove_all <- function(string, pattern) {
 
 # str_split -----------------------------------------------------
 
+#' Split strings by a pattern
+#'
+#' @description
+#' `str_split` splits each string in the input vector into substrings based on a pattern.
+#' `chr_split` splits all strings in the input vector and concatenates the results into a single character vector.
+#'
+#' @param string A character vector of strings to be split.
+#' @param pattern A character string containing a regular expression (or a fixed string) to split the input `string` by.
+#'
+#' @return
+#' For `str_split`: A list of the same length as `string`, with each element being a vector of substrings obtained by splitting the corresponding element of `string`.
+#'
+#' For `chr_split`: A single character vector containing all substrings obtained by splitting each element of `string` and concatenating them.
+#'
+#' @examples
+#' str_split(c("one,two,three", "abc,def,ghi"), ",")
+#' #> [[1]]
+#' #> [1] "one"   "two"   "three"
+#' #>
+#' #> [[2]]
+#' #> [1] "abc" "def" "ghi"
+#'
+#' chr_split(c("one,two,three", "abc,def,ghi"), ",")
+#' #> [1] "one"   "two"   "three" "abc"   "def"   "ghi"
+#'
+#' @seealso
+#' \code{\link{strsplit}} for the base R function.
+#'
+#' @rdname str_split
+#' @export
 str_split <- function(string, pattern) {
   strsplit(string, pattern, perl = TRUE)
 }
