@@ -14,7 +14,7 @@ str_replace_all(string, pattern, replacement)
 
 \item{pattern}{A single string containing a regular expression pattern to match.}
 
-\item{replacement}{The replacement string}
+\item{replacement}{A single string containing the text to replace the pattern with.}
 }
 \value{
 \code{str_replace()} Returns an altered character vector of equal length to \code{string},

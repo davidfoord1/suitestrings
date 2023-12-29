@@ -135,4 +135,30 @@ test_that("str_replace_first handles empty replacement", {
 })
 
 
+## str_replace_all ---------------------------------------------
+
+test_that("str_replace_all replaces all matches correctly", {
+  expect_equal(str_replace_all("Hello world", "o", "O"), "HellO wOrld")
+  expect_equal(str_replace_all("abc abc abc", "abc", "XYZ"), "XYZ XYZ XYZ")
+})
+
+test_that("str_replace_all handles no matches", {
+  expect_equal(str_replace_all("Hello world", "xyz", "XYZ"), "Hello world")
+})
+
+test_that("str_replace_all handles empty pattern", {
+  expect_equal(str_replace_all("abc", "", "X"), "XaXbXcX")
+})
+
+test_that("str_replace_all handles empty string", {
+  expect_equal(str_replace_all("", "pattern", "replacement"), "")
+})
+
+test_that("str_replace_all handles empty replacement", {
+  expect_equal(str_replace_all("Hello world", "o", ""), "Hell wrld")
+})
+
+
+
+
 
