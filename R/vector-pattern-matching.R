@@ -31,7 +31,7 @@ chr_count_matches <- function(string, pattern) {
 
 # chr_split -----------------------------------------------------
 
-chr_split <- function(string, pattern) {
+chr_split_all <- function(string, pattern) {
   unlist(strsplit(string, pattern, perl = TRUE))
 }
 

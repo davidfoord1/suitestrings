@@ -273,7 +273,7 @@ str_remove_all <- function(string, pattern) {
 #'
 #' @rdname str_split
 #' @export
-str_split <- function(string, pattern) {
+str_split_all <- function(string, pattern) {
   strsplit(string, pattern, perl = TRUE)
 }
 
