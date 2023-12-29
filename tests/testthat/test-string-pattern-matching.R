@@ -209,3 +209,29 @@ test_that("str_remove_all handles empty string", {
 test_that("str_remove_all handles repeated patterns", {
   expect_equal(str_remove_all("abcabcabc", "abc"), "")
 })
+
+# str_split -----------------------------------------------------
+
+test_that("str_split_all splits each string correctly", {
+  expect_equal(str_split_all("a,b,c", ","), list(c("a", "b", "c")))
+  expect_equal(str_split_all("hello world", " "), list(c("hello", "world")))
+})
+
+test_that("str_split_all handles no matches", {
+  expect_equal(str_split_all("hello", ","), list("hello"))
+})
+
+test_that("str_split_all handles empty pattern", {
+  expect_equal(str_split_all("abc", ""), list(c("a", "b", "c")))
+})
+
+test_that("str_split_all handles empty string", {
+  expect_equal(str_split_all("", ","), list(character(0)))
+})
+
+test_that("str_split_all handles multiple strings", {
+  expect_equal(str_split_all(c("a,b,c", "d,e"), ","), list(c("a", "b", "c"), c("d", "e")))
+})
+
+
+
