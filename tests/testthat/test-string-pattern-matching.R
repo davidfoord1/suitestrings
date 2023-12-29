@@ -7,7 +7,6 @@ test_that("str_detect_match() detects a pattern in a string", {
   expect_equal(str_detect_match(string, pattern), c(TRUE, TRUE, FALSE))
 })
 
-
 # str_locate ----------------------------------------------------
 ## str_locate_first----------------------------------------------
 
@@ -65,6 +64,49 @@ test_that("str_locate_all handles empty string", {
                     matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end")))))
 })
 
+# str_extract ---------------------------------------------------
+## str_extract_first -------------------------------------------
 
+test_that("str_extract_first extracts the first match correctly", {
+  expect_equal(str_extract_first("abcdef", "[aeiou]"), "a")
+  expect_equal(str_extract_first("Hello world", ".o"), "lo")
+})
+
+test_that("str_extract_first handles no match", {
+  expect_equal(str_extract_first("Hello world", "xyz"), NA_character_)
+})
+
+test_that("str_extract_first handles empty pattern", {
+  expect_equal(str_extract_first("Hello world", ""), "")
+})
+
+test_that("str_extract_first handles empty string", {
+  expect_equal(str_extract_first("", "pattern"), NA_character_)
+})
+
+
+test_that("str_extract_first extracts the first match from a vector", {
+  expect_equal(str_extract_first(c("abcde", "defghi"), "[aeiou]"), c("a", "e"))
+})
+
+## str_extract_all ---------------------------------------------
+
+test_that("str_extract_first extracts the first match from a vector", {
+  expect_equal(str_extract_all(c("abcde", "defghi"), "[aeiou]"),
+               list(c("a", "e"), c("e", "i")))
+})
+
+test_that("str_extract_all handles handles non-matches", {
+  expect_equal(str_extract_all(c("abcde", "xyz", "defghi"), "[aeiou]"),
+               list(c("a", "e"), character(0), c("e", "i")))
+})
+
+test_that("str_extract_all handles empty pattern", {
+  expect_equal(str_extract_all("abc", ""), list(rep("", nchar("abc"))))
+})
+
+test_that("str_extract_all handles empty string", {
+  expect_equal(str_extract_all("", "pattern"), list(character(0)))
+})
 
 
