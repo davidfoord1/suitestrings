@@ -109,6 +109,49 @@ test_that("str_extract_all handles empty string", {
   expect_equal(str_extract_all("", "pattern"), list(character(0)))
 })
 
+## str_extract_nth ---------------------------------------------
+
+test_that("str_extract_nth extracts the nth match correctly", {
+  expect_equal(str_extract_nth("one two three two four", "\\b\\w+\\b", 2), "two")
+  expect_equal(str_extract_nth("repeat repeat repeat", "repeat", 3), "repeat")
+})
+
+test_that("str_extract_nth handles no matches", {
+  expect_equal(str_extract_nth("hello world", "xyz", 1), NA_character_)
+})
+
+test_that("str_extract_nth handles insufficient matches", {
+  expect_equal(str_extract_nth("one two three", "\\b\\w+\\b", 5), NA_character_)
+})
+
+test_that("str_extract_nth handles negative indexing", {
+  expect_equal(str_extract_nth("one two three four", "\\b\\w+\\b", -2), "three")
+})
+
+test_that("str_extract_nth handles multiple strings", {
+  input <- c("one two three", "hello world", "repeat repeat repeat")
+  expect_equal(str_extract_nth(input, "\\b\\w+\\b", 2), c("two", "world", "repeat"))
+})
+
+## str_extract_last --------------------------------------------
+
+test_that("str_extract_last extracts the last match correctly", {
+  expect_equal(str_extract_last("one two three two four", "\\b\\w+\\b"), "four")
+  expect_equal(str_extract_last("repeat repeat repeat", "repeat"), "repeat")
+})
+
+test_that("str_extract_last handles no matches", {
+  expect_equal(str_extract_last("hello world", "xyz"), NA_character_)
+})
+
+test_that("str_extract_last handles single match", {
+  expect_equal(str_extract_last("hello world", "world"), "world")
+})
+
+test_that("str_extract_last handles multiple strings", {
+  input <- c("one two three", "hello world", "repeat repeat repeat")
+  expect_equal(str_extract_last(input, "\\b\\w+\\b"), c("three", "world", "repeat"))
+})
 
 # str_replace ---------------------------------------------------
 ## str_replace_first -------------------------------------------
