@@ -84,7 +84,7 @@ str_locate_first <- function(strings, pattern, fixed = FALSE) {
 #' @rdname str_locate
 #' @export
 str_locate_all <- function(strings, pattern, fixed = FALSE) {
-  find_matches_in_string <- function(strings, fixed) {
+  find_matches_in_string <- function(strings) {
     match_info <- gregexpr(pattern, strings, perl = TRUE, fixed = fixed)[[1]]
     ends <- match_info + attr(match_info, "match.length") - 1L
 
