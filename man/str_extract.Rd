@@ -9,30 +9,29 @@
 \alias{chr_extract_all}
 \title{Extract complete matches from strings}
 \usage{
-str_extract_first(string, pattern)
+str_extract_first(strings, pattern, fixed = FALSE)
 
-str_extract_all(string, pattern)
+str_extract_all(strings, pattern, fixed = FALSE)
 
-str_extract_nth(string, pattern, n)
+str_extract_nth(strings, pattern, n, fixed = FALSE)
 
-str_extract_last(string, pattern)
+str_extract_last(strings, pattern, fixed = FALSE)
 
-chr_extract_all(string, pattern)
+chr_extract_all(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{string}{A character vector. Each element of this vector is a string that the function will process.}
+\item{strings}{A character vector, where each element of the vector is a character string.}
 
-\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{string}.
-The regex used in \code{{suitestrings}} are Perl-like, for the extended features and syntax.
-This is achieved by setting \code{perl = TRUE} in the underlying base R pattern matching functions.
-See \code{\link{regex}} in R's base documentation for more details.}
+\item{pattern}{A single character string containing a regular expression (regex) pattern to be searched for in each element of \code{strings}.
+By default, \code{pattern} is interpreted as a regular expression. If the \code{fixed} argument is set to \code{TRUE},
+\code{pattern} will be treated as a literal string to be matched exactly.}
 
-\item{n}{(For \code{str_extract_nth} only) Integer, the nth occurrence of the pattern to extract.
+\item{n}{(\code{str_extract_nth} only) Integer, the nth occurrence of the pattern to extract.
 Negative values count from the end.}
 }
 \value{
 \code{str_extract_first()}, \code{str_extract_nth()} and \code{str_extract_last()}
-each return a character vector the same length as the input vector \code{string}.
+each return a character vector the same length as the input vector \code{strings}.
 It contains the extracted portion of the string, corresponding to
 the first, nth and last match of the pattern, respectively. Strings
 with no corresponding match are represented as NA values.
@@ -40,7 +39,7 @@ with no corresponding match are represented as NA values.
 \code{str_extract_all()}: returns a list of character vectors, where each list element corresponds
 to a string in the input vector. Each element is a character vector of all matches in that string.
 If no matches are found in a string, the corresponding list element is an empty character vector.
-The list is the same length as the input vector \code{string}.
+The list is the same length as the input vector \code{strings}.
 
 \code{chr_extract_all()}: returns a character vector containing every single match in the input vector.
 Non-matches are ignored. This is equivalent to using calling \code{unlist()} on the output of \code{str_extract_all()}.
@@ -50,12 +49,20 @@ These functions extract parts of strings based on a pattern.
 
 \code{str_extract_first()}, \code{str_extract_nth()} and \code{str_extract_last()} extract
 the first, nth and last occurrence of a pattern in each string,
-into a character vector the same length as \code{string}.
+into a character vector the same length as \code{strings}.
 
 \code{str_extract_all()} extracts all occurrences of a pattern in each string,
-into a list of character vectors the same length as \code{string}.
+into a list of character vectors the same length as \code{strings}.
 
 \code{chr_extract_all()} extracts all occurrences of a pattern from a character vector.
+}
+\details{
+These functions are built using the base R regular expression functions.
+The regex used in \code{{suitestrings}} are based on those used by the Perl language.
+This is achieved by setting \verb{perl = TRUE, fixed = fixed} in the underlying base functions.
+See R's \code{\link{base::regex}} documentation for more on regex implementation in R.
+For complete syntax details of Perl-compatible Regular Expressions (PCRE),
+consult the documentation at \link{https://perldoc.perl.org/perlre}
 }
 \examples{
 str_extract_first(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")

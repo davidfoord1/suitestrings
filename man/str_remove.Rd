@@ -5,20 +5,20 @@
 \alias{str_remove_all}
 \title{Remove Patterns from Strings}
 \usage{
-str_remove_first(string, pattern)
+str_remove_first(strings, pattern, fixed = FALSE)
 
-str_remove_all(string, pattern)
+str_remove_all(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{string}{A character vector. Each element of this vector is a string that the function will process.}
+\item{strings}{A character vector. Each element of this vector is a string that the function will process.}
 
-\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{string}.
+\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{strings}.
 The regex used in \code{{suitestrings}} are Perl-like, for the extended features and syntax.
-This is achieved by setting \code{perl = TRUE} in the underlying base R pattern matching functions.
-See \code{\link{regex}} in R's base documentation for more details.}
+This is achieved by setting \verb{perl = TRUE, fixed = fixed} in the underlying base R pattern matching functions.
+See R's \code{\link{regexp}} documentation for more details.}
 }
 \value{
-A character vector of the same length as \code{string}, with the specified pattern removed.
+A character vector of the same length as \code{strings}, with the specified pattern removed.
 For \code{str_remove_first()}, only the first occurrence of the pattern in each string is removed.
 For \code{str_remove_all()}, all occurrences of the pattern in each string are removed.
 }

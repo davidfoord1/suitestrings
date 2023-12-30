@@ -5,25 +5,25 @@
 \alias{str_replace_all}
 \title{Replace parts of a string with new text.}
 \usage{
-str_replace_first(string, pattern, replacement)
+str_replace_first(strings, pattern, replacement, fixed = FALSE)
 
-str_replace_all(string, pattern, replacement)
+str_replace_all(strings, pattern, replacement, fixed = FALSE)
 }
 \arguments{
-\item{string}{A character vector. Each element of this vector is a string that the function will process.}
+\item{strings}{A character vector. Each element of this vector is a string that the function will process.}
 
-\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{string}.
+\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{strings}.
 The regex used in \code{{suitestrings}} are Perl-like, for the extended features and syntax.
-This is achieved by setting \code{perl = TRUE} in the underlying base R pattern matching functions.
-See \code{\link{regex}} in R's base documentation for more details.}
+This is achieved by setting \verb{perl = TRUE, fixed = fixed} in the underlying base R pattern matching functions.
+See R's \code{\link{regexp}} documentation for more details.}
 
 \item{replacement}{A single string containing the text to replace the pattern with.}
 }
 \value{
-\code{str_replace()} Returns an altered character vector of equal length to \code{string},
+\code{str_replace()} Returns an altered character vector of equal length to \code{strings},
 with the first match in each string replaced.
 
-\code{str_replace_all()} Returns an altered character vector of equal length to \code{string},
+\code{str_replace_all()} Returns an altered character vector of equal length to \code{strings},
 with every match in each string replaced. Regular expression matches are non-overlapping.
 }
 \description{

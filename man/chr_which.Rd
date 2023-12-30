@@ -4,10 +4,10 @@
 \alias{chr_which}
 \title{Find matching indices in character vector}
 \usage{
-chr_which(string, pattern)
+chr_which(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{string}{A character vector of strings to search in.}
+\item{strings}{A character vector of strings to search in.}
 
 \item{pattern}{The pattern to look for.}
 }

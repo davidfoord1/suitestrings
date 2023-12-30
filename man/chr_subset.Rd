@@ -4,15 +4,15 @@
 \alias{chr_subset}
 \title{Get matching elements}
 \usage{
-chr_subset(string, pattern)
+chr_subset(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{string}{A character vector from which elements are to be subset.}
+\item{strings}{A character vector from which elements are to be subset.}
 
-\item{pattern}{A character string containing a regular expression (or a fixed string) to match against each element of \code{string}.}
+\item{pattern}{A character string containing a regular expression (or a fixed string) to match against each element of \code{strings}.}
 }
 \value{
-A character vector containing only the elements of \code{string} that match the specified \code{pattern}. If no matches are found, an empty character vector is returned.
+A character vector containing only the elements of \code{strings} that match the specified \code{pattern}. If no matches are found, an empty character vector is returned.
 }
 \description{
 \code{chr_subset} returns a subset of the input character vector, containing only the elements that match a specified pattern.

@@ -4,10 +4,10 @@
 \alias{str_detect_match}
 \title{Detect the presence of a pattern in a string}
 \usage{
-str_detect_match(string, pattern)
+str_detect_match(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{string}{A character vector of strings to search in.}
+\item{strings}{A character vector of strings to search in.}
 
 \item{pattern}{The pattern to look for.}
 }

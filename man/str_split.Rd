@@ -7,26 +7,26 @@
 \alias{chr_split_all}
 \title{Split strings by a pattern}
 \usage{
-str_split_all(string, pattern)
+str_split_all(strings, pattern, fixed = FALSE)
 
-str_split_first(string, pattern)
+str_split_first(strings, pattern, fixed = FALSE)
 
-chr_split_all(string, pattern)
+chr_split_all(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{string}{A character vector. Each element of this vector is a string that the function will process.}
+\item{strings}{A character vector. Each element of this vector is a string that the function will process.}
 
-\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{string}.
+\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{strings}.
 The regex used in \code{{suitestrings}} are Perl-like, for the extended features and syntax.
-This is achieved by setting \code{perl = TRUE} in the underlying base R pattern matching functions.
-See \code{\link{regex}} in R's base documentation for more details.}
+This is achieved by setting \verb{perl = TRUE, fixed = fixed} in the underlying base R pattern matching functions.
+See R's \code{\link{regexp}} documentation for more details.}
 }
 \value{
-\code{str_split_all()}: A list of the same length as \code{string}, with each element being a vector of substrings obtained by splitting the corresponding element of \code{string}.
+\code{str_split_all()}: A list of the same length as \code{strings}, with each element being a vector of substrings obtained by splitting the corresponding element of \code{strings}.
 
-\code{chr_split_all()}: A single character vector containing all substrings obtained by splitting each element of \code{string} and concatenating them.
+\code{chr_split_all()}: A single character vector containing all substrings obtained by splitting each element of \code{strings} and concatenating them.
 
-\code{str_split_first()}: A character vector the same length as \code{string}, with each element being the first substring obtained by splitting the corresponding element of \code{string}.
+\code{str_split_first()}: A character vector the same length as \code{strings}, with each element being the first substring obtained by splitting the corresponding element of \code{strings}.
 }
 \description{
 \code{str_split_all()} splits each string in the input vector into substrings based on a pattern.

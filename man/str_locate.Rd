@@ -5,12 +5,12 @@
 \alias{str_locate_all}
 \title{Locate pattern matches in strings}
 \usage{
-str_locate_first(string, pattern)
+str_locate_first(strings, pattern, fixed = FALSE)
 
-str_locate_all(string, pattern)
+str_locate_all(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{string}{A character vector of strings to search in.}
+\item{strings}{A character vector of strings to search in.}
 
 \item{pattern}{A character string containing a regular expression.}
 }

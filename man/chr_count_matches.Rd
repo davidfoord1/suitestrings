@@ -4,10 +4,10 @@
 \alias{chr_count_matches}
 \title{Count matching indices in character vector}
 \usage{
-chr_count_matches(string, pattern)
+chr_count_matches(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{string}{A character vector of strings to search in.}
+\item{strings}{A character vector of strings to search in.}
 
 \item{pattern}{The pattern to look for.}
 }
