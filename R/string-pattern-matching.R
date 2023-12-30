@@ -84,7 +84,7 @@ str_locate_first <- function(strings, pattern, fixed = FALSE) {
 #' @rdname str_locate
 #' @export
 str_locate_all <- function(strings, pattern, fixed = FALSE) {
-  find_matches_in_string <- function(strings, fixed, invert) {
+  find_matches_in_string <- function(strings, fixed) {
     match_info <- gregexpr(pattern, strings, perl = TRUE, fixed = fixed)[[1]]
     ends <- match_info + attr(match_info, "match.length") - 1L
 
@@ -114,40 +114,43 @@ str_locate_all <- function(strings, pattern, fixed = FALSE) {
 #'  the first, nth and last occurrence of a pattern in each string,
 #'  into a character vector the same length as `strings`.
 #'
-#' `str_extract_all()` extracts all occurrences of a pattern in each string,
-#' into a list of character vectors the same length as `strings`.
+#' `str_extract_all()` extracts a character vector of all occurrences of a pattern
+#' for each string, into a list the same length as `strings`.
 #'
-#' `chr_extract_all()` extracts all occurrences of a pattern from a character vector.
+#' `chr_extract_all()` extracts all occurrences of a pattern from `strings`
+#' into a character vector.
 #'
 #' @param strings
 #' A character vector, where each element of the vector is a character string.
 #' @param pattern
-#' A single character string containing a regular expression (regex) pattern to be searched for in each element of `strings`.
-#' By default, `pattern` is interpreted as a regular expression. If the `fixed` argument is set to `TRUE`,
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
 #' @param n (`str_extract_nth` only) Integer, the nth occurrence of the pattern to extract.
-#' Negative values count from the end.
+#' Negative values count back from the end.
+#' @param fixed Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return
 #' `str_extract_first()`, `str_extract_nth()` and `str_extract_last()`
 #' each return a character vector the same length as the input vector `strings`.
 #' It contains the extracted portion of the string, corresponding to
 #' the first, nth and last match of the pattern, respectively. Strings
-#' with no corresponding match are represented as NA values.
+#' with no corresponding match are represented as `NA` values.
 #'
 #' `str_extract_all()`: returns a list of character vectors, where each list element corresponds
 #' to a string in the input vector. Each element is a character vector of all matches in that string.
-#' If no matches are found in a string, the corresponding list element is an empty character vector.
+#' If no matches are found in a string, the corresponding list element is an empty character vector i.e. `character(0)`.
 #' The list is the same length as the input vector `strings`.
 #'
 #' `chr_extract_all()`: returns a character vector containing every single match in the input vector.
-#' Non-matches are ignored. This is equivalent to using calling `unlist()` on the output of `str_extract_all()`.
+#' Non-matches are ignored. This is equivalent to calling `unlist()` on the output of `str_extract_all()`.
 #'
 #' @details
 #' These functions are built using the base R regular expression functions.
 #' The regex used in `{suitestrings}` are based on those used by the Perl language.
-#' This is achieved by setting `perl = TRUE, fixed = fixed` in the underlying base functions.
-#' See R's \code{\link{base::regex}} documentation for more on regex implementation in R.
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's \code{\link{base::regex}} documentation for info on the regex implementation.
 #' For complete syntax details of Perl-compatible Regular Expressions (PCRE),
 #' consult the documentation at \link{https://perldoc.perl.org/perlre}
 #'

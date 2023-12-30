@@ -22,27 +22,30 @@ chr_extract_all(strings, pattern, fixed = FALSE)
 \arguments{
 \item{strings}{A character vector, where each element of the vector is a character string.}
 
-\item{pattern}{A single character string containing a regular expression (regex) pattern to be searched for in each element of \code{strings}.
-By default, \code{pattern} is interpreted as a regular expression. If the \code{fixed} argument is set to \code{TRUE},
+\item{pattern}{A single character string to be searched for in each element of \code{strings}.
+By default, \code{pattern} is interpreted as a regular expression (regex). If the \code{fixed} argument is set to \code{TRUE},
 \code{pattern} will be treated as a literal string to be matched exactly.}
 
+\item{fixed}{Logical; whether \code{pattern} should be matched exactly,
+treating regex special characters as regular  string characters. Default \code{FALSE}.}
+
 \item{n}{(\code{str_extract_nth} only) Integer, the nth occurrence of the pattern to extract.
-Negative values count from the end.}
+Negative values count back from the end.}
 }
 \value{
 \code{str_extract_first()}, \code{str_extract_nth()} and \code{str_extract_last()}
 each return a character vector the same length as the input vector \code{strings}.
 It contains the extracted portion of the string, corresponding to
 the first, nth and last match of the pattern, respectively. Strings
-with no corresponding match are represented as NA values.
+with no corresponding match are represented as \code{NA} values.
 
 \code{str_extract_all()}: returns a list of character vectors, where each list element corresponds
 to a string in the input vector. Each element is a character vector of all matches in that string.
-If no matches are found in a string, the corresponding list element is an empty character vector.
+If no matches are found in a string, the corresponding list element is an empty character vector i.e. \code{character(0)}.
 The list is the same length as the input vector \code{strings}.
 
 \code{chr_extract_all()}: returns a character vector containing every single match in the input vector.
-Non-matches are ignored. This is equivalent to using calling \code{unlist()} on the output of \code{str_extract_all()}.
+Non-matches are ignored. This is equivalent to calling \code{unlist()} on the output of \code{str_extract_all()}.
 }
 \description{
 These functions extract parts of strings based on a pattern.
@@ -51,16 +54,17 @@ These functions extract parts of strings based on a pattern.
 the first, nth and last occurrence of a pattern in each string,
 into a character vector the same length as \code{strings}.
 
-\code{str_extract_all()} extracts all occurrences of a pattern in each string,
-into a list of character vectors the same length as \code{strings}.
+\code{str_extract_all()} extracts a character vector of all occurrences of a pattern
+for each string, into a list the same length as \code{strings}.
 
-\code{chr_extract_all()} extracts all occurrences of a pattern from a character vector.
+\code{chr_extract_all()} extracts all occurrences of a pattern from \code{strings}
+into a character vector.
 }
 \details{
 These functions are built using the base R regular expression functions.
 The regex used in \code{{suitestrings}} are based on those used by the Perl language.
-This is achieved by setting \verb{perl = TRUE, fixed = fixed} in the underlying base functions.
-See R's \code{\link{base::regex}} documentation for more on regex implementation in R.
+This is achieved by setting \code{perl = TRUE} in the underlying base functions.
+See R's \code{\link{base::regex}} documentation for info on the regex implementation.
 For complete syntax details of Perl-compatible Regular Expressions (PCRE),
 consult the documentation at \link{https://perldoc.perl.org/perlre}
 }
