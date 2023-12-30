@@ -50,20 +50,18 @@ devtools::install_github("davidfoord1/suitestrings")
 # Load the package
 library(suitestrings)
 
-
 # Prepare a vector of strings
 strings <- c("flat-hat", "backpack", "roll", "cat-sat-on-a-mat")
 # Define a pattern for a three character string with "a" in the middle
 regex_pattern <- "\\wa\\w"
 
+# Get the second match for each string
+str_extract_nth(strings, regex_pattern, 2)
+#> [1] "hat" "pac" NA    "sat"
 
 # Replace the first match in each string
 str_replace_first(strings, regex_pattern, "lea")
 #> [1] "flea-hat"         "leakpack"         "roll"             "lea-sat-on-a-mat"
-
-# Get the second match for each string
-str_extract_nth(strings, regex_pattern, 2)
-#> [1] "hat" "pac" NA    "sat"
 
 # Get a list of every match for each string
 str_extract_all(strings, regex_pattern)
@@ -79,7 +77,11 @@ str_extract_all(strings, regex_pattern)
 #> [[4]]
 #> [1] "cat" "sat" "mat"
 
-# Get every match from the entire character vector
+# Get every match from `strings` into one character vector
 chr_extract_all(strings, regex_pattern)
 #> [1] "lat" "hat" "bac" "pac" "cat" "sat" "mat"
+
+# Get the subset of `strings` that contain a match
+chr_subset(strings, regex_pattern)
+#> [1] "flat-hat"         "backpack"         "cat-sat-on-a-mat"
 ```
