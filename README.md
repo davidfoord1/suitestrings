@@ -10,35 +10,49 @@ This is primarily a learning project, for me to build my understanding
 of string manipulation and regular expressions (both using base R and
 popular packages) as well as how to create packages.
 
-All suitestrings functionality is implemented in base R i.e. the
-functions are built as wrappers around base string manipulation
-functions. The interface mimics what’s seen in
+All `{suitestrings}` functionality is implemented in base R; most
+functions are built as wrappers around `` `{base}` `` string
+manipulation functions. The interface largely mimics what’s seen in
 [stringr](https://stringr.tidyverse.org/reference/index.html) and
 [stringi](https://stringi.gagolewski.com/rapi/stri_count.html), with the
-intent of being more readable and accessible.
+intent of being expressive and easily understandable in English. As
+such, it is set up to be used *instead* of those packages.
 
 So, the goal of suitestrings is to provide comprehensive set of
-functions for string manipulation and regular expression generation.
-Some notable features:
+functions for string manipulation. Some notable features:
 
-- Consistent naming scheme - Designed for use with autocomplete with
-  prefixes `str_` for vectorised operations over strings, `chr_` for
-  operations on character vectors and `pattern_` for building regular
-  expressions.
+- Consistent naming scheme - Including prefixes designed for use with
+  autocomplete :
 
-- Order of inputs - suitestrings usually puts the string as the first
-  argument instead of the pattern, which makes it easier to use with
-  pipes than base R.
+  - `str_` for vectorised operations on strings.
+
+  - `chr_` for vector-wide operations over strings.
+
+- Order of inputs - The string(s) to work on is usually used as the
+  first argument instead of the pattern, which makes it easier to use
+  with pipes than base R.
 
 - No additional dependencies - this package has no Imports and doesn’t
   do anything you can’t replicate exactly in base R.
 
 ## Installation
 
-You can install the development version of suitestrings from
-[GitHub](https://github.com/) with:
+You can install suitestrings from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("davidfoord1/suitestrings")
+```
+
+## Examples
+
+``` r
+# Prepare a vector of strings
+strings <- c("flat-hat", "backpack", "roll", "cat-sat-on-a-mat")
+# Define a pattern for a three character string with a in the middle
+regex_pattern <- "\\wa\\w"
+
+# Get the second match from each string
+str_extract_nth(strings, regex_pattern, 2)
+#> [1] "hat" "pac" NA    "sat"
 ```
