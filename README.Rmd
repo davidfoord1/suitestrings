@@ -11,8 +11,6 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
-
-library(suitestrings)
 ```
 
 # suitestrings
@@ -23,7 +21,7 @@ library(suitestrings)
 
 This is primarily a learning project, for me to build my understanding of string manipulation and regular expressions (both using base R and popular packages) as well as how to create packages.
 
-All `{suitestrings}` functionality is implemented in base R; most functions are built as wrappers around `` `{base}` `` string manipulation functions. The interface largely mimics what's seen in [stringr](https://stringr.tidyverse.org/reference/index.html) and [stringi](https://stringi.gagolewski.com/rapi/stri_count.html), with the intent of being expressive and easily understandable in English. As such, it is set up to be used *instead* of those packages.
+All `{suitestrings}` functionality is implemented in base R; most functions are built as wrappers around `{base}` string manipulation functions. The interface largely mimics what's seen in [stringr](https://stringr.tidyverse.org/reference/index.html) and [stringi](https://stringi.gagolewski.com/rapi/stri_count.html), with the intent of being expressive and easily understandable in English. As such, it is set up to be used *instead* of those packages.
 
 So, the goal of suitestrings is to provide comprehensive set of functions for string manipulation. Some notable features:
 
@@ -49,11 +47,25 @@ devtools::install_github("davidfoord1/suitestrings")
 ## Examples
 
 ``` {r}
+# Load the package
+library(suitestrings)
+
+
 # Prepare a vector of strings
 strings <- c("flat-hat", "backpack", "roll", "cat-sat-on-a-mat")
-# Define a pattern for a three character string with a in the middle
+# Define a pattern for a three character string with "a" in the middle
 regex_pattern <- "\\wa\\w"
 
-# Get the second match from each string
+
+# Replace the first match in each string
+str_replace_first(strings, regex_pattern, "lea")
+
+# Get the second match for each string
 str_extract_nth(strings, regex_pattern, 2)
+
+# Get a list of every match for each string
+str_extract_all(strings, regex_pattern)
+
+# Get every match from the entire character vector
+chr_extract_all(strings, regex_pattern)
 ```
