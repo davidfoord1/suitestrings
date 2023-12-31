@@ -1,3 +1,5 @@
+# chr_sort ------------------------------------------------------
+
 #' Re-organise a character vector
 #'
 #' @description
@@ -66,6 +68,8 @@ chr_rank <- function(strings, decreasing = FALSE) {
 
   ranks
 }
+
+# chr_unique ----------------------------------------------------
 
 chr_unique <- function(strings) {
   unique(strings)
