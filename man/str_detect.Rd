@@ -7,9 +7,11 @@
 str_detect_match(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{strings}{A character vector of strings to search in.}
+\item{strings}{A character vector, where each element of the vector is a character string.}
 
-\item{pattern}{The pattern to look for.}
+\item{pattern}{A single character string to be searched for in each element of \code{strings}.
+By default, \code{pattern} is interpreted as a regular expression (regex). If the \code{fixed} argument is set to \code{TRUE},
+\code{pattern} will be treated as a literal string to be matched exactly.}
 }
 \value{
 A logical vector indicating the presence of each pattern in a string.

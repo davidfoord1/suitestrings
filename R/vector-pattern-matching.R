@@ -1,7 +1,11 @@
 #' Find matching indices in character vector
 #'
-#' @param strings A character vector of strings to search in.
-#' @param pattern The pattern to look for.
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param pattern
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
+#' `pattern` will be treated as a literal string to be matched exactly.
 #'
 #' @return An integer vector of matching indices in string.
 #' @export
@@ -15,8 +19,12 @@ chr_which <- function(strings, pattern, fixed = FALSE) {
 
 #' Count matching indices in character vector
 #'
-#' @param strings A character vector of strings to search in.
-#' @param pattern The pattern to look for.
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param pattern
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
+#' `pattern` will be treated as a literal string to be matched exactly.
 #'
 #' @return A single integer representing the number of matches found
 #' @export
@@ -52,8 +60,12 @@ chr_split_all <- function(strings, pattern, fixed = FALSE) {
 #' @description
 #' `chr_subset` returns a subset of the input character vector, containing only the elements that match a specified pattern.
 #'
-#' @param strings A character vector from which elements are to be subset.
-#' @param pattern A character string containing a regular expression (or a fixed string) to match against each element of `strings`.
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param pattern
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
+#' `pattern` will be treated as a literal string to be matched exactly.
 #'
 #' @return
 #' A character vector containing only the elements of `strings` that match the specified `pattern`. If no matches are found, an empty character vector is returned.

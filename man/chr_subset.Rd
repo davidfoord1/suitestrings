@@ -7,9 +7,11 @@
 chr_subset(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{strings}{A character vector from which elements are to be subset.}
+\item{strings}{A character vector, where each element of the vector is a character string.}
 
-\item{pattern}{A character string containing a regular expression (or a fixed string) to match against each element of \code{strings}.}
+\item{pattern}{A single character string to be searched for in each element of \code{strings}.
+By default, \code{pattern} is interpreted as a regular expression (regex). If the \code{fixed} argument is set to \code{TRUE},
+\code{pattern} will be treated as a literal string to be matched exactly.}
 }
 \value{
 A character vector containing only the elements of \code{strings} that match the specified \code{pattern}. If no matches are found, an empty character vector is returned.
