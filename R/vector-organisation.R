@@ -43,7 +43,7 @@
 #' #> [1] "cherry" "banana" "apple"
 #'
 #' strings[chr_order(strings)]
-#' [1] "apple"  "banana" "cherry"
+#' #> [1] "apple"  "banana" "cherry"
 #'
 #' @rdname chr_sort
 #' @export
