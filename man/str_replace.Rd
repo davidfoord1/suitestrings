@@ -17,6 +17,9 @@ By default, \code{pattern} is interpreted as a regular expression (regex). If th
 \code{pattern} will be treated as a literal string to be matched exactly.}
 
 \item{replacement}{A single string containing the text to replace the pattern with.}
+
+\item{fixed}{Logical; whether \code{pattern} should be matched exactly,
+treating regex special characters as regular  string characters. Default \code{FALSE}.}
 }
 \value{
 \code{str_replace()} Returns an altered character vector of equal length to \code{strings},

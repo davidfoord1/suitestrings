@@ -19,6 +19,9 @@ chr_split_all(strings, pattern, fixed = FALSE)
 \item{pattern}{A single character string to be searched for in each element of \code{strings}.
 By default, \code{pattern} is interpreted as a regular expression (regex). If the \code{fixed} argument is set to \code{TRUE},
 \code{pattern} will be treated as a literal string to be matched exactly.}
+
+\item{fixed}{Logical; whether \code{pattern} should be matched exactly,
+treating regex special characters as regular  string characters. Default \code{FALSE}.}
 }
 \value{
 \code{str_split_all()}: A list of the same length as \code{strings}, with each element being a vector of substrings obtained by splitting the corresponding element of \code{strings}.

@@ -9,6 +9,9 @@
 #' A single character string to be searched for in each element of `strings`.
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return A logical vector indicating the presence of each pattern in a string.
 #' @export
@@ -31,8 +34,15 @@ str_detect_match <- function(strings, pattern, fixed = FALSE) {
 #' `str_locate_first()` finds the first occurrence of a pattern in a string.
 #' `str_locate_all()` finds all occurrences of a pattern in each string of the input vector.
 #'
-#' @param strings A character vector of strings to search in.
-#' @param pattern A character string containing a regular expression.
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param pattern
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
+#' `pattern` will be treated as a literal string to be matched exactly.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return `str_locate_first()` returns a two-column matrix with the start and end positions
 #' of the first match. There is a row for each string. `str_locate_all()` returns a list of matrices.
@@ -132,7 +142,8 @@ str_locate_all <- function(strings, pattern, fixed = FALSE) {
 #' `pattern` will be treated as a literal string to be matched exactly.
 #' @param n (`str_extract_nth` only) Integer, the nth occurrence of the pattern to extract.
 #' Negative values count back from the end.
-#' @param fixed Logical; whether `pattern` should be matched exactly,
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return
@@ -245,6 +256,9 @@ str_extract_last <- function(strings, pattern, fixed = FALSE) {
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
 #' @param replacement A single string containing the text to replace the pattern with.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return
 #' `str_replace()` Returns an altered character vector of equal length to `strings`,
@@ -286,6 +300,9 @@ str_replace_all <- function(strings, pattern, replacement, fixed = FALSE) {
 #' A single character string to be searched for in each element of `strings`.
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return
 #' A character vector of the same length as `strings`, with the specified pattern removed.
@@ -331,6 +348,9 @@ str_remove_all <- function(strings, pattern, fixed = FALSE) {
 #' A single character string to be searched for in each element of `strings`.
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return
 #' `str_split_all()`: A list of the same length as `strings`, with each element being a vector of substrings obtained by splitting the corresponding element of `strings`.

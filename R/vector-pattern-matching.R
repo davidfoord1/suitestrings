@@ -6,6 +6,9 @@
 #' A single character string to be searched for in each element of `strings`.
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return An integer vector of matching indices in string.
 #' @export
@@ -25,6 +28,9 @@ chr_which <- function(strings, pattern, fixed = FALSE) {
 #' A single character string to be searched for in each element of `strings`.
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return A single integer representing the number of matches found
 #' @export
@@ -66,6 +72,9 @@ chr_split_all <- function(strings, pattern, fixed = FALSE) {
 #' A single character string to be searched for in each element of `strings`.
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return
 #' A character vector containing only the elements of `strings` that match the specified `pattern`. If no matches are found, an empty character vector is returned.
