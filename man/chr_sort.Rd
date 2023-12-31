@@ -50,7 +50,7 @@ chr_sort(strings, decreasing = TRUE)
 #> [1] "cherry" "banana" "apple"
 
 strings[chr_order(strings)]
-[1] "apple"  "banana" "cherry"
+#> [1] "apple"  "banana" "cherry"
 
 }
 \seealso{

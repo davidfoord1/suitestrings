@@ -148,11 +148,13 @@ str_locate_all <- function(strings, pattern, fixed = FALSE) {
 #'
 #' @details
 #' These functions are built using the base R regular expression functions.
-#' The regex used in `{suitestrings}` are based on those used by the Perl language.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
 #' This is achieved by setting `perl = TRUE` in the underlying base functions.
-#' See R's \code{\link{base::regex}} documentation for info on the regex implementation.
-#' For complete syntax details of Perl-compatible Regular Expressions (PCRE),
-#' consult the documentation at \link{https://perldoc.perl.org/perlre}
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
+#'
+#' @seealso
+#' [regmatches()] for base R matched substring extraction.
 #'
 #' @examples
 #' str_extract_first(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
