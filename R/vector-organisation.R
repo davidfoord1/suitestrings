@@ -29,29 +29,36 @@
 #' [sort()], [order()] and [rank()] which these functions are wrappers around.
 #'
 #' @examples
-#' chr_sort(c("c", "a", "b"))
-#' #> [1] "a" "b" "c"
-#' chr_order(c("c", "a", "b"))
+#' strings <- c("cherry", "apple", "banana")
+#'
+#' chr_sort(strings)
+#' [1] "apple"  "banana" "cherry"
+#' chr_order(strings)
 #' #> [1] 2 3 1
-#' chr_rank(c("c", "a", "b"))
+#' chr_rank(strings)
 #' #> [1] 3 1 2
+#' chr_sort(strings, decreasing = TRUE)
+#' #> [1] "cherry" "banana" "apple"
+#'
+#' strings[chr_order(strings)]
+#' [1] "apple"  "banana" "cherry"
 #'
 #' @rdname chr_sort
 #' @export
-chr_sort <- function(strings) {
-  sort(strings)
+chr_sort <- function(strings, decreasing = FALSE) {
+  sort(strings, decreasing = decreasing)
 }
 
 #' @rdname chr_sort
 #' @export
-chr_order <- function(strings) {
-  order(strings)
+chr_order <- function(strings, decreasing = FALSE) {
+  order(strings, decreasing = decreasing)
 }
 
 #' @rdname chr_sort
 #' @export
-chr_rank <- function(strings) {
-  rank(strings)
+chr_rank <- function(strings, decreasing = FALSE) {
+  rank(strings, decreasing = decreasing)
 }
 
 chr_unique <- function(strings) {

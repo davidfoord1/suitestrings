@@ -6,11 +6,11 @@
 \alias{chr_rank}
 \title{Re-organise a character vector}
 \usage{
-chr_sort(strings)
+chr_sort(strings, decreasing = FALSE)
 
-chr_order(strings)
+chr_order(strings, decreasing = FALSE)
 
-chr_rank(strings)
+chr_rank(strings, decreasing = FALSE)
 }
 \arguments{
 \item{strings}{A character vector, where each element of the vector is a character string.}
@@ -38,12 +38,19 @@ for sorting many vectors in the same way.
 that would be first in the sorted list.
 }
 \examples{
-chr_sort(c("c", "a", "b"))
-#> [1] "a" "b" "c"
-chr_order(c("c", "a", "b"))
+strings <- c("cherry", "apple", "banana")
+
+chr_sort(strings)
+[1] "apple"  "banana" "cherry"
+chr_order(strings)
 #> [1] 2 3 1
-chr_rank(c("c", "a", "b"))
+chr_rank(strings)
 #> [1] 3 1 2
+chr_sort(strings, decreasing = TRUE)
+#> [1] "cherry" "banana" "apple"
+
+strings[chr_order(strings)]
+[1] "apple"  "banana" "cherry"
 
 }
 \seealso{
