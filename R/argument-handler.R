@@ -31,3 +31,7 @@ check_pattern_arg <- function(pattern, function_name) {
 
   pattern
 }
+
+get_function_name <- function() {
+  deparse(sys.call(-1)[[1]])
+}
