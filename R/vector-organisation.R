@@ -71,6 +71,25 @@ chr_rank <- function(strings, decreasing = FALSE) {
 
 # chr_unique ----------------------------------------------------
 
+#' Remove duplicated strings
+#'
+#' @description Remove duplicate values from a character vector.
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#'
+#' @return
+#' A character vector, usually shorter than `strings`,
+#' containing only distinct values.
+#'
+#' @export
+#'
+#' @seealso
+#' [unique()] which this function wraps around
+#'
+#' @examples
+#' chr_unique(c("a", "b", "a", "c"))
+#' #> [1] "a" "b" "c"
 chr_unique <- function(strings) {
   unique(strings)
 }
