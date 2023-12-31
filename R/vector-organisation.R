@@ -6,6 +6,10 @@ chr_order <- function(strings) {
   order(strings)
 }
 
+chr_rank <- function(strinsg) {
+  rank(strings)
+}
+
 chr_unique <- function(strings) {
   unique(strings)
 }
