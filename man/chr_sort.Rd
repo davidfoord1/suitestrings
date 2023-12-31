@@ -41,7 +41,7 @@ that would be first in the sorted list.
 strings <- c("cherry", "apple", "banana")
 
 chr_sort(strings)
-[1] "apple"  "banana" "cherry"
+#> [1] "apple"  "banana" "cherry"
 chr_order(strings)
 #> [1] 2 3 1
 chr_rank(strings)
