@@ -22,6 +22,13 @@ A single integer representing the number of matches found
 \description{
 Count matching indices in character vector
 }
+\details{
+These functions are built using the base R regular expression functions.
+\code{{suitestrings}} uses Perl-compatible Regular Expressions (PCRE).
+This is achieved by setting \code{perl = TRUE} in the underlying base functions.
+See R's \link{regexp} documentation for info on the regex implementation.
+For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
+}
 \examples{
 chr_count_matches(letters, "[aeiou]")
 #> [1] 5

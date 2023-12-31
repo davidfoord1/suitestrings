@@ -14,6 +14,14 @@
 #' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return A logical vector indicating the presence of each pattern in a string.
+#'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
+#'
 #' @export
 #' @rdname str_detect
 #'
@@ -43,6 +51,13 @@ str_detect_match <- function(strings, pattern, fixed = FALSE) {
 #' @param fixed
 #' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
+#'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 #'
 #' @return `str_locate_first()` returns a two-column matrix with the start and end positions
 #' of the first match. There is a row for each string. `str_locate_all()` returns a list of matrices.
@@ -260,6 +275,13 @@ str_extract_last <- function(strings, pattern, fixed = FALSE) {
 #' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
+#'
 #' @return
 #' `str_replace()` Returns an altered character vector of equal length to `strings`,
 #' with the first match in each string replaced.
@@ -303,6 +325,13 @@ str_replace_all <- function(strings, pattern, replacement, fixed = FALSE) {
 #' @param fixed
 #' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
+#'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 #'
 #' @return
 #' A character vector of the same length as `strings`, with the specified pattern removed.
@@ -351,6 +380,13 @@ str_remove_all <- function(strings, pattern, fixed = FALSE) {
 #' @param fixed
 #' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
+#'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 #'
 #' @return
 #' `str_split_all()`: A list of the same length as `strings`, with each element being a vector of substrings obtained by splitting the corresponding element of `strings`.

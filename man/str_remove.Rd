@@ -28,6 +28,13 @@ For \code{str_remove_all()}, all occurrences of the pattern in each string are r
 \code{str_remove_first()} removes the first occurrence of a pattern in each string.
 \code{str_remove_all()} removes all occurrences of a pattern in each string.
 }
+\details{
+These functions are built using the base R regular expression functions.
+\code{{suitestrings}} uses Perl-compatible Regular Expressions (PCRE).
+This is achieved by setting \code{perl = TRUE} in the underlying base functions.
+See R's \link{regexp} documentation for info on the regex implementation.
+For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
+}
 \examples{
 str_remove_first("Hello world", "o")
 #> [1] "Hell world"

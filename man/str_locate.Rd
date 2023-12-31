@@ -31,6 +31,13 @@ These functions find occurrences of a pattern in strings.
 \code{str_locate_first()} finds the first occurrence of a pattern in a string.
 \code{str_locate_all()} finds all occurrences of a pattern in each string of the input vector.
 }
+\details{
+These functions are built using the base R regular expression functions.
+\code{{suitestrings}} uses Perl-compatible Regular Expressions (PCRE).
+This is achieved by setting \code{perl = TRUE} in the underlying base functions.
+See R's \link{regexp} documentation for info on the regex implementation.
+For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
+}
 \examples{
 str_locate_first("Hello world", "world")
 #>      start end
