@@ -2,6 +2,9 @@
 
 export(chr_count_matches)
 export(chr_extract_all)
+export(chr_order)
+export(chr_rank)
+export(chr_sort)
 export(chr_split_all)
 export(chr_subset)
 export(chr_which)
