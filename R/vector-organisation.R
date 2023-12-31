@@ -58,7 +58,13 @@ chr_order <- function(strings, decreasing = FALSE) {
 #' @rdname chr_sort
 #' @export
 chr_rank <- function(strings, decreasing = FALSE) {
-  rank(strings, decreasing = decreasing)
+  ranks <- rank(strings)
+
+  if (decreasing) {
+    ranks = length(strings) - ranks + 1
+  }
+
+  ranks
 }
 
 chr_unique <- function(strings) {
