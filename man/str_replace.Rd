@@ -10,14 +10,16 @@ str_replace_first(strings, pattern, replacement, fixed = FALSE)
 str_replace_all(strings, pattern, replacement, fixed = FALSE)
 }
 \arguments{
-\item{strings}{A character vector. Each element of this vector is a string that the function will process.}
+\item{strings}{A character vector, where each element of the vector is a character string.}
 
-\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{strings}.
-The regex used in \code{{suitestrings}} are Perl-like, for the extended features and syntax.
-This is achieved by setting \verb{perl = TRUE, fixed = fixed} in the underlying base R pattern matching functions.
-See R's \code{\link{regexp}} documentation for more details.}
+\item{pattern}{A single character string to be searched for in each element of \code{strings}.
+By default, \code{pattern} is interpreted as a regular expression (regex). If the \code{fixed} argument is set to \code{TRUE},
+\code{pattern} will be treated as a literal string to be matched exactly.}
 
 \item{replacement}{A single string containing the text to replace the pattern with.}
+
+\item{fixed}{Logical; whether \code{pattern} should be matched exactly,
+treating regex special characters as regular  string characters. Default \code{FALSE}.}
 }
 \value{
 \code{str_replace()} Returns an altered character vector of equal length to \code{strings},
@@ -28,6 +30,13 @@ with every match in each string replaced. Regular expression matches are non-ove
 }
 \description{
 Replace parts of a string with new text.
+}
+\details{
+These functions are built using the base R regular expression functions.
+\code{{suitestrings}} uses Perl-compatible Regular Expressions (PCRE).
+This is achieved by setting \code{perl = TRUE} in the underlying base functions.
+See R's \link{regexp} documentation for info on the regex implementation.
+For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 }
 \examples{
 str_replace_first("Hello world!", "o", "ooo")

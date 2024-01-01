@@ -62,11 +62,10 @@ into a character vector.
 }
 \details{
 These functions are built using the base R regular expression functions.
-The regex used in \code{{suitestrings}} are based on those used by the Perl language.
+\code{{suitestrings}} uses Perl-compatible Regular Expressions (PCRE).
 This is achieved by setting \code{perl = TRUE} in the underlying base functions.
-See R's \code{\link{base::regex}} documentation for info on the regex implementation.
-For complete syntax details of Perl-compatible Regular Expressions (PCRE),
-consult the documentation at \link{https://perldoc.perl.org/perlre}
+See R's \link{regexp} documentation for info on the regex implementation.
+For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 }
 \examples{
 str_extract_first(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
@@ -94,4 +93,7 @@ str_extract_last(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
 chr_extract_all(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
 #> [1] "mat" "bat" "cat" "hat"
 
+}
+\seealso{
+\code{\link[=regmatches]{regmatches()}} for base R matched substring extraction.
 }

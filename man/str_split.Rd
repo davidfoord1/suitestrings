@@ -14,12 +14,14 @@ str_split_first(strings, pattern, fixed = FALSE)
 chr_split_all(strings, pattern, fixed = FALSE)
 }
 \arguments{
-\item{strings}{A character vector. Each element of this vector is a string that the function will process.}
+\item{strings}{A character vector, where each element of the vector is a character string.}
 
-\item{pattern}{A single character string containing a regular expression (regex) pattern to match against the elements in \code{strings}.
-The regex used in \code{{suitestrings}} are Perl-like, for the extended features and syntax.
-This is achieved by setting \verb{perl = TRUE, fixed = fixed} in the underlying base R pattern matching functions.
-See R's \code{\link{regexp}} documentation for more details.}
+\item{pattern}{A single character string to be searched for in each element of \code{strings}.
+By default, \code{pattern} is interpreted as a regular expression (regex). If the \code{fixed} argument is set to \code{TRUE},
+\code{pattern} will be treated as a literal string to be matched exactly.}
+
+\item{fixed}{Logical; whether \code{pattern} should be matched exactly,
+treating regex special characters as regular  string characters. Default \code{FALSE}.}
 }
 \value{
 \code{str_split_all()}: A list of the same length as \code{strings}, with each element being a vector of substrings obtained by splitting the corresponding element of \code{strings}.
@@ -34,6 +36,13 @@ See R's \code{\link{regexp}} documentation for more details.}
 \code{chr_split_all()} splits all strings in the input vector and concatenates the results into a single character vector.
 
 \code{str_split_first()} takes the first result of splitting each string in the input vector based on a pattern.
+}
+\details{
+These functions are built using the base R regular expression functions.
+\code{{suitestrings}} uses Perl-compatible Regular Expressions (PCRE).
+This is achieved by setting \code{perl = TRUE} in the underlying base functions.
+See R's \link{regexp} documentation for info on the regex implementation.
+For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 }
 \examples{
 str_split_all(c("one,two,three", "abc,def,ghi"), ",")
