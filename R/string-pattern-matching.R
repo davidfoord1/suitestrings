@@ -39,8 +39,10 @@ str_detect_match <- function(strings, pattern, fixed = FALSE) {
 #' @description
 #' These functions find occurrences of a pattern in strings.
 #'
-#' `str_locate_first()` finds the first occurrence of a pattern in a string.
-#' `str_locate_all()` finds all occurrences of a pattern in each string of the input vector.
+#' `str_locate_first()`, `str_locate_nth()` and `str_locate_last()`
+#' find the specified occurrence of a pattern in each string.
+#'
+#' `str_locate_all()` finds all occurrences of a pattern in each string.
 #'
 #' @param strings
 #' A character vector, where each element of the vector is a character string.
@@ -59,9 +61,13 @@ str_detect_match <- function(strings, pattern, fixed = FALSE) {
 #' See R's [regexp] documentation for info on the regex implementation.
 #' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 #'
-#' @return `str_locate_first()` returns a two-column matrix with the start and end positions
-#' of the first match. There is a row for each string. `str_locate_all()` returns a list of matrices.
+#' @return `str_locate_first()`, `str_locate_nth()` and `str_locate_last()`:
+#' return a two-column matrix with the start and end positions
+#' of the first, nth and last match respectively. There is a row for each string.
+#'
+#' `str_locate_all()`: returns a list of matrices.
 #' There is a matrix for each string and a row for each match.
+#'
 #' If no match is found, NA values are returned.
 #'
 #' @examples
@@ -83,15 +89,35 @@ str_detect_match <- function(strings, pattern, fixed = FALSE) {
 #' #> [1,]     9  13
 #' str_locate_all(c("Hello world", "Goodbye world"), "o")
 #' #> [[1]]
-#' #> start end
+#' #>      start end
 #' #> [1,]     5   5
 #' #> [2,]     8   8
 #' #>
 #' #> [[2]]
-#' #> start end
+#' #>      start end
 #' #> [1,]     2   2
 #' #> [2,]     3   3
 #' #> [3,]    10  10
+#'
+#' str_locate_nth("Hello world", "world", 2)
+#' #>      start end
+#' #> [1,]    NA  NA
+#' str_locate_nth(c("Hello world", "Goodbye world"), "o", 2)
+#' #>      start end
+#' #> [1,]     8   8
+#' #> [2,]     3   3
+#'
+#' str_locate_last("Hello world", "world")
+#' #>      start end
+#' #> [1,]     7  11
+#' str_locate_last(c("Hello world", "Goodbye world"), "o")
+#' #>      start end
+#' #> [1,]     8   8
+#' #> [2,]    10  10
+#'
+#' @seealso
+#' [regexpr()] and [gregexpr()] to locate matches in base R. The form is
+#' different, with integer start positions and match length as an attribute.
 #'
 #' @rdname str_locate
 #' @export
@@ -148,6 +174,7 @@ str_locate_nth <- function(strings, pattern, n, fixed = FALSE) {
   }
 
   result <- t(vapply(strings, locate_nth_in_string, integer(2)))
+  rownames(result) <- NULL
   colnames(result) <- c("start", "end")
   return(result)
 }
@@ -169,6 +196,7 @@ str_locate_last <- function(strings, pattern, fixed = FALSE) {
   }
 
   result <- t(vapply(strings, locate_last_in_string, integer(2)))
+  rownames(result) <- NULL
   colnames(result) <- c("start", "end")
   return(result)
 }

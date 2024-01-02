@@ -3,11 +3,17 @@
 \name{str_locate_first}
 \alias{str_locate_first}
 \alias{str_locate_all}
+\alias{str_locate_nth}
+\alias{str_locate_last}
 \title{Locate pattern matches in strings}
 \usage{
 str_locate_first(strings, pattern, fixed = FALSE)
 
 str_locate_all(strings, pattern, fixed = FALSE)
+
+str_locate_nth(strings, pattern, n, fixed = FALSE)
+
+str_locate_last(strings, pattern, fixed = FALSE)
 }
 \arguments{
 \item{strings}{A character vector, where each element of the vector is a character string.}
@@ -20,16 +26,22 @@ By default, \code{pattern} is interpreted as a regular expression (regex). If th
 treating regex special characters as regular  string characters. Default \code{FALSE}.}
 }
 \value{
-\code{str_locate_first()} returns a two-column matrix with the start and end positions
-of the first match. There is a row for each string. \code{str_locate_all()} returns a list of matrices.
+\code{str_locate_first()}, \code{str_locate_nth()} and \code{str_locate_last()}:
+return a two-column matrix with the start and end positions
+of the first, nth and last match respectively. There is a row for each string.
+
+\code{str_locate_all()}: returns a list of matrices.
 There is a matrix for each string and a row for each match.
+
 If no match is found, NA values are returned.
 }
 \description{
 These functions find occurrences of a pattern in strings.
 
-\code{str_locate_first()} finds the first occurrence of a pattern in a string.
-\code{str_locate_all()} finds all occurrences of a pattern in each string of the input vector.
+\code{str_locate_first()}, \code{str_locate_nth()} and \code{str_locate_last()}
+find the specified occurrence of a pattern in each string.
+
+\code{str_locate_all()} finds all occurrences of a pattern in each string.
 }
 \details{
 These functions are built using the base R regular expression functions.
@@ -57,14 +69,34 @@ str_locate_all(c("Hello world", "Goodbye world"), "world")
 #> [1,]     9  13
 str_locate_all(c("Hello world", "Goodbye world"), "o")
 #> [[1]]
-#> start end
+#>      start end
 #> [1,]     5   5
 #> [2,]     8   8
 #>
 #> [[2]]
-#> start end
+#>      start end
 #> [1,]     2   2
 #> [2,]     3   3
 #> [3,]    10  10
 
+str_locate_nth("Hello world", "world", 2)
+#>      start end
+#> [1,]    NA  NA
+str_locate_nth(c("Hello world", "Goodbye world"), "o", 2)
+#>      start end
+#> [1,]     8   8
+#> [2,]     3   3
+
+str_locate_last("Hello world", "world")
+#>      start end
+#> [1,]     7  11
+str_locate_last(c("Hello world", "Goodbye world"), "o")
+#>      start end
+#> [1,]     8   8
+#> [2,]    10  10
+
+}
+\seealso{
+\code{\link[=regexpr]{regexpr()}} and \code{\link[=gregexpr]{gregexpr()}} to locate matches in base R. The form is
+different, with integer start positions and match length as an attribute.
 }
