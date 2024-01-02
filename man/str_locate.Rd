@@ -24,6 +24,9 @@ By default, \code{pattern} is interpreted as a regular expression (regex). If th
 
 \item{fixed}{Logical; whether \code{pattern} should be matched exactly,
 treating regex special characters as regular  string characters. Default \code{FALSE}.}
+
+\item{n}{\code{str_locate_nth()} only: Integer, the nth occurrence of the pattern to extract.
+Negative values count back from the end.}
 }
 \value{
 \code{str_locate_first()}, \code{str_locate_nth()} and \code{str_locate_last()}:

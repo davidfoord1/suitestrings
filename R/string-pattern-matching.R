@@ -53,6 +53,8 @@ str_detect_match <- function(strings, pattern, fixed = FALSE) {
 #' @param fixed
 #' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
+#' @param n `str_locate_nth()` only: Integer, the nth occurrence of the pattern to extract.
+#' Negative values count back from the end.
 #'
 #' @details
 #' These functions are built using the base R regular expression functions.
@@ -165,11 +167,14 @@ str_locate_nth <- function(strings, pattern, n, fixed = FALSE) {
     matches  <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
     ends <- matches + attr(matches, "match.length") - 1L
 
+    len <- length(matches)
+    index <- if (n > 0) n else len + n + 1
+
     # If there is no nth match, return NA NA
-    if (n > length(matches) || all(matches == -1L)) {
+    if (index > length(matches) || all(matches == -1L)) {
       return(c(NA_integer_, NA_integer_))
     } else {
-      return(c(matches[n], ends[n]))
+      return(c(matches[index], ends[index]))
     }
   }
 
