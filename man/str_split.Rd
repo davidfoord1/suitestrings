@@ -51,20 +51,24 @@ See R's \link{regexp} documentation for info on the regex implementation.
 For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 }
 \examples{
+
+str_split_first(c("one,two,three", "abc,def,ghi"), ",")
+#>[1] "one" "abc"
+str_split_nth(c("one,two,three", "abc,def,ghi"), ",", 2)
+#> [1] "two" "def"
+str_split_last(c("one,two,three", "abc,def,ghi"), ",")
+#> [1] "three" "ghi"
+
 str_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #> [[1]]
 #> [1] "one"   "two"   "three"
 #>
 #> [[2]]
 #> [1] "abc" "def" "ghi"
-
 chr_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #> [1] "one"   "two"   "three" "abc"   "def"   "ghi"
 
-str_split_first(c("", "a b c"), " ")
-#> [1] NA  "a"
-
 }
 \seealso{
-\code{\link{strsplit}} for the base R function.
+for the base R function these wrap around.
 }
