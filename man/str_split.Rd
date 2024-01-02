@@ -4,12 +4,18 @@
 \name{str_split_all}
 \alias{str_split_all}
 \alias{str_split_first}
+\alias{str_split_nth}
+\alias{str_split_last}
 \alias{chr_split_all}
 \title{Split strings by a pattern}
 \usage{
 str_split_all(strings, pattern, fixed = FALSE)
 
 str_split_first(strings, pattern, fixed = FALSE)
+
+str_split_nth(strings, pattern, n, fixed = FALSE)
+
+str_split_last(strings, pattern, fixed = FALSE)
 
 chr_split_all(strings, pattern, fixed = FALSE)
 }

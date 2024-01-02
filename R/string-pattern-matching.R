@@ -496,6 +496,30 @@ str_split_all <- function(strings, pattern, fixed = FALSE) {
 #' @export
 str_split_first <- function(strings, pattern, fixed = FALSE) {
   split_string <- strsplit(strings, pattern, perl = TRUE, fixed = fixed)
-  sapply(split_string, \(x) ifelse(length(x) > 1, x[[1]], x))
+  vapply(split_string,
+         function(string) {
+           ifelse(length(string) > 0, string[[1]], string)
+         },
+         FUN.VALUE = character(1))
+}
+
+#' @rdname str_split
+#' @export
+str_split_nth <- function(strings, pattern, n, fixed = FALSE) {
+  split_string <- strsplit(strings, pattern, perl = TRUE, fixed = fixed)
+  vapply(split_string,
+         function(string) {
+           ifelse(length(string) >= n, string[[n]], string)
+         },
+         FUN.VALUE = character(1))
+}
+
+#' @rdname str_split
+#' @export
+str_split_last <- function(strings, pattern, fixed = FALSE) {
+  split_string <- strsplit(strings, pattern, perl = TRUE, fixed = fixed)
+  vapply(split_string,
+         \(string) ifelse(length(string) > 0, string[[length(string)]], string),
+         FUN.VALUE = character(1))
 }
 
