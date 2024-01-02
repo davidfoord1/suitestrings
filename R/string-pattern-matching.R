@@ -155,7 +155,7 @@ str_locate_all <- function(strings, pattern, fixed = FALSE) {
   }
 
   result <- lapply(strings, find_matches_in_string)
-  return(matches)
+  return(result)
 }
 
 #' @rdname str_locate
