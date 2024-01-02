@@ -87,6 +87,25 @@ test_that("str_locate_nth handles edge cases correctly", {
   expect_equal(str_locate_nth("banana", "x", 1), matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))))
 })
 
+# str_locate_last -----------------------------------------------
+
+test_that("str_locate_last finds the last match correctly", {
+  strings <- c("banana", "apple apple")
+  pattern <- "a"
+
+  # Test with strings having valid matches
+  expect_equal(str_locate_last(strings, pattern),
+               matrix(c(6, 6, 7, 7), ncol = 2, byrow = TRUE, dimnames = list(NULL, c("start", "end"))))
+})
+
+test_that("str_locate_last handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_locate_last("", "a"), matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))))
+
+  # Test with no pattern match
+  expect_equal(str_locate_last("banana", "x"), matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))))
+})
+
 # str_extract ---------------------------------------------------
 ## str_extract_first -------------------------------------------
 
