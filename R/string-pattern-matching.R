@@ -97,15 +97,15 @@ str_detect_match <- function(strings, pattern, fixed = FALSE) {
 #' @export
 str_locate_first <- function(strings, pattern, fixed = FALSE) {
   # Get the match info
-  match_info <- regexpr(pattern, strings, perl = TRUE, fixed = fixed)
-  match_length <- attr(match_info, "match.length")
-  match_end <- match_info + match_length - 1L
+  matches <- regexpr(pattern, strings, perl = TRUE, fixed = fixed)
+  match_length <- attr(matches, "match.length")
+  match_end <- matches + match_length - 1L
 
-  no_match <- match_info == -1
-  match_info[no_match] <- NA_integer_
+  no_match <- matches == -1
+  matches[no_match] <- NA_integer_
   match_end[no_match] <- NA_integer_
 
-  matrix(c(match_info, match_end),
+  matrix(c(matches, match_end),
          ncol = 2,
          dimnames = list(NULL, c("start", "end")))
 }
@@ -114,22 +114,63 @@ str_locate_first <- function(strings, pattern, fixed = FALSE) {
 #' @export
 str_locate_all <- function(strings, pattern, fixed = FALSE) {
   find_matches_in_string <- function(strings) {
-    match_info <- gregexpr(pattern, strings, perl = TRUE, fixed = fixed)[[1]]
-    ends <- match_info + attr(match_info, "match.length") - 1L
+    matches <- gregexpr(pattern, strings, perl = TRUE, fixed = fixed)[[1]]
+    ends <- matches + attr(matches, "match.length") - 1L
 
     # If there are no matches, store as NA NA
-    if (all(match_info == -1L)) {
+    if (all(matches == -1L)) {
       return(matrix(NA_integer_,
                     ncol = 2,
                     nrow = 1,
                     dimnames = list(NULL, c("start", "end"))))
     }
 
-    cbind(start = match_info, end = ends)
+    cbind(start = matches, end = ends)
   }
 
-  matches <- lapply(strings, find_matches_in_string)
+  result <- lapply(strings, find_matches_in_string)
   return(matches)
+}
+
+#' @rdname str_locate
+#' @export
+str_locate_nth <- function(strings, pattern, n, fixed = FALSE) {
+  locate_nth_in_string <- function(string) {
+    matches  <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+    ends <- matches + attr(matches, "match.length") - 1L
+
+    # If there is no nth match, return NA NA
+    if (n > length(matches) || all(matches == -1L)) {
+      return(c(NA_integer_, NA_integer_))
+    } else {
+      return(c(matches[n], ends[n]))
+    }
+  }
+
+  result <- t(vapply(strings, locate_nth_in_string, integer(2)))
+  colnames(result) <- c("start", "end")
+  return(result)
+}
+
+#' @rdname str_locate
+#' @export
+str_locate_last <- function(strings, pattern, fixed = FALSE) {
+  locate_last_in_string <- function(string) {
+    matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+    ends <- matches + attr(matches, "match.length") - 1L
+
+    # If there are no matches, return NA NA
+    if (all(matches == -1L)) {
+      return(c(NA_integer_, NA_integer_))
+    } else {
+      last_index <- length(matches)
+      return(c(matches[last_index], ends[last_index]))
+    }
+  }
+
+  result <- t(vapply(strings, locate_last_in_string, integer(2)))
+  colnames(result) <- c("start", "end")
+  return(result)
 }
 
 # str_extract ---------------------------------------------------
