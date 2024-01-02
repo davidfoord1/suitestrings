@@ -64,6 +64,29 @@ test_that("str_locate_all handles empty string", {
                     matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end")))))
 })
 
+## str_locate_nth -----------------------------------------------
+
+test_that("str_locate_nth finds the correct nth match", {
+  strings <- c("banana", "apple apple", "no match here")
+  pattern <- "a"
+
+  # Test with a valid nth occurrence
+  expect_equal(str_locate_nth(strings, pattern, 2),
+               matrix(c(4, 4, 7, 7, NA_integer_, NA_integer_), ncol = 2, byrow = TRUE, dimnames = list(NULL, c("start", "end"))))
+
+  # Test with nth occurrence that doesn't exist
+  expect_equal(str_locate_nth(strings, pattern, 4),
+               matrix(c(NA_integer_, NA_integer_, NA_integer_, NA_integer_, NA_integer_, NA_integer_), ncol = 2, byrow = TRUE, dimnames = list(NULL, c("start", "end"))))
+})
+
+test_that("str_locate_nth handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_locate_nth("", "a", 1), matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))))
+
+  # Test with no pattern match
+  expect_equal(str_locate_nth("banana", "x", 1), matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))))
+})
+
 # str_extract ---------------------------------------------------
 ## str_extract_first -------------------------------------------
 
