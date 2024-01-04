@@ -3,11 +3,17 @@
 \name{str_remove_first}
 \alias{str_remove_first}
 \alias{str_remove_all}
+\alias{str_remove_nth}
+\alias{str_remove_last}
 \title{Remove Patterns from Strings}
 \usage{
 str_remove_first(strings, pattern, fixed = FALSE)
 
 str_remove_all(strings, pattern, fixed = FALSE)
+
+str_remove_nth(strings, pattern, n, fixed = FALSE)
+
+str_remove_last(strings, pattern, fixed = FALSE)
 }
 \arguments{
 \item{strings}{A character vector, where each element of the vector is a character string.}
@@ -18,6 +24,9 @@ By default, \code{pattern} is interpreted as a regular expression (regex). If th
 
 \item{fixed}{Logical; whether \code{pattern} should be matched exactly,
 treating regex special characters as regular  string characters. Default \code{FALSE}.}
+
+\item{n}{(\code{str_remove_nth} only) Integer, the nth occurrence of the pattern to replace.
+Negative values count back from the end.}
 }
 \value{
 A character vector of the same length as \code{strings}, with the specified pattern removed.
@@ -36,13 +45,19 @@ See R's \link{regexp} documentation for info on the regex implementation.
 For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 }
 \examples{
-str_remove_first("Hello world", "o")
-#> [1] "Hell world"
+string <- "carrot, car park, cable car"
 
-str_remove_all("Hello world", "o")
-#> [1] "Hell wrld"
+str_remove_first(string, "car")
+#> [1] "rot, car park, cable car"
+str_remove_nth(string, "car", 2)
+#> [1] "carrot,  park, cable car"
+str_remove_last(string, "car")
+#> [1] "carrot, car park, cable "
+str_remove_all(string, "car")
+#> [1] "rot,  park, cable "
 
 }
 \seealso{
-\code{\link{str_replace_first}}, \code{\link{str_replace_all}} for replacing patterns with specific text.
+\code{\link[=str_replace_all]{str_replace_all()}}  and family for replacing patterns with specific text.
+\code{str_remove}  functions are equivalent to calling those with \code{replacement = ""}
 }
