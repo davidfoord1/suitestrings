@@ -271,6 +271,24 @@ test_that("str_replace_nth handles edge cases correctly", {
   expect_equal(str_replace_nth("banana", "x", "X", 1), "banana")
 })
 
+## str_replace_last --------------------------------------------
+
+test_that("str_replace_last replaces the last match correctly", {
+  strings <- c("banana", "banana banana", "no match here")
+  pattern <- "na"
+
+  # Basic replacement
+  expect_equal(str_replace_last(strings, pattern, "NA"),
+               c("banaNA", "banana banaNA", "no match here"))
+})
+
+test_that("str_replace_last handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_replace_last("", "a", "A"), "")
+
+  # Test with no pattern match
+  expect_equal(str_replace_last("banana", "x", "X"), "banana")
+})
 
 # str_remove ----------------------------------------------------
 ## str_remove_first ----------------------------------------------
