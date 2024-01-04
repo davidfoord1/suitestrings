@@ -1,3 +1,18 @@
+# chr_detect ----------------------------------------------------
+
+#' @rdname str_detect
+#' @export
+chr_detect_any <- function(strings, pattern, fixed = FALSE) {
+  any(grepl(pattern, strings, perl = TRUE, fixed = fixed))
+}
+
+#' @rdname str_detect
+#' @export
+chr_detect_all <- function(strings, pattern, fixed = FALSE) {
+  all(grepl(pattern, strings, perl = TRUE, fixed = fixed))
+}
+
+
 #' Find matching indices in character vector
 #'
 #' @param strings

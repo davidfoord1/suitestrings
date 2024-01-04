@@ -9,6 +9,27 @@
 #' A single character string to be searched for in each element of `strings`.
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
+#'
+#' @return
+#' `str_detect()`:
+#' A logical vector equal in length to `strings`, indicating whether
+#' the pattern has been found in each of the strings.
+#'
+#' `str_detect_starts_with()` and `str_detect_ends_with()`:
+#' A logical vector equal in length to `strings`, indicating whether
+#' the pattern has been found at the start-of or end-of each strings,
+#' respectively.
+#'
+#' `chr_detect_any()`:
+#' A single logical value for whether the pattern occurs anywhere in
+#' a character vector.
+#'
+#' `chr_detect_all()`:
+#' A single logical value for whether the pattern occurs in every
+#' element of a character vector.
+#'
+#' @seealso [grepl()] which these functions wrap around.
+#'
 #' @param fixed
 #' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
@@ -26,10 +47,47 @@
 #' @rdname str_detect
 #'
 #' @examples
-#' str_detect_match(c("apple", "banana", "cherry"), "a")
+#' strings <- c("apple", "banana", "cherry")
+#'
+#' str_detect(strings, "a")
 #' #> [1]  TRUE  TRUE FALSE
-str_detect_match <- function(strings, pattern, fixed = FALSE) {
+#' str_detect_starts_with(strings, "a")
+#' #> [1]  TRUE FALSE FALSE
+#' str_detect_ends_with(strings, "a")
+#' #> [1] FALSE  TRUE FALSE
+#'
+#' chr_detect_any(strings, "a")
+#' #> [1] TRUE
+#' chr_detect_all(strings, "a")
+#' #> [1] FALSE
+str_detect <- function(strings, pattern, fixed = FALSE) {
   grepl(pattern, strings, perl = TRUE, fixed = fixed)
+}
+
+#' @rdname str_detect
+#' @export
+str_detect_starts_with <- function(strings, pattern, fixed = FALSE) {
+  if (fixed) {
+    # Escape all regex special characters in the literal string pattern
+    pattern <- gsub("([][{}()+*^$|\\\\?.])", "\\\\\\1", pattern)
+  }
+
+  # Prepend the start-of-line anchor for regex pattern
+  pattern <- paste0("^", pattern)
+  grepl(pattern, strings, perl = TRUE)
+}
+
+#' @rdname str_detect
+#' @export
+str_detect_ends_with <- function(strings, pattern, fixed = FALSE) {
+  if (fixed) {
+    # Escape all regex special characters in the literal string pattern
+    pattern <- gsub("([][{}()+*^$|\\\\?.])", "\\\\\\1", pattern)
+  }
+
+  # Prepend the start-of-line anchor for regex pattern
+  pattern <- paste0(pattern, "$")
+  grepl(pattern, strings, perl = TRUE)
 }
 
 # str_locate ----------------------------------------------------

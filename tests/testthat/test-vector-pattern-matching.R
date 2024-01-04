@@ -1,3 +1,20 @@
+
+# chr_detect_any ----------------------------------------------------
+
+test_that("chr_detect_any() identifies if any strings contain the pattern", {
+  strings <- c("apple", "banana", "cherry")
+
+  expect_equal(chr_detect_any(strings, "a"), TRUE)
+})
+
+# chr_detect_all ------------------------------------------------
+
+test_that("chr_detect_all() identifies if any strings contain the pattern", {
+  strings <- c("apple", "banana", "cherry")
+
+  expect_equal(chr_detect_all(strings, "a"), FALSE)
+})
+
 # str_which -----------------------------------------------------
 
 test_that("chr_which() identifies the matching indices in a character vector", {

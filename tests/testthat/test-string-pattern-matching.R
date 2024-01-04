@@ -1,10 +1,31 @@
 # str_detect ----------------------------------------------------
 
-test_that("str_detect_match() detects a pattern in a string", {
+
+## str_detect --------------------------------------------------
+
+test_that("str_detect() detects a pattern in a string", {
   strings <- c("apple", "banana", "cherry")
   pattern <- "a"
 
-  expect_equal(str_detect_match(strings, pattern), c(TRUE, TRUE, FALSE))
+  expect_equal(str_detect(strings, pattern), c(TRUE, TRUE, FALSE))
+})
+
+## str_detect_starts_with ---------------------------------------
+
+test_that("str_detect_starts_with() detects a pattern in a string", {
+  strings <- c("apple", "banana", "cherry")
+  pattern <- "a"
+
+  expect_equal(str_detect_starts_with(strings, pattern), c(TRUE, FALSE, FALSE))
+})
+
+# str_detect_ends_with ------------------------------------------
+
+test_that("str_detect_ends_with() detects a pattern in a string", {
+  strings <- c("apple", "banana", "cherry")
+  pattern <- "a"
+
+  expect_equal(str_detect_ends_with(strings, pattern), c(FALSE, TRUE, FALSE))
 })
 
 # str_locate ----------------------------------------------------
