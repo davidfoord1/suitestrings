@@ -338,6 +338,12 @@ str_extract_last <- function(strings, pattern, fixed = FALSE) {
 
 #' Replace parts of a string with new text.
 #'
+#' @description
+#' `str_replace_first()`, `str_replace_nth()` and `str_replace_last()`:
+#' Replace the specified pattern occurrence in each string.
+#'
+#' `str_replace_all()`
+#' Replace every pattern occurrence in each string.
 #' @param strings
 #' A character vector, where each element of the vector is a character string.
 #' @param pattern
@@ -345,6 +351,8 @@ str_extract_last <- function(strings, pattern, fixed = FALSE) {
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
 #' @param replacement A single string containing the text to replace the pattern with.
+#' @param n (`str_replace_nth` only) Integer, the nth occurrence of the pattern to replace.
+#' Negative values count back from the end.
 #' @param fixed
 #' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
@@ -357,18 +365,30 @@ str_extract_last <- function(strings, pattern, fixed = FALSE) {
 #' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 #'
 #' @return
-#' `str_replace()` Returns an altered character vector of equal length to `strings`,
-#' with the first match in each string replaced.
+#' `str_replace_first()`, `str_replace_nth()` and `str_replace_last()`:
+#' Returns an altered character vector of equal length to `strings`,
+#' with the first, nth and last pattern occurrence, respectively,
+#' replaced by the `replacement` text.
 #'
 #' `str_replace_all()` Returns an altered character vector of equal length to `strings`,
-#' with every match in each string replaced. Regular expression matches are non-overlapping.
+#' with every match in each string replaced.
+#'
+#' @seealso
+#' [sub()] and [gsub()] for the base replacement functions that `_first` and `_all` wrap around, respectively.
+#'
+#' [regmatches<-] for the base in-place replacement function that `_nth` and `_last` wrap around.
 #'
 #' @examples
-#' str_replace_first("Hello world!", "o", "ooo")
-#' #> [1] "Hellooo world!"
+#' strings <- c("banana", "banana banana", "no match here")
 #'
-#' str_replace_all("Hello world!", "o", "ooo")
-#' #> [1] "Hellooo wooorld!"
+#' str_replace_first(strings, "na", "NA")
+#' #> [1] "baNAna"        "baNAna banana" "no match here"
+#' str_replace_nth(strings, "na", "NA", 2)
+#' #> [1] "banaNA"        "banaNA banana" "no match here"
+#' str_replace_last(strings, "na", "NA")
+#' #> [1] "banaNA"        "banana banaNA" "no match here"
+#' str_replace_all(strings, "na", "NA")
+#' #> [1] "baNANA"        "baNANA baNANA" "no match here"
 #'
 #' @rdname str_replace
 #' @export
@@ -412,6 +432,8 @@ str_replace_nth <- function(strings, pattern, replacement, n, fixed = FALSE) {
   strings
 }
 
+#' @rdname str_replace
+#' @export
 str_replace_last <- function(strings, pattern, replacement, fixed = FALSE) {
   replace_last_in_string <- function(string) {
     # There is no direct base equivalent function for _nth

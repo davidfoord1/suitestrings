@@ -29,7 +29,7 @@ By default, \code{pattern} is interpreted as a regular expression (regex). If th
 \item{fixed}{Logical; whether \code{pattern} should be matched exactly,
 treating regex special characters as regular  string characters. Default \code{FALSE}.}
 
-\item{n}{(\code{str_split_nth} only) Integer, the index of substring to extract
+\item{n}{(\code{str_split_nth} only) Integer, the index of a substring to extract
 from a split string. Negative values count back from the end.}
 }
 \value{
