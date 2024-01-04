@@ -28,7 +28,6 @@
 #' A single logical value for whether the pattern occurs in every
 #' element of a character vector.
 #'
-#'
 #' @seealso [grepl()] which these functions wrap around.
 #'
 #' @param fixed
