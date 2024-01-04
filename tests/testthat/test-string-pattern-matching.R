@@ -244,6 +244,34 @@ test_that("str_replace_all handles empty replacement", {
 })
 
 
+## str_replace_nth ----------------------------------------------
+
+test_that("str_replace_nth replaces the correct nth match", {
+  strings <- c("banana", "banana banana", "no match here")
+  pattern <- "na"
+
+  # Basic replacement
+  expect_equal(str_replace_nth(strings, pattern, "NA", 2),
+               c("banaNA", "banaNA banana", "no match here"))
+
+  # No such nth match
+  expect_equal(str_replace_nth(strings, pattern, "NA", 4),
+               c("banana", "banana banaNA", "no match here"))
+
+  # Negative indexing (counting from the end)
+  expect_equal(str_replace_nth(strings, pattern, "NA", -1),
+               c("banaNA", "banana banaNA", "no match here"))
+})
+
+test_that("str_replace_nth handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_replace_nth("", "a", "A", 1), "")
+
+  # Test with no pattern match
+  expect_equal(str_replace_nth("banana", "x", "X", 1), "banana")
+})
+
+
 # str_remove ----------------------------------------------------
 ## str_remove_first ----------------------------------------------
 
