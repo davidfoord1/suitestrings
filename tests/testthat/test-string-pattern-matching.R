@@ -347,6 +347,39 @@ test_that("str_split_first handles strings with no delimiter", {
   expect_equal(str_split_first(input, ","), input)
 })
 
+## str_split_nth ---------------------------------------------
+
+test_that("str_split_nth splits at the nth occurrence correctly", {
+  expect_equal(str_split_nth("a,b,c", ",", 2), "b")
+  expect_equal(str_split_nth("hello world", " ", 2), "world")
+})
+
+test_that("str_split_nth handles no matches", {
+  expect_equal(str_split_nth("hello", ",", 1), "hello")
+  expect_equal(str_split_nth("hello", ",", 2), NA_character_)
+})
+
+test_that("str_split_nth handles empty pattern", {
+  expect_equal(str_split_nth("abc", "", 2), "b")
+})
+
+test_that("str_split_nth handles empty string", {
+  expect_equal(str_split_nth("", ",", 1), NA_character_)
+})
+
+test_that("str_split_nth handles multiple strings", {
+  expect_equal(str_split_nth(c("a,b,c", "d,e,f", "g,h"), ",", 2), c("b", "e", "h"))
+})
+
+test_that("str_split_nth handles strings with no delimiter", {
+  input <- c("apple", "banana", "cherry")
+  expect_equal(str_split_nth(input, ",", 1), input)
+})
+
+test_that("str_split_nth handles negative n", {
+  expect_equal(str_split_nth(c("a,b,c", "d,e,f", "g,h"), ",", -1), c("c", "f", "h"))
+})
+
 ## str_split_last ---------------------------------------------
 
 test_that("str_split_last splits to the last occurrence correctly", {
