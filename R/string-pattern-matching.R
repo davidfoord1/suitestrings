@@ -382,6 +382,36 @@ str_replace_all <- function(strings, pattern, replacement, fixed = FALSE) {
   gsub(pattern, replacement, strings, perl = TRUE, fixed = fixed)
 }
 
+#' @rdname str_replace
+#' @export
+str_replace_nth <- function(strings, pattern, replacement, n, fixed = FALSE) {
+  replace_nth_in_string <- function(string) {
+    # There is no direct base equivalent function for _nth
+    # So we select all matches
+    matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+
+    len <- length(matches)
+    # Handle negative indexes as counting back from the end
+    index <- if (n > 0) n else len + n + 1
+
+    # Just return the string if the index is larger than the number of matches
+    if(abs(index) > len) return(string)
+
+    nth_match <- matches[[index]]
+    attr(nth_match, "match.length") <- attr(matches, "match.length")[[index]]
+
+    if (matches[index] != -1) {
+      regmatches(string, nth_match) <- replacement
+    }
+
+    return(string)
+  }
+
+  strings <- vapply(strings, replace_nth_in_string, character(1))
+  names(strings) <- NULL
+  strings
+}
+
 # str_remove ----------------------------------------------------
 
 #' Remove Patterns from Strings
