@@ -346,3 +346,31 @@ test_that("str_split_first handles strings with no delimiter", {
   input <- c("apple", "banana", "cherry")
   expect_equal(str_split_first(input, ","), input)
 })
+
+## str_split_last ---------------------------------------------
+
+test_that("str_split_last splits to the last occurrence correctly", {
+  expect_equal(str_split_last("a,b,c", ","), "c")
+  expect_equal(str_split_last("hello world", " "), "world")
+})
+
+test_that("str_split_last handles no matches", {
+  expect_equal(str_split_last("hello", ","), "hello")
+})
+
+test_that("str_split_last handles empty pattern", {
+  expect_equal(str_split_last("abc", ""), "c")
+})
+
+test_that("str_split_last handles empty string", {
+  expect_equal(str_split_last("", ","), NA_character_)
+})
+
+test_that("str_split_last handles multiple strings", {
+  expect_equal(str_split_last(c("a,b,c", "d,e,f", "g,h"), ","), c("c", "f", "h"))
+})
+
+test_that("str_split_last handles strings with no delimiter", {
+  input <- c("apple", "banana", "cherry")
+  expect_equal(str_split_last(input, ","), input)
+})
