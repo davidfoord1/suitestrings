@@ -412,6 +412,30 @@ str_replace_nth <- function(strings, pattern, replacement, n, fixed = FALSE) {
   strings
 }
 
+str_replace_last <- function(strings, pattern, replacement, fixed = FALSE) {
+  replace_last_in_string <- function(string) {
+    # There is no direct base equivalent function for _nth
+    # So we select all matches
+    matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+
+    len <- length(matches)
+    # Handle negative indexes as counting back from the end
+
+    last_match <- matches[[len]]
+    attr(last_match, "match.length") <- attr(matches, "match.length")[[len]]
+
+    if (matches[len] != -1) {
+      regmatches(string, last_match) <- replacement
+    }
+
+    return(string)
+  }
+
+  strings <- vapply(strings, replace_last_in_string, character(1))
+  names(strings) <- NULL
+  strings
+}
+
 # str_remove ----------------------------------------------------
 
 #' Remove Patterns from Strings
