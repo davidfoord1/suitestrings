@@ -439,11 +439,17 @@ str_remove_all <- function(strings, pattern, fixed = FALSE) {
 #' Split strings by a pattern
 #'
 #' @description
-#' `str_split_all()` splits each string in the input vector into substrings based on a pattern.
+#' `str_split_first()`, `str_split_nth()` and `str_split_last()`:
+#' take the first, nth and last result of splitting each string in
+#' the input vector based on a pattern delimiter.
 #'
-#' `chr_split_all()` splits all strings in the input vector and concatenates the results into a single character vector.
+#' `str_split_all()` splits each string in the input vector into substrings
+#' based on a pattern.
 #'
-#' `str_split_first()` takes the first result of splitting each string in the input vector based on a pattern.
+#' `chr_split_all()` splits all strings in the input vector and
+#' returns the substrings in a single character vector.
+#'
+#'
 #'
 #' @param strings
 #' A character vector, where each element of the vector is a character string.
@@ -451,6 +457,9 @@ str_remove_all <- function(strings, pattern, fixed = FALSE) {
 #' A single character string to be searched for in each element of `strings`.
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
+#' @param n
+#' (`str_split_nth` only) Integer, the index of a substring to extract
+#' from a split string. Negative values count back from the end.
 #' @param fixed
 #' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
@@ -463,11 +472,20 @@ str_remove_all <- function(strings, pattern, fixed = FALSE) {
 #' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 #'
 #' @return
-#' `str_split_all()`: A list of the same length as `strings`, with each element being a vector of substrings obtained by splitting the corresponding element of `strings`.
+#' `str_split_first()`, `str_split_nth()` and `str_split_last()`:
+#' A character vector the same length as `strings`,
+#' with each element being the first, nth or last substring obtained
+#' by splitting the corresponding element of `strings`.
 #'
-#' `chr_split_all()`: A single character vector containing all substrings obtained by splitting each element of `strings` and concatenating them.
+#' `str_split_all()`: A list of the same length as `strings`,
+#' with each element being a character vector of substrings obtained by
+#' splitting the corresponding element of `strings`.
 #'
-#' `str_split_first()`: A character vector the same length as `strings`, with each element being the first substring obtained by splitting the corresponding element of `strings`.
+#' `chr_split_all()`: A single character vector containing all substrings
+#' obtained by splitting each element of `strings`. Equivalent of
+#' using `unlist()` on the output of `str_split_all()`.
+#'
+#' @seealso [strsplit()] which these functions wrap around.
 #'
 #' @examples
 #'
@@ -486,9 +504,6 @@ str_remove_all <- function(strings, pattern, fixed = FALSE) {
 #' #> [1] "abc" "def" "ghi"
 #' chr_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #' #> [1] "one"   "two"   "three" "abc"   "def"   "ghi"
-#'
-#' @seealso
-#'  for the base R function these wrap around.
 #'
 #' @rdname str_split
 #' @export
@@ -529,4 +544,3 @@ str_split_last <- function(strings, pattern, fixed = FALSE) {
          \(string) ifelse(length(string) > 0, string[[length(string)]], string),
          FUN.VALUE = character(1))
 }
-
