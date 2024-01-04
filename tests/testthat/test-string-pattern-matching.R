@@ -341,6 +341,33 @@ test_that("str_remove_all handles repeated patterns", {
   expect_equal(str_remove_all("abcabcabc", "abc"), "")
 })
 
+## str_remove_nth ----------------------------------------------
+
+test_that("str_remove_nth removes the correct nth match", {
+  strings <- c("banana", "banana banana", "no match here")
+  pattern <- "na"
+
+  # Removing the nth occurrence
+  expect_equal(str_remove_nth(strings, pattern, 2),
+               c("bana", "bana banana", "no match here"))
+
+  # No such nth match
+  expect_equal(str_remove_nth(strings, pattern, 4),
+               c("banana", "banana bana", "no match here"))
+
+  # Negative indexing (counting from the end)
+  expect_equal(str_remove_nth(strings, pattern, -1),
+               c("bana", "banana bana", "no match here"))
+})
+
+test_that("str_remove_nth handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_remove_nth("", "a", 1), "")
+
+  # Test with no pattern match
+  expect_equal(str_remove_nth("banana", "x", 1), "banana")
+})
+
 # str_split -----------------------------------------------------
 ## str_split_all -----------------------------------------------
 
