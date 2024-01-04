@@ -513,7 +513,7 @@ str_remove_all <- function(strings, pattern, fixed = FALSE) {
 #' @rdname str_remove
 #' @export
 str_remove_nth <- function(strings, pattern, n, fixed = FALSE) {
-  replace_nth_in_string <- function(string) {
+  remove_nth_in_string <- function(string) {
     # There is no direct base equivalent function for _nth
     # So we select all matches
     matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
@@ -528,18 +528,43 @@ str_remove_nth <- function(strings, pattern, n, fixed = FALSE) {
     nth_match <- matches[[index]]
     attr(nth_match, "match.length") <- attr(matches, "match.length")[[index]]
 
-    if (matches[index] != -1) {
+    if (matches[[index]] != -1) {
       regmatches(string, nth_match) <- ""
     }
 
     return(string)
   }
 
-  strings <- vapply(strings, replace_nth_in_string, character(1))
+  strings <- vapply(strings, remove_nth_in_string, character(1))
   names(strings) <- NULL
   strings
 }
 
+#' @rdname str_remove
+#' @export
+str_remove_last <- function(strings, pattern, fixed = FALSE) {
+  remove_last_in_string <- function(string) {
+    # There is no direct base equivalent function for _nth
+    # So we select all matches
+    matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+
+    len <- length(matches)
+    # Handle negative indexes as counting back from the end
+
+    last_match <- matches[[len]]
+    attr(last_match, "match.length") <- attr(matches, "match.length")[[len]]
+
+      if (matches[[len]] != -1) {
+      regmatches(string, last_match) <- ""
+    }
+
+    return(string)
+  }
+
+  strings <- vapply(strings, remove_last_in_string, character(1))
+  names(strings) <- NULL
+  strings
+}
 # str_split -----------------------------------------------------
 
 #' Split strings by a pattern
