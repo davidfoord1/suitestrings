@@ -511,9 +511,12 @@ str_split_first <- function(strings, pattern, fixed = FALSE) {
 #' @export
 str_split_nth <- function(strings, pattern, n, fixed = FALSE) {
   split_string <- strsplit(strings, pattern, perl = TRUE, fixed = fixed)
+
   vapply(split_string,
          function(string) {
-           ifelse(length(string) >= n, string[[n]], string)
+           len <- length(string)
+           index <- if (n > 0) n else len + n + 1
+           ifelse(length(string) >= abs(index), string[[index]], NA_character_)
          },
          FUN.VALUE = character(1))
 }
