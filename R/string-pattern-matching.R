@@ -13,8 +13,21 @@
 #' @examples
 #' str_detect_match(c("apple", "banana", "cherry"), "a")
 #' #> [1]  TRUE  TRUE FALSE
-str_detect_match <- function(strings, pattern, fixed = FALSE) {
+str_detect <- function(strings, pattern, fixed = FALSE) {
   grepl(pattern, strings, perl = TRUE, fixed = fixed)
+}
+
+#' @rdname str_detect
+#' @export
+str_detect_starts_with <- function(strings, pattern, fixed = FALSE) {
+  if (fixed) {
+    # Escape all regex special characters in the literal string pattern
+    pattern <- gsub("([][{}()+*^$|\\\\?.])", "\\\\\\1", pattern)
+  }
+
+  # Prepend the start-of-line anchor for regex pattern
+  pattern <- paste0("^", pattern)
+  grepl(pattern, strings, perl = TRUE)
 }
 
 # str_locate ----------------------------------------------------
