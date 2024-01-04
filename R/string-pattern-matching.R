@@ -472,6 +472,8 @@ str_replace_last <- function(strings, pattern, replacement, fixed = FALSE) {
 #' A single character string to be searched for in each element of `strings`.
 #' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
 #' `pattern` will be treated as a literal string to be matched exactly.
+#' @param n (`str_remove_nth` only) Integer, the nth occurrence of the pattern to replace.
+#' Negative values count back from the end.
 #' @param fixed
 #' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
@@ -489,14 +491,20 @@ str_replace_last <- function(strings, pattern, replacement, fixed = FALSE) {
 #' For `str_remove_all()`, all occurrences of the pattern in each string are removed.
 #'
 #' @examples
-#' str_remove_first("Hello world", "o")
-#' #> [1] "Hell world"
+#' string <- "carrot, car park, cable car"
 #'
-#' str_remove_all("Hello world", "o")
-#' #> [1] "Hell wrld"
+#' str_remove_first(string, "car")
+#' #> [1] "rot, car park, cable car"
+#' str_remove_nth(string, "car", 2)
+#' #> [1] "carrot,  park, cable car"
+#' str_remove_last(string, "car")
+#' #> [1] "carrot, car park, cable "
+#' str_remove_all(string, "car")
+#' #> [1] "rot,  park, cable "
 #'
 #' @seealso
-#' \code{\link{str_replace_first}}, \code{\link{str_replace_all}} for replacing patterns with specific text.
+#' [str_replace_all()]  and family for replacing patterns with specific text.
+#' `str_remove`  functions are equivalent to calling those with `replacement = ""`
 #'
 #' @rdname str_remove
 #' @export
@@ -565,6 +573,7 @@ str_remove_last <- function(strings, pattern, fixed = FALSE) {
   names(strings) <- NULL
   strings
 }
+
 # str_split -----------------------------------------------------
 
 #' Split strings by a pattern
