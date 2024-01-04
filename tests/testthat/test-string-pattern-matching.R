@@ -368,6 +368,25 @@ test_that("str_remove_nth handles edge cases correctly", {
   expect_equal(str_remove_nth("banana", "x", 1), "banana")
 })
 
+## str_remove_last() -------------------------------------------
+
+test_that("str_remove_last removes the last match correctly", {
+  strings <- c("banana", "banana banana", "no match here")
+  pattern <- "na"
+
+  # Removing the last occurrence
+  expect_equal(str_remove_last(strings, pattern),
+               c("bana", "banana bana", "no match here"))
+})
+
+test_that("str_remove_last handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_remove_last("", "a"), "")
+
+  # Test with no pattern match
+  expect_equal(str_remove_last("banana", "x"), "banana")
+})
+
 # str_split -----------------------------------------------------
 ## str_split_all -----------------------------------------------
 
