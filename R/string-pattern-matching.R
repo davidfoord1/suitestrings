@@ -3,16 +3,51 @@
 #' @description
 #' These functions search for patterns in strings
 #'
-#' @param strings A character vector of strings to search in.
-#' @param pattern The pattern to look for.
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param pattern
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
+#' `pattern` will be treated as a literal string to be matched exactly.
 #'
-#' @return A logical vector indicating the presence of each pattern in a string.
+#' @return
+#' `str_detect()`:
+#' A logical vector equal in length to `strings`, indicating whether
+#' the pattern has been found in each of the strings.
+#'
+#' `str_detect_starts_with()` and `str_detect_ends_with()`:
+#' A logical vector equal in length to `strings`, indicating whether
+#' the pattern has been found at the start-of or end-of each strings,
+#' respectively.
+#'
+#' `chr_detect_any()`:
+#' A single logical value for whether the pattern occurs anywhere in
+#' a character vector.
+#'
+#' `chr_detect_all()`:
+#' A single logical value for whether the pattern occurs in every
+#' element of a character vector.
+#'
+#'
+#' @seealso [grepl()] which these functions wrap around.
+#'
 #' @export
 #' @rdname str_detect
 #'
 #' @examples
-#' str_detect_match(c("apple", "banana", "cherry"), "a")
+#' strings <- c("apple", "banana", "cherry")
+#'
+#' str_detect(strings, "a")
 #' #> [1]  TRUE  TRUE FALSE
+#' str_detect_starts_with(strings, "a")
+#' #> [1]  TRUE FALSE FALSE
+#' str_detect_ends_with(strings, "a")
+#' #> [1] FALSE  TRUE FALSE
+#'
+#' chr_detect_any(strings, "a")
+#' #> [1] TRUE
+#' chr_detect_all(strings, "a")
+#' #> [1] FALSE
 str_detect <- function(strings, pattern, fixed = FALSE) {
   grepl(pattern, strings, perl = TRUE, fixed = fixed)
 }
