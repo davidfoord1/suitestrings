@@ -31,6 +31,19 @@
 #'
 #' @seealso [grepl()] which these functions wrap around.
 #'
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
+#'
+#' @return A logical vector indicating the presence of each pattern in a string.
+#'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
+#'
 #' @export
 #' @rdname str_detect
 #'
@@ -85,15 +98,37 @@ str_detect_ends_with <- function(strings, pattern, fixed = FALSE) {
 #' @description
 #' These functions find occurrences of a pattern in strings.
 #'
-#' `str_locate_first()` finds the first occurrence of a pattern in a string.
-#' `str_locate_all()` finds all occurrences of a pattern in each string of the input vector.
+#' `str_locate_first()`, `str_locate_nth()` and `str_locate_last()`
+#' find the specified occurrence of a pattern in each string.
 #'
-#' @param strings A character vector of strings to search in.
-#' @param pattern A character string containing a regular expression.
+#' `str_locate_all()` finds all occurrences of a pattern in each string.
 #'
-#' @return `str_locate_first()` returns a two-column matrix with the start and end positions
-#' of the first match. There is a row for each string. `str_locate_all()` returns a list of matrices.
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param pattern
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
+#' `pattern` will be treated as a literal string to be matched exactly.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
+#' @param n `str_locate_nth()` only: Integer, the nth occurrence of the pattern to extract.
+#' Negative values count back from the end.
+#'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
+#'
+#' @return `str_locate_first()`, `str_locate_nth()` and `str_locate_last()`:
+#' return a two-column matrix with the start and end positions
+#' of the first, nth and last match respectively. There is a row for each string.
+#'
+#' `str_locate_all()`: returns a list of matrices.
 #' There is a matrix for each string and a row for each match.
+#'
 #' If no match is found, NA values are returned.
 #'
 #' @examples
@@ -115,29 +150,49 @@ str_detect_ends_with <- function(strings, pattern, fixed = FALSE) {
 #' #> [1,]     9  13
 #' str_locate_all(c("Hello world", "Goodbye world"), "o")
 #' #> [[1]]
-#' #> start end
+#' #>      start end
 #' #> [1,]     5   5
 #' #> [2,]     8   8
 #' #>
 #' #> [[2]]
-#' #> start end
+#' #>      start end
 #' #> [1,]     2   2
 #' #> [2,]     3   3
 #' #> [3,]    10  10
+#'
+#' str_locate_nth("Hello world", "world", 2)
+#' #>      start end
+#' #> [1,]    NA  NA
+#' str_locate_nth(c("Hello world", "Goodbye world"), "o", 2)
+#' #>      start end
+#' #> [1,]     8   8
+#' #> [2,]     3   3
+#'
+#' str_locate_last("Hello world", "world")
+#' #>      start end
+#' #> [1,]     7  11
+#' str_locate_last(c("Hello world", "Goodbye world"), "o")
+#' #>      start end
+#' #> [1,]     8   8
+#' #> [2,]    10  10
+#'
+#' @seealso
+#' [regexpr()] and [gregexpr()] to locate matches in base R. The form is
+#' different, with integer start positions and match length as an attribute.
 #'
 #' @rdname str_locate
 #' @export
 str_locate_first <- function(strings, pattern, fixed = FALSE) {
   # Get the match info
-  match_info <- regexpr(pattern, strings, perl = TRUE, fixed = fixed)
-  match_length <- attr(match_info, "match.length")
-  match_end <- match_info + match_length - 1L
+  matches <- regexpr(pattern, strings, perl = TRUE, fixed = fixed)
+  match_length <- attr(matches, "match.length")
+  match_end <- matches + match_length - 1L
 
-  no_match <- match_info == -1
-  match_info[no_match] <- NA_integer_
+  no_match <- matches == -1
+  matches[no_match] <- NA_integer_
   match_end[no_match] <- NA_integer_
 
-  matrix(c(match_info, match_end),
+  matrix(c(matches, match_end),
          ncol = 2,
          dimnames = list(NULL, c("start", "end")))
 }
@@ -146,22 +201,68 @@ str_locate_first <- function(strings, pattern, fixed = FALSE) {
 #' @export
 str_locate_all <- function(strings, pattern, fixed = FALSE) {
   find_matches_in_string <- function(strings) {
-    match_info <- gregexpr(pattern, strings, perl = TRUE, fixed = fixed)[[1]]
-    ends <- match_info + attr(match_info, "match.length") - 1L
+    matches <- gregexpr(pattern, strings, perl = TRUE, fixed = fixed)[[1]]
+    ends <- matches + attr(matches, "match.length") - 1L
 
     # If there are no matches, store as NA NA
-    if (all(match_info == -1L)) {
+    if (all(matches == -1L)) {
       return(matrix(NA_integer_,
                     ncol = 2,
                     nrow = 1,
                     dimnames = list(NULL, c("start", "end"))))
     }
 
-    cbind(start = match_info, end = ends)
+    cbind(start = matches, end = ends)
   }
 
-  matches <- lapply(strings, find_matches_in_string)
-  return(matches)
+  result <- lapply(strings, find_matches_in_string)
+  return(result)
+}
+
+#' @rdname str_locate
+#' @export
+str_locate_nth <- function(strings, pattern, n, fixed = FALSE) {
+  locate_nth_in_string <- function(string) {
+    matches  <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+    ends <- matches + attr(matches, "match.length") - 1L
+
+    len <- length(matches)
+    index <- if (n > 0) n else len + n + 1
+
+    # If there is no nth match, return NA NA
+    if (index > length(matches) || all(matches == -1L)) {
+      return(c(NA_integer_, NA_integer_))
+    } else {
+      return(c(matches[index], ends[index]))
+    }
+  }
+
+  result <- t(vapply(strings, locate_nth_in_string, integer(2)))
+  rownames(result) <- NULL
+  colnames(result) <- c("start", "end")
+  return(result)
+}
+
+#' @rdname str_locate
+#' @export
+str_locate_last <- function(strings, pattern, fixed = FALSE) {
+  locate_last_in_string <- function(string) {
+    matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+    ends <- matches + attr(matches, "match.length") - 1L
+
+    # If there are no matches, return NA NA
+    if (all(matches == -1L)) {
+      return(c(NA_integer_, NA_integer_))
+    } else {
+      last_index <- length(matches)
+      return(c(matches[last_index], ends[last_index]))
+    }
+  }
+
+  result <- t(vapply(strings, locate_last_in_string, integer(2)))
+  rownames(result) <- NULL
+  colnames(result) <- c("start", "end")
+  return(result)
 }
 
 # str_extract ---------------------------------------------------
@@ -189,7 +290,8 @@ str_locate_all <- function(strings, pattern, fixed = FALSE) {
 #' `pattern` will be treated as a literal string to be matched exactly.
 #' @param n (`str_extract_nth` only) Integer, the nth occurrence of the pattern to extract.
 #' Negative values count back from the end.
-#' @param fixed Logical; whether `pattern` should be matched exactly,
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
 #' treating regex special characters as regular  string characters. Default `FALSE`.
 #'
 #' @return
@@ -209,11 +311,13 @@ str_locate_all <- function(strings, pattern, fixed = FALSE) {
 #'
 #' @details
 #' These functions are built using the base R regular expression functions.
-#' The regex used in `{suitestrings}` are based on those used by the Perl language.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
 #' This is achieved by setting `perl = TRUE` in the underlying base functions.
-#' See R's \code{\link{base::regex}} documentation for info on the regex implementation.
-#' For complete syntax details of Perl-compatible Regular Expressions (PCRE),
-#' consult the documentation at \link{https://perldoc.perl.org/perlre}
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
+#'
+#' @seealso
+#' [regmatches()] for base R matched substring extraction.
 #'
 #' @examples
 #' str_extract_first(c("mat", "bat", "pig", "cat-in-a-hat"), ".at")
@@ -293,26 +397,57 @@ str_extract_last <- function(strings, pattern, fixed = FALSE) {
 
 #' Replace parts of a string with new text.
 #'
-#' @param strings A character vector. Each element of this vector is a string that the function will process.
-#' @param pattern A single character string containing a regular expression (regex) pattern to match against the elements in `strings`.
-#' The regex used in `{suitestrings}` are Perl-like, for the extended features and syntax.
-#' This is achieved by setting `perl = TRUE, fixed = fixed` in the underlying base R pattern matching functions.
-#' See R's \code{\link{regexp}} documentation for more details.
+#' @description
+#' `str_replace_first()`, `str_replace_nth()` and `str_replace_last()`:
+#' Replace the specified pattern occurrence in each string.
+#'
+#' `str_replace_all()`
+#' Replace every pattern occurrence in each string.
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param pattern
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
+#' `pattern` will be treated as a literal string to be matched exactly.
 #' @param replacement A single string containing the text to replace the pattern with.
+#' @param n (`str_replace_nth` only) Integer, the nth occurrence of the pattern to replace.
+#' Negative values count back from the end.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
+#'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 #'
 #' @return
-#' `str_replace()` Returns an altered character vector of equal length to `strings`,
-#' with the first match in each string replaced.
+#' `str_replace_first()`, `str_replace_nth()` and `str_replace_last()`:
+#' Returns an altered character vector of equal length to `strings`,
+#' with the first, nth and last pattern occurrence, respectively,
+#' replaced by the `replacement` text.
 #'
 #' `str_replace_all()` Returns an altered character vector of equal length to `strings`,
-#' with every match in each string replaced. Regular expression matches are non-overlapping.
+#' with every match in each string replaced.
+#'
+#' @seealso
+#' [sub()] and [gsub()] for the base replacement functions that `_first` and `_all` wrap around, respectively.
+#'
+#' [regmatches<-] for the base in-place replacement function that `_nth` and `_last` wrap around.
 #'
 #' @examples
-#' str_replace_first("Hello world!", "o", "ooo")
-#' #> [1] "Hellooo world!"
+#' strings <- c("banana", "banana banana", "no match here")
 #'
-#' str_replace_all("Hello world!", "o", "ooo")
-#' #> [1] "Hellooo wooorld!"
+#' str_replace_first(strings, "na", "NA")
+#' #> [1] "baNAna"        "baNAna banana" "no match here"
+#' str_replace_nth(strings, "na", "NA", 2)
+#' #> [1] "banaNA"        "banaNA banana" "no match here"
+#' str_replace_last(strings, "na", "NA")
+#' #> [1] "banaNA"        "banana banaNA" "no match here"
+#' str_replace_all(strings, "na", "NA")
+#' #> [1] "baNANA"        "baNANA baNANA" "no match here"
 #'
 #' @rdname str_replace
 #' @export
@@ -326,6 +461,62 @@ str_replace_all <- function(strings, pattern, replacement, fixed = FALSE) {
   gsub(pattern, replacement, strings, perl = TRUE, fixed = fixed)
 }
 
+#' @rdname str_replace
+#' @export
+str_replace_nth <- function(strings, pattern, replacement, n, fixed = FALSE) {
+  replace_nth_in_string <- function(string) {
+    # There is no direct base equivalent function for _nth
+    # So we select all matches
+    matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+
+    len <- length(matches)
+    # Handle negative indexes as counting back from the end
+    index <- if (n > 0) n else len + n + 1
+
+    # Just return the string if the index is larger than the number of matches
+    if(abs(index) > len) return(string)
+
+    nth_match <- matches[[index]]
+    attr(nth_match, "match.length") <- attr(matches, "match.length")[[index]]
+
+    if (matches[index] != -1) {
+      regmatches(string, nth_match) <- replacement
+    }
+
+    return(string)
+  }
+
+  strings <- vapply(strings, replace_nth_in_string, character(1))
+  names(strings) <- NULL
+  strings
+}
+
+#' @rdname str_replace
+#' @export
+str_replace_last <- function(strings, pattern, replacement, fixed = FALSE) {
+  replace_last_in_string <- function(string) {
+    # There is no direct base equivalent function for _nth
+    # So we select all matches
+    matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+
+    len <- length(matches)
+    # Handle negative indexes as counting back from the end
+
+    last_match <- matches[[len]]
+    attr(last_match, "match.length") <- attr(matches, "match.length")[[len]]
+
+    if (matches[len] != -1) {
+      regmatches(string, last_match) <- replacement
+    }
+
+    return(string)
+  }
+
+  strings <- vapply(strings, replace_last_in_string, character(1))
+  names(strings) <- NULL
+  strings
+}
+
 # str_remove ----------------------------------------------------
 
 #' Remove Patterns from Strings
@@ -334,11 +525,24 @@ str_replace_all <- function(strings, pattern, replacement, fixed = FALSE) {
 #' `str_remove_first()` removes the first occurrence of a pattern in each string.
 #' `str_remove_all()` removes all occurrences of a pattern in each string.
 #'
-#' @param strings A character vector. Each element of this vector is a string that the function will process.
-#' @param pattern A single character string containing a regular expression (regex) pattern to match against the elements in `strings`.
-#' The regex used in `{suitestrings}` are Perl-like, for the extended features and syntax.
-#' This is achieved by setting `perl = TRUE, fixed = fixed` in the underlying base R pattern matching functions.
-#' See R's \code{\link{regexp}} documentation for more details.
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param pattern
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
+#' `pattern` will be treated as a literal string to be matched exactly.
+#' @param n (`str_remove_nth` only) Integer, the nth occurrence of the pattern to replace.
+#' Negative values count back from the end.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
+#'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 #'
 #' @return
 #' A character vector of the same length as `strings`, with the specified pattern removed.
@@ -346,14 +550,20 @@ str_replace_all <- function(strings, pattern, replacement, fixed = FALSE) {
 #' For `str_remove_all()`, all occurrences of the pattern in each string are removed.
 #'
 #' @examples
-#' str_remove_first("Hello world", "o")
-#' #> [1] "Hell world"
+#' string <- "carrot, car park, cable car"
 #'
-#' str_remove_all("Hello world", "o")
-#' #> [1] "Hell wrld"
+#' str_remove_first(string, "car")
+#' #> [1] "rot, car park, cable car"
+#' str_remove_nth(string, "car", 2)
+#' #> [1] "carrot,  park, cable car"
+#' str_remove_last(string, "car")
+#' #> [1] "carrot, car park, cable "
+#' str_remove_all(string, "car")
+#' #> [1] "rot,  park, cable "
 #'
 #' @seealso
-#' \code{\link{str_replace_first}}, \code{\link{str_replace_all}} for replacing patterns with specific text.
+#' [str_replace_all()]  and family for replacing patterns with specific text.
+#' `str_remove`  functions are equivalent to calling those with `replacement = ""`
 #'
 #' @rdname str_remove
 #' @export
@@ -367,46 +577,132 @@ str_remove_all <- function(strings, pattern, fixed = FALSE) {
   gsub(pattern, "", strings, perl = TRUE, fixed = fixed)
 }
 
+#' @rdname str_remove
+#' @export
+str_remove_nth <- function(strings, pattern, n, fixed = FALSE) {
+  remove_nth_in_string <- function(string) {
+    # There is no direct base equivalent function for _nth
+    # So we select all matches
+    matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+
+    len <- length(matches)
+    # Handle negative indexes as counting back from the end
+    index <- if (n > 0) n else len + n + 1
+
+    # Just return the string if the index is larger than the number of matches
+    if(abs(index) > len) return(string)
+
+    nth_match <- matches[[index]]
+    attr(nth_match, "match.length") <- attr(matches, "match.length")[[index]]
+
+    if (matches[[index]] != -1) {
+      regmatches(string, nth_match) <- ""
+    }
+
+    return(string)
+  }
+
+  strings <- vapply(strings, remove_nth_in_string, character(1))
+  names(strings) <- NULL
+  strings
+}
+
+#' @rdname str_remove
+#' @export
+str_remove_last <- function(strings, pattern, fixed = FALSE) {
+  remove_last_in_string <- function(string) {
+    # There is no direct base equivalent function for _nth
+    # So we select all matches
+    matches <- gregexpr(pattern, string, perl = TRUE, fixed = fixed)[[1]]
+
+    len <- length(matches)
+    # Handle negative indexes as counting back from the end
+
+    last_match <- matches[[len]]
+    attr(last_match, "match.length") <- attr(matches, "match.length")[[len]]
+
+      if (matches[[len]] != -1) {
+      regmatches(string, last_match) <- ""
+    }
+
+    return(string)
+  }
+
+  strings <- vapply(strings, remove_last_in_string, character(1))
+  names(strings) <- NULL
+  strings
+}
+
 # str_split -----------------------------------------------------
 
 #' Split strings by a pattern
 #'
 #' @description
-#' `str_split_all()` splits each string in the input vector into substrings based on a pattern.
+#' `str_split_first()`, `str_split_nth()` and `str_split_last()`:
+#' take the first, nth and last result of splitting each string in
+#' the input vector based on a pattern delimiter.
 #'
-#' `chr_split_all()` splits all strings in the input vector and concatenates the results into a single character vector.
+#' `str_split_all()` splits each string in the input vector into substrings
+#' based on a pattern.
 #'
-#' `str_split_first()` takes the first result of splitting each string in the input vector based on a pattern.
+#' `chr_split_all()` splits all strings in the input vector and
+#' returns the substrings in a single character vector.
 #'
-#' @param strings A character vector. Each element of this vector is a string that the function will process.
-#' @param pattern A single character string containing a regular expression (regex) pattern to match against the elements in `strings`.
-#' The regex used in `{suitestrings}` are Perl-like, for the extended features and syntax.
-#' This is achieved by setting `perl = TRUE, fixed = fixed` in the underlying base R pattern matching functions.
-#' See R's \code{\link{regexp}} documentation for more details.
+#'
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param pattern
+#' A single character string to be searched for in each element of `strings`.
+#' By default, `pattern` is interpreted as a regular expression (regex). If the `fixed` argument is set to `TRUE`,
+#' `pattern` will be treated as a literal string to be matched exactly.
+#' @param n
+#' (`str_split_nth` only) Integer, the index of a substring to extract
+#' from a split string. Negative values count back from the end.
+#' @param fixed
+#' Logical; whether `pattern` should be matched exactly,
+#' treating regex special characters as regular  string characters. Default `FALSE`.
+#'
+#' @details
+#' These functions are built using the base R regular expression functions.
+#' `{suitestrings}` uses Perl-compatible Regular Expressions (PCRE).
+#' This is achieved by setting `perl = TRUE` in the underlying base functions.
+#' See R's [regexp] documentation for info on the regex implementation.
+#' For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 #'
 #' @return
-#' `str_split_all()`: A list of the same length as `strings`, with each element being a vector of substrings obtained by splitting the corresponding element of `strings`.
+#' `str_split_first()`, `str_split_nth()` and `str_split_last()`:
+#' A character vector the same length as `strings`,
+#' with each element being the first, nth or last substring obtained
+#' by splitting the corresponding element of `strings`.
 #'
-#' `chr_split_all()`: A single character vector containing all substrings obtained by splitting each element of `strings` and concatenating them.
+#' `str_split_all()`: A list of the same length as `strings`,
+#' with each element being a character vector of substrings obtained by
+#' splitting the corresponding element of `strings`.
 #'
-#' `str_split_first()`: A character vector the same length as `strings`, with each element being the first substring obtained by splitting the corresponding element of `strings`.
+#' `chr_split_all()`: A single character vector containing all substrings
+#' obtained by splitting each element of `strings`. Equivalent of
+#' using `unlist()` on the output of `str_split_all()`.
+#'
+#' @seealso [strsplit()] which these functions wrap around.
 #'
 #' @examples
+#'
+#' str_split_first(c("one,two,three", "abc,def,ghi"), ",")
+#' #> [1] "one" "abc"
+#' str_split_nth(c("one,two,three", "abc,def,ghi"), ",", 2)
+#' #> [1] "two" "def"
+#' str_split_last(c("one,two,three", "abc,def,ghi"), ",")
+#' #> [1] "three" "ghi"
+#'
 #' str_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #' #> [[1]]
 #' #> [1] "one"   "two"   "three"
 #' #>
 #' #> [[2]]
 #' #> [1] "abc" "def" "ghi"
-#'
 #' chr_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #' #> [1] "one"   "two"   "three" "abc"   "def"   "ghi"
-#'
-#' str_split_first(c("", "a b c"), " ")
-#' #> [1] NA  "a"
-#'
-#' @seealso
-#' \code{\link{strsplit}} for the base R function.
 #'
 #' @rdname str_split
 #' @export
@@ -418,6 +714,32 @@ str_split_all <- function(strings, pattern, fixed = FALSE) {
 #' @export
 str_split_first <- function(strings, pattern, fixed = FALSE) {
   split_string <- strsplit(strings, pattern, perl = TRUE, fixed = fixed)
-  sapply(split_string, \(x) ifelse(length(x) > 1, x[[1]], x))
+  vapply(split_string,
+         function(string) {
+           ifelse(length(string) > 0, string[[1]], string)
+         },
+         FUN.VALUE = character(1))
 }
 
+#' @rdname str_split
+#' @export
+str_split_nth <- function(strings, pattern, n, fixed = FALSE) {
+  split_string <- strsplit(strings, pattern, perl = TRUE, fixed = fixed)
+
+  vapply(split_string,
+         function(string) {
+           len <- length(string)
+           index <- if (n > 0) n else len + n + 1
+           ifelse(length(string) >= abs(index), string[[index]], NA_character_)
+         },
+         FUN.VALUE = character(1))
+}
+
+#' @rdname str_split
+#' @export
+str_split_last <- function(strings, pattern, fixed = FALSE) {
+  split_string <- strsplit(strings, pattern, perl = TRUE, fixed = fixed)
+  vapply(split_string,
+         \(string) ifelse(length(string) > 0, string[[length(string)]], string),
+         FUN.VALUE = character(1))
+}
