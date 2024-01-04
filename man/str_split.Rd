@@ -4,12 +4,18 @@
 \name{str_split_all}
 \alias{str_split_all}
 \alias{str_split_first}
+\alias{str_split_nth}
+\alias{str_split_last}
 \alias{chr_split_all}
 \title{Split strings by a pattern}
 \usage{
 str_split_all(strings, pattern, fixed = FALSE)
 
 str_split_first(strings, pattern, fixed = FALSE)
+
+str_split_nth(strings, pattern, n, fixed = FALSE)
+
+str_split_last(strings, pattern, fixed = FALSE)
 
 chr_split_all(strings, pattern, fixed = FALSE)
 }
@@ -22,20 +28,34 @@ By default, \code{pattern} is interpreted as a regular expression (regex). If th
 
 \item{fixed}{Logical; whether \code{pattern} should be matched exactly,
 treating regex special characters as regular  string characters. Default \code{FALSE}.}
+
+\item{n}{(\code{str_split_nth} only) Integer, the index of a substring to extract
+from a split string. Negative values count back from the end.}
 }
 \value{
-\code{str_split_all()}: A list of the same length as \code{strings}, with each element being a vector of substrings obtained by splitting the corresponding element of \code{strings}.
+\code{str_split_first()}, \code{str_split_nth()} and \code{str_split_last()}:
+A character vector the same length as \code{strings},
+with each element being the first, nth or last substring obtained
+by splitting the corresponding element of \code{strings}.
 
-\code{chr_split_all()}: A single character vector containing all substrings obtained by splitting each element of \code{strings} and concatenating them.
+\code{str_split_all()}: A list of the same length as \code{strings},
+with each element being a character vector of substrings obtained by
+splitting the corresponding element of \code{strings}.
 
-\code{str_split_first()}: A character vector the same length as \code{strings}, with each element being the first substring obtained by splitting the corresponding element of \code{strings}.
+\code{chr_split_all()}: A single character vector containing all substrings
+obtained by splitting each element of \code{strings}. Equivalent of
+using \code{unlist()} on the output of \code{str_split_all()}.
 }
 \description{
-\code{str_split_all()} splits each string in the input vector into substrings based on a pattern.
+\code{str_split_first()}, \code{str_split_nth()} and \code{str_split_last()}:
+take the first, nth and last result of splitting each string in
+the input vector based on a pattern delimiter.
 
-\code{chr_split_all()} splits all strings in the input vector and concatenates the results into a single character vector.
+\code{str_split_all()} splits each string in the input vector into substrings
+based on a pattern.
 
-\code{str_split_first()} takes the first result of splitting each string in the input vector based on a pattern.
+\code{chr_split_all()} splits all strings in the input vector and
+returns the substrings in a single character vector.
 }
 \details{
 These functions are built using the base R regular expression functions.
@@ -45,20 +65,24 @@ See R's \link{regexp} documentation for info on the regex implementation.
 For complete syntax details see \href{https://www.pcre.org/current/doc/html/}{https://www.pcre.org/current/doc/html/}
 }
 \examples{
+
+str_split_first(c("one,two,three", "abc,def,ghi"), ",")
+#> [1] "one" "abc"
+str_split_nth(c("one,two,three", "abc,def,ghi"), ",", 2)
+#> [1] "two" "def"
+str_split_last(c("one,two,three", "abc,def,ghi"), ",")
+#> [1] "three" "ghi"
+
 str_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #> [[1]]
 #> [1] "one"   "two"   "three"
 #>
 #> [[2]]
 #> [1] "abc" "def" "ghi"
-
 chr_split_all(c("one,two,three", "abc,def,ghi"), ",")
 #> [1] "one"   "two"   "three" "abc"   "def"   "ghi"
 
-str_split_first(c("", "a b c"), " ")
-#> [1] NA  "a"
-
 }
 \seealso{
-\code{\link{strsplit}} for the base R function.
+\code{\link[=strsplit]{strsplit()}} which these functions wrap around.
 }
