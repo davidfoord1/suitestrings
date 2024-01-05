@@ -10,7 +10,7 @@ str_glue <- function(strings, .envir = parent.frame()) {
   # Regular expression to find {{variable}} patterns
 
   replace_vars <- function(string, .envir) {
-    pattern <- "\\{\\{([^\\}\\}]+)\\}\\}"
+    pattern <- "\\{([^\\}]+)\\}"
     matches <- gregexpr(pattern, string)[[1]]
 
     if (matches[[1]] == -1) {
@@ -22,8 +22,8 @@ str_glue <- function(strings, .envir = parent.frame()) {
     var_values <- character(length(matches))
     for (index in seq_along(matches)) {
       var_names[[index]] <- substr(string,
-                                   matches[[index]] + 2, # +2 to skip {{
-                                   matches[[index]] + match_lengths[[index]] - 2 - 1)
+                                   matches[[index]] + 1, # +2 to skip {{
+                                   matches[[index]] + match_lengths[[index]] - 1 - 1)
 
       var_values[[index]] <- tryCatch(
         as.character(eval(parse(text = var_names[[index]]), envir = .envir)),
@@ -32,7 +32,7 @@ str_glue <- function(strings, .envir = parent.frame()) {
     }
 
     for (index in seq_along(matches)) {
-      pattern <- paste0("{{", var_names[[index]], "}}")
+      pattern <- paste0("{", var_names[[index]], "}")
       string <- sub(pattern, var_values[[index]], string, fixed = TRUE)
     }
 
@@ -43,5 +43,6 @@ str_glue <- function(strings, .envir = parent.frame()) {
                    \(string) replace_vars(string, .envir),
                    FUN.VALUE = character(1))
   names(result) <- NULL
+
   return(result)
 }
