@@ -1,5 +1,37 @@
-str_concat <- function(...) {
-  paste0(...)
+#' Concatenate strings
+#'
+#' @description
+#' `str_concat()` takes multiple string arguments and concatenates them into a single string,
+#' inserting a specified separator between each piece.
+#'
+#' @param ...
+#' One or more character vectors or objects coercible to character vectors. These are the strings
+#' or objects to be concatenated.
+#'
+#' @param separator
+#' A character string to separate the concatenated elements. Defaults to an empty string,
+#' which results in no separation between elements.
+#'
+#' @return
+#' A single character string representing the concatenation of all input elements, separated by
+#' the specified `separator`.
+#'
+#' @examples
+#' str_concat("Hello", "world", separator = " ")
+#' #> [1] "Hello world"
+#' str_concat("2023", "01", "01", separator = "-")
+#' #> [1] "2023-01-01"
+#' str_concat("One", "Two", "Three")
+#' #> [1] "OneTwoThree"
+#'
+#' @export
+#'
+#' @seealso
+#' [chr_collapse()] for reduce a character vector into a single string.
+#'
+#' [paste()], which `str_concat()` wraps around.
+str_concat <- function(..., separator = "") {
+  paste(..., sep = separator)
 }
 
 chr_collapse <- function(strings, separator = "") {
