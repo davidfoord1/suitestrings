@@ -34,6 +34,32 @@ str_concat <- function(..., separator = "") {
   paste(..., sep = separator)
 }
 
+#' Collapse a character vector to a single string
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#'
+#' @param separator
+#' A character string to separate the concatenated elements. Defaults to an empty string,
+#' which results in no separation between elements.
+#'
+#' @return
+#' A single character string
+#'
+#' @export
+#'
+#' @seealso
+#' [str_concat()] for concatenating multiple character strings/vectors together.
+#'
+#' [paste0()] which `chr_collapse()` wraps around.
+#'
+#' @examples
+#' chr_collapse(c("Hello", "world"), " ")
+#' #> [1] "Hello world"
+#' chr_collapse(letters, "-")
+#' #> [1] "a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z"
+#' chr_collapse(1:9)
+#' #> [1] "123456789"
 chr_collapse <- function(strings, separator = "") {
   paste0(strings, collapse = separator)
 }
