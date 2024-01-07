@@ -184,10 +184,8 @@ str_glue <- function(..., separator = "", environment = parent.frame()) {
       # parse() from text to expression
       # eval() from expression to result, within the eval_env
       # as.character() to convert back to string
-      expr_values[[index]] <- tryCatch(
-        as.character(eval(parse(text = expr_strings[[index]]), envir = eval_env)),
-        error = function(e) NA_character_
-      )
+      expr_values[[index]] <-
+        as.character(eval(parse(text = expr_strings[[index]]), envir = eval_env))
     }
 
     # Loop through the matches again, replacing the pattern occurrences
