@@ -64,55 +64,72 @@ chr_collapse <- function(strings, separator = "") {
   paste0(strings, collapse = separator)
 }
 
-#' Evaluate R code in strings
+#' Evaluate R code within strings
 #'
-#' @param strings
-#' A character vector, where each element of the vector is a character string.
+#' @description Combine strings, with text inside braces `{}`
+#' evaluated as R expressions to be output directly within the string.
+#'
+#' @param ...
+#' Expression strings to format and concatenate.
+#'
+#' Named arguments are taken to be temporary variables available
+#' for substitution.
 #' @param separator
 #' A character string to separate the concatenated elements. Defaults to an empty string,
-#' which results in no separation between elements.'
-#' @param envir
-#' Environment to evaluate the expression in. By default this is the environment
+#' which results in no separation between elements.
+#' @param environment
+#' An evironment object to evaluate the expression in. By default this is the environment
 #' `str_glue()` was called from.
 #'
 #' @return
 #' A character vector with same length as the longest input.
 #'
+#' @details
+#' Unnamed arguments to `...` are taken as strings containing expressions
+#' to evaluate and format. Multiple inputs are concatenated together
+#' before being formatted. Named arguments will be added as variables
+#' to a temporary environment along with the variables supplied within
+#' `environment`.
+#'
+#' Doubling the braces escapes them, for when you want braces in your
+#' output strings.
+#'
 #' @export
 #'
 #' @seealso
-#' [str_concat()] for combining strings without evaluation.
+#' [str_concat()] for simply combining strings and
+#' [chr_collapse()] for collapsing strings in character vectors
+#' to a single string.
 #'
-#' [chr_collapse()] for strings in character vectors to a single string.
-#'
-#' [sprintf()] for C-style string formatting
+#' [sprintf()] for C-style string formatting and variable interpolation.
 #'
 #' @examples
-#' tri_num_str <- function(n) chr_collapse(cumsum(seq(n)), ", ")
-#' n <- 5
+#' x <- 5
 #'
 #' # Evaluate R expressions in braces {} in the middle of a string
-#' str_glue("The first {n} triangle numbers are {tri_num_str(n)}.")
+#' str_glue("The square of {x} is {x^2}")
+#' #> [1] "The square of 5 is 25"
+#' tri_num_str <- \(n) chr_collapse(cumsum(seq(n)), ", ")
+#' str_glue("The first {x} triangle numbers are {tri_num_str(x)}.")
 #' #> [1] "The first 5 triangle numbers are 1, 3, 6, 10, 15."
 #'
-#' # Supply variables as named arguments
+#' # Named arguments are taken as temporary variables.
 #' str_glue(
 #'    "My name is {name}, ",
 #'    "I am {age} years old. ",
-#'    "In {n} years I'll be {age + n}.",
+#'    "In {x} years I'll be {age + x}.",
 #'    name = "John",
 #'    age = 45
 #' )
 #' #> [1] "My name is John, I am 45 years old. In 5 years I'll be 50."
-str_glue <- function(..., separator = "", envir = parent.frame()) {
+str_glue <- function(..., separator = "", environment = parent.frame()) {
   args <- list(...)
   arg_names <- names(args)
-
 
   if (is.null(arg_names)) {
     # If no named arguments, use the input args and envir as-is
     unnamed_args <- args
-    eval_env <- envir
+    eval_env <- environment
   } else {
     # Separate named and unnamed arguments
     named_args <- args[arg_names != ""]
@@ -121,13 +138,13 @@ str_glue <- function(..., separator = "", envir = parent.frame()) {
     # So that we can evaluate variables from both the input envir
     # and the named arguments, create a new environment
     # combining named_args and input envir
-    eval_env <- list2env(named_args, parent = envir)
+    eval_env <- list2env(named_args, parent = environment)
   }
 
   # Combine unnamed arguments as strings
   strings <- do.call(paste, c(lapply(unnamed_args, as.character), sep = separator))
 
-  replace_vars <- function(string, envir) {
+  replace_vars <- function(string) {
     # Braces can be included in strings be escaping them with a second brace
     # So first we replace escaped bracers with placeholders
     # To ensure they don't get caught in the expression evaluation
@@ -189,7 +206,7 @@ str_glue <- function(..., separator = "", envir = parent.frame()) {
 
   # Apply the function to all strings (unnamed args) passed to
   result <- vapply(strings,
-                   \(string) replace_vars(string, envir),
+                   \(string) replace_vars(string),
                    FUN.VALUE = character(1))
 
   names(result) <- NULL
