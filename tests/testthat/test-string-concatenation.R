@@ -22,6 +22,28 @@ test_that("str_concat handles NA values", {
   expect_equal(str_concat("Hello ", NA_character_), "Hello NA")
 })
 
+# chr_collapse --------------------------------------------------
+
+test_that("chr_collapse combines elements of a chr vector", {
+  expect_equal(chr_collapse(letters), "abcdefghijklmnopqrstuvwxyz")
+  expect_equal(chr_collapse(1:10), "12345678910")
+  expect_equal(chr_collapse(c("Hello ", "world")))
+})
+
+test_that("chr_collapse correctly applies the separator", {
+  expect_equal(chr_collapse(c("Hello", "world"), separator = " "),
+               "Hello world")
+  expect_equal(chr_collapse(letters, separator = "-"),
+               "a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z")
+  expect_equal(chr_collapse(1:10, separator = ", "),
+               "1, 2, 3, 4, 5, 6, 7, 8, 9, 10")
+})
+
+test_that("chr_collapse handles empty strings", {
+  expect_equal(chr_collapse(c("Hello", "", " ", "", "world")),
+               "Hello world")
+})
+
 # str_glue ------------------------------------------------------
 
 test_that("str_glue handles basic string concatenation", {
