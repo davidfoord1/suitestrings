@@ -1,3 +1,27 @@
+# str_concat ----------------------------------------------------
+
+test_that("str_concat handles basic string concatenation", {
+  expect_equal(str_concat("Hello", ", ", "world!"), "Hello, world!")
+})
+
+test_that("str_concat correctly applies the separator", {
+  expect_equal(str_concat("Hello", "world", separator = ", "), "Hello, world")
+  expect_equal(str_concat("Hello", "world", separator = " -- "), "Hello -- world")
+})
+
+test_that("str_concat handles emptry strings", {
+  expect_equal(str_concat("Hello", "", "world"), "Helloworld")
+  expect_equal(str_concat("Hello", "", "world", separator = "-"), "Hello--world")
+})
+
+test_that("str_concat ignores NULL values", {
+  expect_equal(str_concat("Hello ", NULL, "world"), "Hello world")
+})
+
+test_that("str_concat handles NA values", {
+  expect_equal(str_concat("Hello ", NA_character_), "Hello NA")
+})
+
 # str_glue ------------------------------------------------------
 
 test_that("str_glue handles basic string concatenation", {
