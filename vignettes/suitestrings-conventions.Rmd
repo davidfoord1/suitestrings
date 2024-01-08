@@ -1,0 +1,166 @@
+---
+title: "suitestrings conventions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{suitestrings conventions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(suitestrings)
+```
+
+A consistent approach is taken to naming functions and arguments. This vignette sets out to explain the structure, compare this against base R and popular string packages, and perhaps point out any exceptions to the rules. Once you're familiar with the structure it should be easier to understand what a function does just from it's name.
+
+The basic function name structure is as follows, with each function having at least the first two parts:
+
+```
+<operation-type>_<action>_<action-location>
+```
+
+### Prefixes - `<operation-type>`
+
+Prefixes are used for a general base of behaviour:
+
+- `str_` for vectorised operations on strings.
+- `chr_` for vector-wide operations over strings.
+
+#### `str_` for operations on strings 
+
+In a character vector, the same operation is applied to each string. These functions are useful for single strings, but also for chains of inputs and outputs where you map from one vector to another.
+
+An example:
+```{r}
+strings <- c("Hello, world.", "Happy birthday!", "Nice to meet you.")
+strings
+
+# Transform each string
+snake_strings <- str_to_snake_case(strings)
+snake_strings
+
+# Is the text "day" in each string?
+day_pattern <- "day"
+day_in_strings <- str_detect(strings, day_pattern)
+day_in_strings
+```
+
+In most cases the output will have the same `length()` as the input `strings`.
+
+``` {r}
+# Vector length is preserved
+length(strings)
+length(snake_strings) 
+length(day_in_strings)
+```
+
+#### `chr_` for vector-wide operations
+
+These functions operate on the character vector as a whole. They may give the a single piece of information about the vector, a re-organised vector of the same length or perhaps an elements extracted from every string. The result may be of any `length()`, but will always be an atomic vector i.e. won't be a list.
+
+For example, a single fact about the vector:
+```{r}
+# Is the text "day" in any of the strings?
+chr_detect_any(strings, day_pattern)
+
+# Is the text "day" in all of the strings?
+chr_detect_all(strings, day_pattern)
+```
+
+Or a re-organised vector:
+```{r}
+# Rearrange the vector in alphabetical order
+chr_sort(strings)
+```
+
+#### `str_` or `chr_`
+
+In a few cases, the only difference between two function names is the prefix. When this happens the `str_` function will give you a list (equal in `length()` to the input vector) with a result for each string . The `chr_` function will give a single atomic vector containing all of the same elements, as if you used `unlist()` on the result of the `str_` version.
+
+See extraction of every match for a pattern:
+
+```{r}
+word_pattern <- "\\w+"
+
+str_result <- str_extract_all(strings, word_pattern)
+str_result
+
+chr_result <- chr_extract_all(strings, word_pattern)
+chr_result
+
+
+length(str_result) # Length is preserved here
+length(chr_result) # Not here
+```
+
+### Suffixes - `<action-location>`
+
+#### Pattern Occurrence - first, nth, last or all
+
+The majority of functions that include matching of patterns (typically regular expressions) include a suffix for which occurrence of the pattern within a string you want to work with. The following apply for the action verbs `locate`, `extract`, `replace`, `remove`, `split`:
+
+- `_first` matches the first occurrence.
+- `_nth`  matches a specific occurrence, as set in additional argument `n`.
+- `_last` matches the last occurrence.
+- `_all` matches every occurrence.
+
+You can expect a single vector resulting from `_first`, `_last` and `_nth`, whereas `str_<action>_all()` will return a list. Again, you can use the `chr_<action>_all()` variant to get to a single atomic vector.
+
+``` {r}
+str_extract_first(strings, word_pattern) # the first word
+str_extract_nth(strings, word_pattern, 2) # the second word
+str_extract_last(strings, word_pattern) # the last word
+
+str_extract_all(strings, word_pattern) # all words
+```
+
+
+## Function arguments
+
+You may have noticed repeating in our example names: `function(strings, some_pattern)`. This was quite deliberate to highlight the most common first and second arguments.
+
+Chaining the first argument
+
+- **`strings`** - Almost every function takes this as the first argument. It's a character vector containing all the strings to manipulate. The main reason to have this as the first argument is to make it suitable for piping with `|>` or `magrittr::%>%`.
+
+```{r}
+# Easily perform a chain of operations on strings
+# Like these unnecessary steps to make a happy hello
+strings |> 
+  chr_sort() |> 
+  str_extract_first(word_pattern) |> 
+  chr_collapse(" ") |>
+  str_remove_last(word_pattern) |> 
+  str_concat(":)")
+
+# You can probably find better uses
+```
+
+Pattern matching
+
+- **`pattern`** - The second argument to any function that uses pattern matching. This is a single string to be matched, by default interpreted as a regular expression.
+- **`fixed`** - Accompanying every `pattern` argument is a  logical argument to optionally interpret the `pattern` as a literal string to be matched exactly.
+
+String combination
+
+- **`...`** - A minority of functions take several character vectors  as the first arguments instead of `strings`; `str_concat()` and `str_glue()`. When you pass multiple character vectors the resulting vector will have the `length()` of the longest input vector. 
+- **`separator`** - A string to be placed between input elements in the output string.
+
+## Comparison to other packages
+
+#### Compared to stringr 
+
+We've broken away from the `stringr` convention of starting every function with `str_`. If you're used to that, you might not be able to immediately find equivalent functions. For example, sort has moved from `str_sort()` to `chr_sort()`. However, once you get used to `chr_` it should be more informative, and useful for immediately identifying if a function is applied vector-wide or not.
+
+`stringr::str_split_1()` for instance, was added as something of an afterthought to the str_split family, for getting an atomic vector containing all results, whereas the equivalent `suitestrings::chr_split_all()` sits as a natural part of the naming scheme.
+
+```{r}
+chr_split_all(strings, " ")
+```
