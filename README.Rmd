@@ -17,23 +17,27 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
+[![Repo status: work in progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+
 <!-- badges: end -->
 
-This is primarily a learning project, for me to build my understanding of string manipulation and regular expressions (both using base R and popular packages) as well as how to create packages.
+This is primarily a personal learning project, but `{suitestrings}` aims to provide comprehensive and convenient set of functions for working with strings in R. More specifically: 
 
-All `{suitestrings}` functionality is implemented in base R; most functions are built as wrappers around `{base}` string manipulation functions. The interface largely mimics what's seen in [stringr](https://stringr.tidyverse.org/reference/index.html) and [stringi](https://stringi.gagolewski.com/rapi/stri_count.html), with the intent of being expressive and easily understandable in English. As such, it is set up to be used *instead* of those packages.
+- Combining strings.
+- Cleaning and transforming strings.
+- Manipulating strings based on regular expression patterns.
 
-So, the goal of suitestrings is to provide comprehensive set of functions for string manipulation. Some notable features:
+A few benefits of the design of this package:
 
--   Consistent naming scheme - Including prefixes designed for use with autocomplete :
+-   A consistent naming scheme - Including prefixes designed for use with auto-complete:
 
     -   `str_` for vectorised operations on strings.
 
     -   `chr_` for vector-wide operations over strings.
 
--   Order of inputs - The string(s) to work on is usually used as the first argument instead of the pattern, which makes it easier to use with pipes than base R.
+-   Order of inputs - The string or strings to work on is usually used as the first argument instead of the pattern, which makes it easier to use with pipes than base R.
 
--   No additional dependencies - this package has no Imports and doesn't do anything you can't replicate exactly in base R.
+-   No additional dependencies - this package has no Imports so you'll only need base R to use it.
 
 ## Installation
 
@@ -45,22 +49,62 @@ devtools::install_github("davidfoord1/suitestrings")
 ```
 
 ## Examples
-
-``` {r}
-# Load the package
+```{r}
 library(suitestrings)
+```
+### Combine strings together
 
+Concatenation across multiple vectors.
+
+```{r}
+str_concat(c("Mary ", "Joseph "), 
+           "had a ", 
+           c("little ", "technicolour "), 
+           c("lamb ", "dreamcoat "))
+```
+
+Evaluate R expression in strings
+
+```{r}
+x <- 25
+str_glue("{x} squared is {x^2} and the square root of {x} are {sqrt(x)}")
+```
+
+### Clean and transform strings
+
+```{r}
+str_to_snake_case("  This IS  a->>GreAt<<-strING!!")
+```
+
+### Manipulating strings based on regular expression patterns
+
+```{r}
 # Prepare a vector of strings
 strings <- c("flat-hat", "backpack", "roll", "cat-sat-on-a-mat")
-# Define a pattern for a three character string with "a" in the middle
+# Define a pattern for any three characters with "a" in the middle
 regex_pattern <- "\\wa\\w"
+```
 
+Detect, extract and replace patterns in strings
+
+```{r}
+str_detect(strings, regex_pattern)
+str_extract_first(strings, regex_pattern)
+str_replace_first(strings, regex_pattern, "lea")
+```
+
+Work with specific occurrences of patterns
+
+```{r}
 # Get the second match for each string
 str_extract_nth(strings, regex_pattern, 2)
 
 # Replace the first match in each string
-str_replace_first(strings, regex_pattern, "lea")
+str_remove_last(strings, regex_pattern)
+```
 
+Work with every occurrence of a pattern
+```{r}
 # Get a list of every match for each string
 str_extract_all(strings, regex_pattern)
 
