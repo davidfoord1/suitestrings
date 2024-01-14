@@ -10,9 +10,9 @@ progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.reposta
 
 <!-- badges: end -->
 
-This is primarily a personal learning project, though nonetheless aims
-to provide a comprehensive and convenient set of functions for working
-with strings in R. More specifically, for:
+This is primarily a personal learning project. It aims to provide a
+comprehensive and convenient set of functions for working with strings
+in R. More specifically, for:
 
 - Combining strings.
 - Cleaning and transforming strings.
@@ -36,7 +36,7 @@ You can install suitestrings from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("davidfoord1/suitestrings")
+devtools::install_github("davidfoord1/suitestrings", build_vignettes = TRUE)
 ```
 
 ## Examples
@@ -47,30 +47,20 @@ library(suitestrings)
 
 ### Combine strings together
 
-\####Concatenate strings
+#### Concatenate strings
 
 ``` r
 str_concat("Mary", "had", "a", "little", "lamb", separator = " ")
 #> [1] "Mary had a little lamb"
 ```
 
-#### Concatenate across across multiple vectors.
-
-``` r
-str_concat(c("Mary ", "Joseph "), 
-           "had a ", 
-           c("little ", "technicolour "), 
-           c("lamb.", "dreamcoat."))
-#> [1] "Mary had a little lamb."             
-#> [2] "Joseph had a technicolour dreamcoat."
-```
-
 #### Evaluate R expression in strings
 
-`str_glue()` treats text in braces {} like R code
+`str_glue()` treats text in braces `{}` like R code
 
 ``` r
 statement <- "{x} squared is {x^2} and its square root is {sqrt(x)}."
+
 x <- 25
 str_glue(statement)
 #> [1] "25 squared is 625 and its square root is 5."
@@ -90,20 +80,23 @@ str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STRing!!")
 ### Manipulate strings based on regular expression patterns
 
 ``` r
-# Prepare a vector of strings
+# Prepare an example character vector.
 strings <- c("flat-hat", "backpack", "roll", "cat-sat-on-a-mat")
-# Define a pattern for any three characters with "a" in the middle
-regex_pattern <- "\\wa\\w"
+# Define a pattern for any three letter word with "a" in the middle.
+pattern <- "\\wa\\w"
 ```
 
 #### Detect, extract and replace patterns in strings
 
 ``` r
-str_detect(strings, regex_pattern)
+# Does a string contain a match?
+str_detect(strings, pattern)
 #> [1]  TRUE  TRUE FALSE  TRUE
-str_extract_first(strings, regex_pattern)
+# Get the first match in a string
+str_extract_first(strings, pattern)
 #> [1] "lat" "bac" NA    "cat"
-str_replace_first(strings, regex_pattern, "lea")
+# Replace the first match in a string
+str_replace_first(strings, pattern, "lea")
 #> [1] "flea-hat"         "leakpack"         "roll"             "lea-sat-on-a-mat"
 ```
 
@@ -113,19 +106,38 @@ Using suffixes \_first, \_nth and \_last
 
 ``` r
 # Get the second match for each string
-str_extract_nth(strings, regex_pattern, 2)
+str_extract_nth(strings, pattern, 2)
 #> [1] "hat" "pac" NA    "sat"
-
-# Replace the last match in each string
-str_remove_last(strings, regex_pattern)
+# Remove the last match in each string
+str_remove_last(strings, pattern)
 #> [1] "flat-"         "backk"         "roll"          "cat-sat-on-a-"
 ```
 
 #### Work with every occurrence of a pattern
 
 ``` r
+str_locate_all(strings, pattern)
+#> [[1]]
+#>      start end
+#> [1,]     2   4
+#> [2,]     6   8
+#> 
+#> [[2]]
+#>      start end
+#> [1,]     1   3
+#> [2,]     5   7
+#> 
+#> [[3]]
+#>      start end
+#> [1,]    NA  NA
+#> 
+#> [[4]]
+#>      start end
+#> [1,]     1   3
+#> [2,]     5   7
+#> [3,]    14  16
 # Get a list of every match for each string
-str_extract_all(strings, regex_pattern)
+str_extract_all(strings, pattern)
 #> [[1]]
 #> [1] "lat" "hat"
 #> 
@@ -137,12 +149,20 @@ str_extract_all(strings, regex_pattern)
 #> 
 #> [[4]]
 #> [1] "cat" "sat" "mat"
+```
 
+#### Work on the character vector as a whole
+
+``` r
 # Get every match from `strings` into one character vector
-chr_extract_all(strings, regex_pattern)
+chr_extract_all(strings, pattern)
 #> [1] "lat" "hat" "bac" "pac" "cat" "sat" "mat"
 
+# Which elements of the vector contain a match?
+chr_which(strings, pattern)
+#> [1] 1 2 4
+
 # Get the subset of `strings` that contain a match
-chr_subset(strings, regex_pattern)
+chr_subset(strings, pattern)
 #> [1] "flat-hat"         "backpack"         "cat-sat-on-a-mat"
 ```

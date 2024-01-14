@@ -40,7 +40,7 @@ You can install suitestrings from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("davidfoord1/suitestrings")
+devtools::install_github("davidfoord1/suitestrings", build_vignettes = TRUE)
 ```
 
 ## Examples
@@ -49,24 +49,17 @@ library(suitestrings)
 ```
 ### Combine strings together
 
-####Concatenate strings
+#### Concatenate strings
 ```{r}
 str_concat("Mary", "had", "a", "little", "lamb", separator = " ")
 ```
 
-#### Concatenate across across multiple vectors.
-```{r}
-str_concat(c("Mary ", "Joseph "), 
-           "had a ", 
-           c("little ", "technicolour "), 
-           c("lamb.", "dreamcoat."))
-```
-
 #### Evaluate R expression in strings
 
-`str_glue()` treats text in braces {} like R code
+`str_glue()` treats text in braces `{}` like R code
 ```{r}
 statement <- "{x} squared is {x^2} and its square root is {sqrt(x)}."
+
 x <- 25
 str_glue(statement)
 
@@ -83,18 +76,21 @@ str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STRing!!")
 ### Manipulate strings based on regular expression patterns
 
 ```{r}
-# Prepare a vector of strings
+# Prepare an example character vector.
 strings <- c("flat-hat", "backpack", "roll", "cat-sat-on-a-mat")
-# Define a pattern for any three characters with "a" in the middle
-regex_pattern <- "\\wa\\w"
+# Define a pattern for any three letter word with "a" in the middle.
+pattern <- "\\wa\\w"
 ```
 
 #### Detect, extract and replace patterns in strings
 
 ```{r}
-str_detect(strings, regex_pattern)
-str_extract_first(strings, regex_pattern)
-str_replace_first(strings, regex_pattern, "lea")
+# Does a string contain a match?
+str_detect(strings, pattern)
+# Get the first match in a string
+str_extract_first(strings, pattern)
+# Replace the first match in a string
+str_replace_first(strings, pattern, "lea")
 ```
 
 #### Work with specific occurrences of patterns
@@ -103,20 +99,26 @@ Using suffixes _first, _nth and _last
 
 ```{r}
 # Get the second match for each string
-str_extract_nth(strings, regex_pattern, 2)
-
-# Replace the last match in each string
-str_remove_last(strings, regex_pattern)
+str_extract_nth(strings, pattern, 2)
+# Remove the last match in each string
+str_remove_last(strings, pattern)
 ```
 
 #### Work with every occurrence of a pattern
 ```{r}
+str_locate_all(strings, pattern)
 # Get a list of every match for each string
-str_extract_all(strings, regex_pattern)
+str_extract_all(strings, pattern)
+```
 
+#### Work on the character vector as a whole
+```{r}
 # Get every match from `strings` into one character vector
-chr_extract_all(strings, regex_pattern)
+chr_extract_all(strings, pattern)
+
+# Which elements of the vector contain a match?
+chr_which(strings, pattern)
 
 # Get the subset of `strings` that contain a match
-chr_subset(strings, regex_pattern)
+chr_subset(strings, pattern)
 ```
