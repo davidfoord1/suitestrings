@@ -83,8 +83,8 @@ str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STRing!!")
 ``` r
 # Prepare an example character vector.
 strings <- c("flat-hat", "backpack", "roll", "cat-sat-on-a-mat")
-# Define a pattern for any three letter word with "a" in the middle.
-pattern <- "\\wa\\w"
+# Define a pattern for a sequence of letters with "a" in the middle.
+pattern <- "\\wa+\\w+"
 ```
 
 #### Detect, extract and replace patterns in strings
@@ -95,10 +95,10 @@ str_detect(strings, pattern)
 #> [1]  TRUE  TRUE FALSE  TRUE
 # Get the first match in a string
 str_extract_first(strings, pattern)
-#> [1] "lat" "bac" NA    "cat"
+#> [1] "lat"      "backpack" NA         "cat"
 # Replace the first match in a string
-str_replace_first(strings, pattern, "lea")
-#> [1] "flea-hat"         "leakpack"         "roll"             "lea-sat-on-a-mat"
+str_replace_first(strings, pattern, "dog")
+#> [1] "fdog-hat"         "dog"              "roll"             "dog-sat-on-a-mat"
 ```
 
 #### Work with specific occurrences of patterns
@@ -108,10 +108,10 @@ Using suffixes \_first, \_nth and \_last
 ``` r
 # Get the second match for each string
 str_extract_nth(strings, pattern, 2)
-#> [1] "hat" "pac" NA    "sat"
+#> [1] "hat" NA    NA    "sat"
 # Remove the last match in each string
 str_remove_last(strings, pattern)
-#> [1] "flat-"         "backk"         "roll"          "cat-sat-on-a-"
+#> [1] "flat-"         ""              "roll"          "cat-sat-on-a-"
 ```
 
 #### Work with every occurrence of a pattern
@@ -125,8 +125,7 @@ str_locate_all(strings, pattern)
 #> 
 #> [[2]]
 #>      start end
-#> [1,]     1   3
-#> [2,]     5   7
+#> [1,]     1   8
 #> 
 #> [[3]]
 #>      start end
@@ -144,7 +143,7 @@ str_extract_all(strings, pattern)
 #> [1] "lat" "hat"
 #> 
 #> [[2]]
-#> [1] "bac" "pac"
+#> [1] "backpack"
 #> 
 #> [[3]]
 #> character(0)
@@ -158,7 +157,7 @@ str_extract_all(strings, pattern)
 ``` r
 # Get every match from `strings` into one character vector
 chr_extract_all(strings, pattern)
-#> [1] "lat" "hat" "bac" "pac" "cat" "sat" "mat"
+#> [1] "lat"      "hat"      "backpack" "cat"      "sat"      "mat"
 
 # Which elements of the vector contain a match?
 chr_which(strings, pattern)
