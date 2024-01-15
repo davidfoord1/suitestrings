@@ -20,7 +20,7 @@ library(suitestrings)
 <!-- badges: start -->
 
 [![Repo status: work in progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-
+[![R-CMD-check](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 This is primarily a personal learning project. It aims to provide a comprehensive and convenient set of functions for working with strings in R. More specifically, for:
