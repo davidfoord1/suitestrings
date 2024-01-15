@@ -11,6 +11,8 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+library(suitestrings)
 ```
 
 # suitestrings
@@ -23,16 +25,16 @@ knitr::opts_chunk$set(
 
 This is primarily a personal learning project. It aims to provide a comprehensive and convenient set of functions for working with strings in R. More specifically, for:
 
-- Combining strings.
-- Cleaning and transforming strings.
-- Manipulating strings based on regular expression patterns.
+-   Combining strings.
+-   Cleaning and transforming strings.
+-   Manipulating strings based on regular expression patterns.
 
-The interface is built with a consistent naming scheme and argument structure. The first argument will be the string or strings to work on, which makes it particularly convenient to work with pipes `|>`. Functions start with prefixes for easy identification and auto-completion. Get familiar with the design by reading `vignette("suitestrings-conventions")`:
+The interface is built with a consistent naming scheme and argument structure. The first argument will be the string or strings to work on, which makes it particularly convenient to work with pipes `|>`. Functions start with prefixes for easy identification and auto-completion:
 
-    -   `str_` for vectorised operations on strings.
-    -   `chr_` for vector-wide operations over strings.
+-   `str_` for vectorised operations on strings.
+-   `chr_` for vector-wide operations over strings.
 
-This package is built with base R (no imports).
+You can read more at `vignette("suitestrings-conventions")`.
 
 ## Installation
 
@@ -41,15 +43,19 @@ You can install suitestrings from [GitHub](https://github.com/) with:
 ``` r
 # install.packages("devtools")
 devtools::install_github("davidfoord1/suitestrings", build_vignettes = TRUE)
-```
 
-## Examples
-```{r}
+# Load the package to your library
 library(suitestrings)
 ```
+
+This package is built with base R, so there are no additional dependencies to install.
+
+## Examples
+
 ### Combine strings together
 
 #### Concatenate strings
+
 ```{r}
 str_concat("Mary", "had", "a", "little", "lamb", separator = " ")
 ```
@@ -57,6 +63,7 @@ str_concat("Mary", "had", "a", "little", "lamb", separator = " ")
 #### Evaluate R expression in strings
 
 `str_glue()` treats text in braces `{}` like R code
+
 ```{r}
 statement <- "{x} squared is {x^2} and its square root is {sqrt(x)}."
 
@@ -78,8 +85,8 @@ str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STRing!!")
 ```{r}
 # Prepare an example character vector.
 strings <- c("flat-hat", "backpack", "roll", "cat-sat-on-a-mat")
-# Define a pattern for any three letter word with "a" in the middle.
-pattern <- "\\wa\\w"
+# Define a pattern for a sequence of letters with "a" in the middle.
+pattern <- "\\wa+\\w+"
 ```
 
 #### Detect, extract and replace patterns in strings
@@ -90,7 +97,7 @@ str_detect(strings, pattern)
 # Get the first match in a string
 str_extract_first(strings, pattern)
 # Replace the first match in a string
-str_replace_first(strings, pattern, "lea")
+str_replace_first(strings, pattern, "dog")
 ```
 
 #### Work with specific occurrences of patterns
@@ -105,13 +112,16 @@ str_remove_last(strings, pattern)
 ```
 
 #### Work with every occurrence of a pattern
+
 ```{r}
 str_locate_all(strings, pattern)
+
 # Get a list of every match for each string
 str_extract_all(strings, pattern)
 ```
 
 #### Work on the character vector as a whole
+
 ```{r}
 # Get every match from `strings` into one character vector
 chr_extract_all(strings, pattern)

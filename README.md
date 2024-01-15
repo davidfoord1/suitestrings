@@ -22,13 +22,12 @@ The interface is built with a consistent naming scheme and argument
 structure. The first argument will be the string or strings to work on,
 which makes it particularly convenient to work with pipes `|>`.
 Functions start with prefixes for easy identification and
-auto-completion. Get familiar with the design by reading
-`vignette("suitestrings-conventions")`:
+auto-completion:
 
-    -   `str_` for vectorised operations on strings.
-    -   `chr_` for vector-wide operations over strings.
+- `str_` for vectorised operations on strings.
+- `chr_` for vector-wide operations over strings.
 
-This package is built with base R (no imports).
+You can read more at `vignette("suitestrings-conventions")`.
 
 ## Installation
 
@@ -37,13 +36,15 @@ You can install suitestrings from [GitHub](https://github.com/) with:
 ``` r
 # install.packages("devtools")
 devtools::install_github("davidfoord1/suitestrings", build_vignettes = TRUE)
-```
 
-## Examples
-
-``` r
+# Load the package to your library
 library(suitestrings)
 ```
+
+This package is built with base R, so there are no additional
+dependencies to install.
+
+## Examples
 
 ### Combine strings together
 
@@ -136,6 +137,7 @@ str_locate_all(strings, pattern)
 #> [1,]     1   3
 #> [2,]     5   7
 #> [3,]    14  16
+
 # Get a list of every match for each string
 str_extract_all(strings, pattern)
 #> [[1]]
