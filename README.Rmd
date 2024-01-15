@@ -102,7 +102,7 @@ str_replace_first(strings, pattern, "rat")
 
 #### Work with specific occurrences of patterns
 
-Using suffixes _first, _nth and _last
+Using suffixes \_first, \_nth and \_last
 
 ```{r}
 # Get the second match for each string

@@ -7,6 +7,7 @@
 
 [![Repo status: work in
 progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![R-CMD-check](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml)
 
 <!-- badges: end -->
 
@@ -20,9 +21,8 @@ in R. More specifically, for:
 
 The interface is built with a consistent naming scheme and argument
 structure. The first argument will be the string or strings to work on,
-which makes it particularly convenient to work with pipes `|>`.
-Functions start with prefixes for easy identification and
-auto-completion:
+which makes it particularly convenient to work with pipes. Functions
+start with prefixes for easy identification and auto-completion:
 
 - `str_` for vectorised operations on strings.
 - `chr_` for vector-wide operations over strings.
