@@ -27,7 +27,7 @@ test_that("str_concat handles NA values", {
 test_that("chr_collapse combines elements of a chr vector", {
   expect_equal(chr_collapse(letters), "abcdefghijklmnopqrstuvwxyz")
   expect_equal(chr_collapse(1:10), "12345678910")
-  expect_equal(chr_collapse(c("Hello ", "world")))
+  expect_equal(chr_collapse(c("Hello ", "world")), "Hello world")
 })
 
 test_that("chr_collapse correctly applies the separator", {
