@@ -29,7 +29,7 @@ This is primarily a personal learning project. It aims to provide a comprehensiv
 -   Cleaning and transforming strings.
 -   Manipulating strings based on regular expression patterns.
 
-The interface is built with a consistent naming scheme and argument structure. The first argument will be the string or strings to work on, which makes it particularly convenient to work with pipes `|>`. Functions start with prefixes for easy identification and auto-completion:
+The interface is built with a consistent naming scheme and argument structure. The first argument will be the string or strings to work on, which makes it particularly convenient to work with pipes. Functions start with prefixes for easy identification and auto-completion:
 
 -   `str_` for vectorised operations on strings.
 -   `chr_` for vector-wide operations over strings.
@@ -85,8 +85,8 @@ str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STRing!!")
 ```{r}
 # Prepare an example character vector.
 strings <- c("flat-hat", "backpack", "roll", "cat-sat-on-a-mat")
-# Define a pattern for a sequence of letters with "a" in the middle.
-pattern <- "\\wa+\\w+"
+# Define a pattern for a three letter sequence with "a" in the middle.
+pattern <- "\\wa\\w"
 ```
 
 #### Detect, extract and replace patterns in strings
@@ -97,7 +97,7 @@ str_detect(strings, pattern)
 # Get the first match in a string
 str_extract_first(strings, pattern)
 # Replace the first match in a string
-str_replace_first(strings, pattern, "dog")
+str_replace_first(strings, pattern, "rat")
 ```
 
 #### Work with specific occurrences of patterns
