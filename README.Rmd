@@ -19,8 +19,10 @@ library(suitestrings)
 
 <!-- badges: start -->
 
-[![Repo status: work in progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![R-CMD-check](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml)
+[![Repo status: work in progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) 
+[![R-CMD-check](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml) 
+[![codecov](https://codecov.io/gh/davidfoord1/suitestrings/graph/badge.svg?token=F41JP7X4YP)](https://codecov.io.gh.davidfoord1/suitestrings)
+
 <!-- badges: end -->
 
 This is primarily a personal learning project. It aims to provide a comprehensive and convenient set of functions for working with strings in R. More specifically, for:
@@ -102,7 +104,7 @@ str_replace_first(strings, pattern, "rat")
 
 #### Work with specific occurrences of patterns
 
-Using suffixes _first, _nth and _last
+Using suffixes \_first, \_nth and \_last
 
 ```{r}
 # Get the second match for each string
