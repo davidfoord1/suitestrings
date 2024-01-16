@@ -1,10 +1,31 @@
 # str_detect ----------------------------------------------------
 
-test_that("str_detect_match() detects a pattern in a string", {
+
+## str_detect --------------------------------------------------
+
+test_that("str_detect() detects a pattern in a string", {
   strings <- c("apple", "banana", "cherry")
   pattern <- "a"
 
-  expect_equal(str_detect_match(strings, pattern), c(TRUE, TRUE, FALSE))
+  expect_equal(str_detect(strings, pattern), c(TRUE, TRUE, FALSE))
+})
+
+## str_detect_starts_with ---------------------------------------
+
+test_that("str_detect_starts_with() detects a pattern in a string", {
+  strings <- c("apple", "banana", "cherry")
+  pattern <- "a"
+
+  expect_equal(str_detect_starts_with(strings, pattern), c(TRUE, FALSE, FALSE))
+})
+
+# str_detect_ends_with ------------------------------------------
+
+test_that("str_detect_ends_with() detects a pattern in a string", {
+  strings <- c("apple", "banana", "cherry")
+  pattern <- "a"
+
+  expect_equal(str_detect_ends_with(strings, pattern), c(FALSE, TRUE, FALSE))
 })
 
 # str_locate ----------------------------------------------------
@@ -62,6 +83,48 @@ test_that("str_locate_all handles empty string", {
   expect_equal(result,
                list(matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))),
                     matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end")))))
+})
+
+## str_locate_nth -----------------------------------------------
+
+test_that("str_locate_nth finds the correct nth match", {
+  strings <- c("banana", "apple apple", "no match here")
+  pattern <- "a"
+
+  # Test with a valid nth occurrence
+  expect_equal(str_locate_nth(strings, pattern, 2),
+               matrix(c(4, 4, 7, 7, NA_integer_, NA_integer_), ncol = 2, byrow = TRUE, dimnames = list(NULL, c("start", "end"))))
+
+  # Test with nth occurrence that doesn't exist
+  expect_equal(str_locate_nth(strings, pattern, 4),
+               matrix(c(NA_integer_, NA_integer_, NA_integer_, NA_integer_, NA_integer_, NA_integer_), ncol = 2, byrow = TRUE, dimnames = list(NULL, c("start", "end"))))
+})
+
+test_that("str_locate_nth handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_locate_nth("", "a", 1), matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))))
+
+  # Test with no pattern match
+  expect_equal(str_locate_nth("banana", "x", 1), matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))))
+})
+
+# str_locate_last -----------------------------------------------
+
+test_that("str_locate_last finds the last match correctly", {
+  strings <- c("banana", "apple apple")
+  pattern <- "a"
+
+  # Test with strings having valid matches
+  expect_equal(str_locate_last(strings, pattern),
+               matrix(c(6, 6, 7, 7), ncol = 2, byrow = TRUE, dimnames = list(NULL, c("start", "end"))))
+})
+
+test_that("str_locate_last handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_locate_last("", "a"), matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))))
+
+  # Test with no pattern match
+  expect_equal(str_locate_last("banana", "x"), matrix(c(NA_integer_, NA_integer_), ncol = 2, dimnames = list(NULL, c("start", "end"))))
 })
 
 # str_extract ---------------------------------------------------
@@ -202,6 +265,52 @@ test_that("str_replace_all handles empty replacement", {
 })
 
 
+## str_replace_nth ----------------------------------------------
+
+test_that("str_replace_nth replaces the correct nth match", {
+  strings <- c("banana", "banana banana", "no match here")
+  pattern <- "na"
+
+  # Basic replacement
+  expect_equal(str_replace_nth(strings, pattern, "NA", 2),
+               c("banaNA", "banaNA banana", "no match here"))
+
+  # No such nth match
+  expect_equal(str_replace_nth(strings, pattern, "NA", 4),
+               c("banana", "banana banaNA", "no match here"))
+
+  # Negative indexing (counting from the end)
+  expect_equal(str_replace_nth(strings, pattern, "NA", -1),
+               c("banaNA", "banana banaNA", "no match here"))
+})
+
+test_that("str_replace_nth handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_replace_nth("", "a", "A", 1), "")
+
+  # Test with no pattern match
+  expect_equal(str_replace_nth("banana", "x", "X", 1), "banana")
+})
+
+## str_replace_last --------------------------------------------
+
+test_that("str_replace_last replaces the last match correctly", {
+  strings <- c("banana", "banana banana", "no match here")
+  pattern <- "na"
+
+  # Basic replacement
+  expect_equal(str_replace_last(strings, pattern, "NA"),
+               c("banaNA", "banana banaNA", "no match here"))
+})
+
+test_that("str_replace_last handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_replace_last("", "a", "A"), "")
+
+  # Test with no pattern match
+  expect_equal(str_replace_last("banana", "x", "X"), "banana")
+})
+
 # str_remove ----------------------------------------------------
 ## str_remove_first ----------------------------------------------
 
@@ -251,6 +360,52 @@ test_that("str_remove_all handles empty string", {
 
 test_that("str_remove_all handles repeated patterns", {
   expect_equal(str_remove_all("abcabcabc", "abc"), "")
+})
+
+## str_remove_nth ----------------------------------------------
+
+test_that("str_remove_nth removes the correct nth match", {
+  strings <- c("banana", "banana banana", "no match here")
+  pattern <- "na"
+
+  # Removing the nth occurrence
+  expect_equal(str_remove_nth(strings, pattern, 2),
+               c("bana", "bana banana", "no match here"))
+
+  # No such nth match
+  expect_equal(str_remove_nth(strings, pattern, 4),
+               c("banana", "banana bana", "no match here"))
+
+  # Negative indexing (counting from the end)
+  expect_equal(str_remove_nth(strings, pattern, -1),
+               c("bana", "banana bana", "no match here"))
+})
+
+test_that("str_remove_nth handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_remove_nth("", "a", 1), "")
+
+  # Test with no pattern match
+  expect_equal(str_remove_nth("banana", "x", 1), "banana")
+})
+
+## str_remove_last() -------------------------------------------
+
+test_that("str_remove_last removes the last match correctly", {
+  strings <- c("banana", "banana banana", "no match here")
+  pattern <- "na"
+
+  # Removing the last occurrence
+  expect_equal(str_remove_last(strings, pattern),
+               c("bana", "banana bana", "no match here"))
+})
+
+test_that("str_remove_last handles edge cases correctly", {
+  # Test with empty string
+  expect_equal(str_remove_last("", "a"), "")
+
+  # Test with no pattern match
+  expect_equal(str_remove_last("banana", "x"), "banana")
 })
 
 # str_split -----------------------------------------------------
@@ -303,4 +458,65 @@ test_that("str_split_first handles multiple strings", {
 test_that("str_split_first handles strings with no delimiter", {
   input <- c("apple", "banana", "cherry")
   expect_equal(str_split_first(input, ","), input)
+})
+
+## str_split_nth ---------------------------------------------
+
+test_that("str_split_nth splits at the nth occurrence correctly", {
+  expect_equal(str_split_nth("a,b,c", ",", 2), "b")
+  expect_equal(str_split_nth("hello world", " ", 2), "world")
+})
+
+test_that("str_split_nth handles no matches", {
+  expect_equal(str_split_nth("hello", ",", 1), "hello")
+  expect_equal(str_split_nth("hello", ",", 2), NA_character_)
+})
+
+test_that("str_split_nth handles empty pattern", {
+  expect_equal(str_split_nth("abc", "", 2), "b")
+})
+
+test_that("str_split_nth handles empty string", {
+  expect_equal(str_split_nth("", ",", 1), NA_character_)
+})
+
+test_that("str_split_nth handles multiple strings", {
+  expect_equal(str_split_nth(c("a,b,c", "d,e,f", "g,h"), ",", 2), c("b", "e", "h"))
+})
+
+test_that("str_split_nth handles strings with no delimiter", {
+  input <- c("apple", "banana", "cherry")
+  expect_equal(str_split_nth(input, ",", 1), input)
+})
+
+test_that("str_split_nth handles negative n", {
+  expect_equal(str_split_nth(c("a,b,c", "d,e,f", "g,h"), ",", -1), c("c", "f", "h"))
+})
+
+## str_split_last ---------------------------------------------
+
+test_that("str_split_last splits to the last occurrence correctly", {
+  expect_equal(str_split_last("a,b,c", ","), "c")
+  expect_equal(str_split_last("hello world", " "), "world")
+})
+
+test_that("str_split_last handles no matches", {
+  expect_equal(str_split_last("hello", ","), "hello")
+})
+
+test_that("str_split_last handles empty pattern", {
+  expect_equal(str_split_last("abc", ""), "c")
+})
+
+test_that("str_split_last handles empty string", {
+  expect_equal(str_split_last("", ","), NA_character_)
+})
+
+test_that("str_split_last handles multiple strings", {
+  expect_equal(str_split_last(c("a,b,c", "d,e,f", "g,h"), ","), c("c", "f", "h"))
+})
+
+test_that("str_split_last handles strings with no delimiter", {
+  input <- c("apple", "banana", "cherry")
+  expect_equal(str_split_last(input, ","), input)
 })
