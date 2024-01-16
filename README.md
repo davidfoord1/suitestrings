@@ -8,6 +8,7 @@
 [![Repo status: work in
 progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![R-CMD-check](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/davidfoord1/suitestrings/graph/badge.svg?token=F41JP7X4YP)](https://codecov.io.gh.davidfoord1/suitestrings)
 
 <!-- badges: end -->
 
