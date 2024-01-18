@@ -26,3 +26,37 @@ test_that("str_to_snake_case converts to snake case correctly", {
   expect_equal(str_to_snake_case("Hello-World 123"), "hello_world_123")
   expect_equal(str_to_snake_case("--Hello**World--"), "hello_world")
 })
+
+
+# str_ whitespace ---------------------------------------------------------
+
+# str_trim ----------------------------------------------------------------
+
+test_that("str_trim removes whitespace at the front", {
+  expect_equal(str_trim("    Hello"), "Hello")
+  expect_equal(str_trim(c("  Hello", "   world"), c("Hello", "world"))
+})
+
+test_that("str_trim removes whitespace at the end", {
+  expect_equal(str_trim("Hello   "), "Hello")
+  expect_equal(str_trim(c("Hello   ", "world    "), c("Hello", "world"))
+})
+
+test_that("str_trim removes whitespace at both ends", {
+  expect_equal(str_trim("  Hello   "), "Hello")
+  expect_equal(str_trim(c("   Hello   ", "   world    "), c("Hello", "world"))
+})
+
+test_that("str_trim empties a string with only whitespace", {
+  expect_equal(str_trim("   "), "")
+  expect_equal(str_trim("                                      "), "")
+})
+
+test_that("str_trim does nothing to a string without leading/trailing whitespace", {
+  expect_equal(str_trim("Hello"), "Hello")
+  expect_equal(str_trim(c("Hello", "world")), c("Hello", "world"))
+})
+
+# str_squish --------------------------------------------------------------
+
+
