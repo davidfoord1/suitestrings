@@ -34,17 +34,17 @@ test_that("str_to_snake_case converts to snake case correctly", {
 
 test_that("str_trim removes whitespace at the front", {
   expect_equal(str_trim("    Hello"), "Hello")
-  expect_equal(str_trim(c("  Hello", "   world"), c("Hello", "world"))
+  expect_equal(str_trim(c("  Hello", "   world")), c("Hello", "world"))
 })
 
 test_that("str_trim removes whitespace at the end", {
   expect_equal(str_trim("Hello   "), "Hello")
-  expect_equal(str_trim(c("Hello   ", "world    "), c("Hello", "world"))
+  expect_equal(str_trim(c("Hello   ", "world    ")), c("Hello", "world"))
 })
 
 test_that("str_trim removes whitespace at both ends", {
   expect_equal(str_trim("  Hello   "), "Hello")
-  expect_equal(str_trim(c("   Hello   ", "   world    "), c("Hello", "world"))
+  expect_equal(str_trim(c("   Hello   ", "   world    ")), c("Hello", "world"))
 })
 
 test_that("str_trim empties a string with only whitespace", {

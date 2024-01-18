@@ -63,3 +63,9 @@ str_to_snake_case <- function(strings) {
 
   tolower(strings)
 }
+
+str_trim <- function(strings) {
+  strings <- gsub("^[[:space:]]+", "", strings)
+  strings <- gsub("[[:space:]]+$", "", strings)
+  strings
+}
