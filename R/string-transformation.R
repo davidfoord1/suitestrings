@@ -64,6 +64,23 @@ str_to_snake_case <- function(strings) {
   tolower(strings)
 }
 
+#' Remove trailing and leading whitespace
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#'
+#' @return
+#' The same character vector, but with whitespace removed from the start and end
+#' of each string.
+#' @export
+#'
+#' @examples
+#' print(str_trim("    Remove these extra spaces    "))
+#' #> [1] "Remove these extra spaces"
+#' print(str_trim("Remove trailing new line character \n"))
+#' #> [1] "Remove trailing new line character"
+#' print(str_trim("But leave space     in   the      middle"))
+#' #> [1] "But leave space     in   the      middle"
 str_trim <- function(strings) {
   strings <- gsub("^[[:space:]]+", "", strings)
   strings <- gsub("[[:space:]]+$", "", strings)
