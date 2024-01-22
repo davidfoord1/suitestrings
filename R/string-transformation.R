@@ -102,16 +102,22 @@ str_squish <- function(strings) {
 #'
 #' @param strings
 #' A character vector, where each element of the vector is a character string.
-#' @param indent_width
-#' The number of times the `indent` should be repeated, on each side specified
+#' @param times
+#' The number of times the `indent` should be repeated, on each side specified.
 #' @param indent
 #' The characters to be used to indent.
 #' @param side
 #' Which side of the string should the indent be applied, one of
 #' "left", "right" or "both". The left side is the default.
 #'
-#' @return A vector similar to `strings`, but with the
+#' @return A character vector of the same length as `strings`, with each
+#' element indented as specified by the `times`, `indent`, and `side` arguments.
 #' @export
+#'
+#' @seealso
+#' [str_concat()] and [str_glue()] for combining strings together.
+#'
+#' Base [paste0()] and [strrep()] used by this function.
 #'
 #' @examples
 #' str_indent(c("Hello", "World"), 3)
@@ -120,16 +126,26 @@ str_squish <- function(strings) {
 #' #> [1] "...Hello" "...World"
 #' str_indent(c("Hello", "World"), 3, "-", "both")
 #' #> [1] "---Hello---" "---World---"
+#'
+#' # Being extra
+#' "wow" |>
+#'   str_indent(side = "both") |>
+#'   str_indent(3, indent = "->>") |>
+#'   str_indent(3,  side = "right", indent = "<<-") |>
+#'   str_indent(2, side = "both", indent = "-||-") |>
+#'   str_indent(2, indent = "[") |>
+#'   str_indent(2, side = "right", indent = "]")
+#' #> [1] "[[-||--||-->>->>->> wow <<-<<-<<--||--||-]]"
 str_indent <- function(strings,
-                       indent_width,
+                       times = 1,
                        side = c("left", "right", "both"),
                        indent = " ") {
   side = match.arg(side)
 
   left_indent <- right_indent <- 0
 
-  if (side == "left" || side == "both") left_indent <- indent_width
-  if (side == "right" || side == "both") right_indent <- indent_width
+  if (side == "left" || side == "both") left_indent <- times
+  if (side == "right" || side == "both") right_indent <- times
 
   paste0(strrep(indent, left_indent), strings, strrep(indent, right_indent))
 }
