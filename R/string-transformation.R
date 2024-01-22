@@ -122,8 +122,8 @@ str_squish <- function(strings) {
 #' #> [1] "---Hello---" "---World---"
 str_indent <- function(strings,
                        indent_width,
-                       indent = " ",
-                       side = c("left", "right", "both")) {
+                       side = c("left", "right", "both"),
+                       indent = " ") {
   side = match.arg(side)
 
   left_indent <- right_indent <- 0

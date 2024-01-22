@@ -91,9 +91,36 @@ test_that("str_squish does nothing to a string without extra whitespace", {
   expect_equal(str_squish(c("Hello", "world")), c("Hello", "world"))
 })
 
-# str_pad -----------------------------------------------------------------
+# str_indent ---------------------------------------------------------------
 
-test_that("str_pad adds padding to the left", {
-
+test_that("str_indent adds indent to the left", {
+  expect_equal(str_indent("hello", 3), "   hello")
+  expect_equal(str_indent(c("hello", "world"), 3),
+               c("   hello", "   world"))
+  expect_equal(str_indent("hello", 3, "left"), "   hello")
+  expect_equal(str_indent(c("hello", "world"), 3, "left"),
+               c("   hello", "   world"))
 })
 
+test_that("str_indent adds indent to the right", {
+  expect_equal(str_indent("hello", 3, "right"), "hello   ")
+  expect_equal(str_indent(c("hello", "world"), 3, "right"),
+               c("hello   ", "world   "))
+})
+
+test_that("str_indent adds indent to both sides", {
+  expect_equal(str_indent("hello", 3, "both"), "   hello   ")
+  expect_equal(str_indent(c("hello", "world"), 3, "both"),
+               c("   hello   ", "   world   "))
+})
+
+test_that("str_indent applies a custom indent character", {
+  expect_equal(str_indent("hello", 3, indent = "."), "...hello")
+  expect_equal(str_indent(c("hello", "world"), 3, indent = "."),
+               c("...hello", "...world"))
+})
+
+test_that("str_indent handles empty strings and vectors", {
+  expect_equal(str_indent("", 3), "   ")
+  expect_equal(str_indent(character(), 3), "   ")
+})
