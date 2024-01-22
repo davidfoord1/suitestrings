@@ -72,6 +72,8 @@ str_to_snake_case <- function(strings) {
 #' @return
 #' The same character vector, but with whitespace removed from the start and end
 #' of each string.
+#'
+#' @rdname str_trim
 #' @export
 #'
 #' @examples
@@ -81,8 +83,20 @@ str_to_snake_case <- function(strings) {
 #' #> [1] "Remove trailing new line character"
 #' print(str_trim("But leave space     in   the      middle"))
 #' #> [1] "But leave space     in   the      middle"
+#'
+#' print(str_squish(" Don't leave   space    in  the   middle   here  "))
+#' #> [1] "Don't leave space in the middle here"
 str_trim <- function(strings) {
   strings <- gsub("^[[:space:]]+", "", strings)
   strings <- gsub("[[:space:]]+$", "", strings)
+  strings
+}
+
+#' @export
+#' @rdname str_trim
+str_squish <- function(strings) {
+  strings <- gsub("^[[:space:]]+", "", strings)
+  strings <- gsub("[[:space:]]+$", "", strings)
+  strings <- gsub("[[:space:]]+", " ", strings)
   strings
 }
