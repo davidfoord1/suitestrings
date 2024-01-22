@@ -94,8 +94,6 @@ str_trim <- function(strings) {
 #' @export
 #' @rdname str_trim
 str_squish <- function(strings) {
-  strings <- gsub("^[[:space:]]+", "", strings)
-  strings <- gsub("[[:space:]]+$", "", strings)
-  strings <- gsub("[[:space:]]+", " ", strings)
+  strings <- gsub("[[:space:]]+", " ", str_trim(strings))
   strings
 }
