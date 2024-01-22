@@ -87,8 +87,7 @@ str_to_snake_case <- function(strings) {
 #' print(str_squish(" Don't leave   space    in  the   middle   here  "))
 #' #> [1] "Don't leave space in the middle here"
 str_trim <- function(strings) {
-  strings <- gsub("^[[:space:]]+", "", strings)
-  strings <- gsub("[[:space:]]+$", "", strings)
+  strings <- gsub("^[[:space:]]+|[[:space:]]+$", "", strings)
   strings
 }
 
