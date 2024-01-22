@@ -90,3 +90,10 @@ test_that("str_squish does nothing to a string without extra whitespace", {
   expect_equal(str_squish("Hello"), "Hello")
   expect_equal(str_squish(c("Hello", "world")), c("Hello", "world"))
 })
+
+# str_pad -----------------------------------------------------------------
+
+test_that("str_pad adds padding to the left", {
+
+})
+

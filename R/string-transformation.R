@@ -97,3 +97,39 @@ str_squish <- function(strings) {
   strings <- gsub("[[:space:]]+", " ", str_trim(strings))
   strings
 }
+
+#' Add characters to the ends of strings
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param indent_width
+#' The number of times the `indent` should be repeated, on each side specified
+#' @param indent
+#' The characters to be used to indent.
+#' @param side
+#' Which side of the string should the indent be applied, one of
+#' "left", "right" or "both". The left side is the default.
+#'
+#' @return A vector similar to `strings`, but with the
+#' @export
+#'
+#' @examples
+#' str_indent(c("Hello", "World"), 3)
+#' #> [1] "   Hello" "   World"
+#' str_indent(c("Hello", "World"), 3, ".")
+#' #> [1] "...Hello" "...World"
+#' str_indent(c("Hello", "World"), 3, "-", "both")
+#' #> [1] "---Hello---" "---World---"
+str_indent <- function(strings,
+                       indent_width,
+                       indent = " ",
+                       side = c("left", "right", "both")) {
+  side = match.arg(side)
+
+  left_indent <- right_indent <- 0
+
+  if (side == "left" || side == "both") left_indent <- indent_width
+  if (side == "right" || side == "both") right_indent <- indent_width
+
+  paste0(strrep(indent, left_indent), strings, strrep(indent, right_indent))
+}
