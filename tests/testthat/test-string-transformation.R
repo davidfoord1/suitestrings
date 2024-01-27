@@ -165,6 +165,8 @@ test_that("str_pad takes a custom pad character", {
                c(".hello", ".world"))
 })
 
-test_that("str_pad doesn't accept more than one character for padding", {
+test_that("str_pad only accepts one character for padding", {
   expect_error(str_pad("hello", pad = ".."))
+  expect_error(str_pad("hello", pad = ""))
+  expect_error(str_pad("hello", pad = character(0)))
 })
