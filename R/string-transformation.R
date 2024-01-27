@@ -7,6 +7,10 @@
 #'
 #' @param strings
 #' A character vector, where each element of the vector is a character string.
+#' @param split_on_capital
+#' `str_to_snake_case()` only: whether to treat every upper case letter as
+#' the start of a new word. This is for converting from PascalCase and
+#' camelCase.
 #'
 #' @return
 #' `str_to_upper_case()`:
@@ -19,9 +23,7 @@
 #' Returns `strings` with all upper case letters converted to lower case,
 #' non-alphanumeric characters between words converted to an underscore "_",
 #' and all preceding/trailing non-alphanumeric characters removed.
-#' Any alternate word separations are replaced with an underscore,
-#' including as an insertion between words, for example,
-#' "camelCase" will be converted to "camel_case".
+#'
 #'
 #' @seealso
 #' [str_replace_all()] for replacing specific characters with other characters.
@@ -38,6 +40,13 @@
 #' #> [1] "a good day for kite-flying!"
 #' str_to_snake_case(string)
 #' #> [1] "a_good_day_for_kite_flying"
+#'
+#' # Optionally convert from PascalCase and camelCase:
+#' str_to_snake_case(
+#'   "AGoodDayForKiteFlying",
+#'   split_on_capital = TRUE
+#' )
+#' #> [1] "a_good_day_for_kite_flying"
 str_to_upper_case<- function(strings) {
   toupper(strings)
 }
@@ -50,16 +59,17 @@ str_to_lower_case <- function(strings) {
 
 #' @export
 #' @rdname str_to_case
-str_to_snake_case <- function(strings) {
+str_to_snake_case <- function(strings, split_on_capital = FALSE) {
   # Replace all non-alphanumeric sequences with an underscore
   strings <- gsub("[^[:alnum:]]+", "_", strings)
 
   # Remove any leading or trailing underscores
   strings <- gsub("^_+|_+$", "", strings)
 
-  # To handle things like camelCase
-  # Insert underscores between lowercase and uppercase letters
-  strings <- gsub("([a-z])([A-Z])", "\\1_\\2", strings)
+  if (split_on_capital) {
+    # Insert underscores between lowercase and uppercase letters
+    strings <- gsub("([a-zA-Z])([A-Z])", "\\1_\\2", strings)
+  }
 
   tolower(strings)
 }
