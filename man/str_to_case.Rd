@@ -10,10 +10,14 @@ str_to_upper_case(strings)
 
 str_to_lower_case(strings)
 
-str_to_snake_case(strings)
+str_to_snake_case(strings, split_on_capital = FALSE)
 }
 \arguments{
 \item{strings}{A character vector, where each element of the vector is a character string.}
+
+\item{split_on_capital}{\code{str_to_snake_case()} only: whether to treat every upper case letter as
+the start of a new word. This is for converting from PascalCase and
+camelCase.}
 }
 \value{
 \code{str_to_upper_case()}:
@@ -26,9 +30,6 @@ Returns \code{strings} with all upper case letters converted to lower case.
 Returns \code{strings} with all upper case letters converted to lower case,
 non-alphanumeric characters between words converted to an underscore "_",
 and all preceding/trailing non-alphanumeric characters removed.
-Any alternate word separations are replaced with an underscore,
-including as an insertion between words, for example,
-"camelCase" will be converted to "camel_case".
 }
 \description{
 Convert strings to "UPPER CASE", "lower case" or "snake_case".
@@ -43,6 +44,13 @@ str_to_upper_case(string)
 str_to_lower_case(string)
 #> [1] "a good day for kite-flying!"
 str_to_snake_case(string)
+#> [1] "a_good_day_for_kite_flying"
+
+# Optionally convert from PascalCase and camelCase:
+str_to_snake_case(
+  "AGoodDayForKiteFlying",
+  split_on_capital = TRUE
+)
 #> [1] "a_good_day_for_kite_flying"
 }
 \seealso{
