@@ -214,6 +214,8 @@ str_pad <- function(strings,
                     prefer_side = c("right", "left")
                     ) {
   stopifnot(nchar(pad) == 1)
+  stopifnot(length(pad) == 1)
+
   side <- match.arg(side)
   prefer_side <- match.arg(prefer_side)
 
