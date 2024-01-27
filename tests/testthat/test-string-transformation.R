@@ -124,3 +124,47 @@ test_that("str_indent handles empty strings and vectors", {
   expect_equal(str_indent("", 3), "   ")
   expect_equal(str_indent(character(), 3), "   ")
 })
+
+# str_pad -----------------------------------------------------------------
+
+test_that("str_pad adds padding to the left", {
+  expect_equal(str_pad("hello"), " hello")
+  expect_equal(str_pad(c("hello", "world")), c(" hello", " world"))
+  expect_equal(str_pad("hello", side = "left"), " hello")
+  expect_equal(str_pad(c("hello", "world"), side = "left"),
+               c(" hello", " world"))
+})
+
+test_that("str_pad adds padding to the right", {
+  expect_equal(str_pad("hello", side = "right"), "hello ")
+  expect_equal(str_pad(c("hello", "world"), side = "right"),
+               c("hello ", "world "))
+})
+
+test_that("str_pad pads to a specified length", {
+  expect_equal(str_pad("hello", 10), "     hello")
+  expect_equal(str_pad(c("hello", "world"), 10), c("     hello", "     world"))
+})
+
+test_that("str_pad pads to both sides", {
+  expect_equal(str_pad("hello", 10, side = "both"), "  hello   ")
+  expect_equal(str_pad(c("hello", "world"), 10, side = "both"),
+               c("  hello   ", "  world   "))
+})
+
+test_that("str_pad prefers the left when specified", {
+  expect_equal(str_pad("hello", 10, side = "both", prefer_side = "left"),
+               "   hello  ")
+  expect_equal(str_pad(c("hello", "world"), 10, side = "both", prefer_side = "left"),
+               c("   hello  ", "   world  "))
+})
+
+test_that("str_pad takes a custom pad character", {
+  expect_equal(str_pad("hello", pad = "."), ".hello")
+  expect_equal(str_pad(c("hello", "world"), pad = "."),
+               c(".hello", ".world"))
+})
+
+test_that("str_pad doesn't accept more than one character for padding", {
+  expect_error(str_pad("hello", pad = ".."))
+})
