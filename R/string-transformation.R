@@ -244,3 +244,51 @@ str_pad <- function(strings,
 
   paste0(strrep(pad, left_pad), strings, strrep(pad, right_pad))
 }
+
+#' Wrap character strings to format as paragraphs
+#'
+#' @description
+#' Each character string in the input is first split into paragraphs
+#' (or lines containing whitespace only).
+#' The paragraphs are then formatted by breaking lines at word boundaries.
+#' The target columns for wrapping lines and the indentation of the first
+#' and all subsequent lines of a paragraph can be controlled independently.
+#'
+#' @param strings
+#' #' A character vector, where each element of the vector is a character string.
+#' @param min_width
+#' A positive integer giving the minimum line width for for wrapping lines in the output.
+#' @param indent
+#' A non-negative integer giving the indentation of the first line in a paragraph.
+#' @param exdent
+#' A non-negative integer specifying the indentation of subsequent lines in paragraphs.
+#' @param initial
+#' A character string to be used as a prefix for the first line in each
+#' paragraph.
+#' @param prefix
+#' A character string to be used as a prefix for subsequent lines in each
+#' paragraph.
+#'
+#' @return
+#' A list of a character vector for each input string in `strings`.
+#' The new strings in each character vector are each a single line of the
+#' the string formatted by paragraph.
+#' @export
+#'
+#' @examples
+#' text <- paste(readLines(file.path(R.home("doc"), "THANKS")), collapse = "\n")
+#'
+#' writeLines(str_wrap(text, min_width = 60))
+#' writeLines(str_wrap(text, min_width = 60, indent = 5))
+#' writeLines(str_wrap(text, min_width = 60, exdent = 5))
+#' writeLines(str_wrap(text, min_width = 60, prefix = "> "))
+
+str_wrap <- function(strings,
+                     min_width = 80,
+                     indent = 0,
+                     exdent = 0,
+                     prefix = "",
+                     initial = prefix
+) {
+  strwrap(strings, min_width, indent, exdent, prefix, initial = initial)
+}
