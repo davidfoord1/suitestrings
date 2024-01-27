@@ -127,7 +127,7 @@ str_squish <- function(strings) {
 #' str_indent(c("Hello", "World"), 3, "-", "both")
 #' #> [1] "---Hello---" "---World---"
 #'
-#' # Being extra
+#' # Get extra with it
 #' "wow" |>
 #'   str_indent(side = "both") |>
 #'   str_indent(3, indent = "->>") |>
@@ -148,4 +148,97 @@ str_indent <- function(strings,
   if (side == "right" || side == "both") right_indent <- times
 
   paste0(strrep(indent, left_indent), strings, strrep(indent, right_indent))
+}
+
+#' Pad a string to a minimum length
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param min_length
+#' The minimum number of characters in the padded string. The default is one more
+#' character than the longest string in `strings`. Strings already longer than
+#' `min_length` will be unchanged.
+#' @param side
+#' Which side of the string should the indent be applied, one of
+#' "left", "right" or "both". The left side is the default. When "both", half
+#' the required padding length with be added to each side, with `prefer_side`
+#' controlling where odd additions go.
+#' @param pad
+#' A single character used to pad the space
+#' @param prefer_side
+#' If `side` is "both", which side should get one extra pad when `min_length`
+#' is odd? Default to the right side.
+#'
+#' @return
+#' A character vector equal in length to `strings`, with each string having a
+#' [str_length()] of `min_length`. Strings already longer than `min_length`
+#' will be unchanged.
+#'
+#' @export
+#'
+#' @seealso
+#' [str_indent()] for adding a specific number of characters.
+#'
+#' [str_concat()] and [str_glue()] for combining strings together.
+#'
+#' Base [paste0()] and [strrep()] used by this function.
+#'
+#' @examples
+#' str_pad(c("Hello", "World"))
+#' #> [1] " Hello" " World"
+#'
+#' str_pad(c("Hello", "World"), 10)
+#' #> [1] "     Hello" "     World"
+#'
+#' str_pad(c("Hello", "World"),
+#'         10,
+#'         side = "both")
+#' #> [1] "  Hello   " "  World   "
+#'
+#' str_pad(c("Hello", "World"),
+#'         10,
+#'         side = "both",
+#'         pad = ".")
+#' #> [1] "..Hello..." "..World..."
+#'
+#' str_pad(c("Hello", "World"),
+#'         10,
+#'         side = "both",
+#'         pad = ".",
+#'         prefer_side = "left")
+#' #> [1] "...Hello.." "...World.."
+str_pad <- function(strings,
+                    min_length = max(nchar(strings)) + 1,
+                    side = c("left", "right", "both"),
+                    pad = " ",
+                    prefer_side = c("right", "left")
+                    ) {
+  stopifnot(nchar(pad) == 1)
+  side <- match.arg(side)
+  prefer_side <- match.arg(prefer_side)
+
+  pad_length <- min_length - nchar(strings)
+
+  left_pad <- right_pad <- 0
+
+  if (side == "both") {
+    side_length <- pad_length/2
+    if (prefer_side == "right") {
+      left_pad <- floor(side_length)
+      right_pad <- ceiling(side_length)
+    } else {
+      right_pad <- floor(side_length)
+      left_pad <- ceiling(side_length)
+    }
+  }
+
+  if (side == "left") {
+    left_pad <- pad_length
+  }
+
+  if (side == "right") {
+    right_pad <- pad_length
+  }
+
+  paste0(strrep(pad, left_pad), strings, strrep(pad, right_pad))
 }

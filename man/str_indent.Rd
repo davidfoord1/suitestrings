@@ -31,7 +31,7 @@ str_indent(c("Hello", "World"), 3, ".")
 str_indent(c("Hello", "World"), 3, "-", "both")
 #> [1] "---Hello---" "---World---"
 
-# Being extra
+# Get extra with it
 "wow" |>
   str_indent(side = "both") |>
   str_indent(3, indent = "->>") |>
