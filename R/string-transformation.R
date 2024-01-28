@@ -56,7 +56,7 @@
 #'
 #' # Optionally capitalise first letter of the word
 #' str_to_camel_case(
-#'   str_to_camel_case(string),
+#'   string,
 #'   capitalise_first = TRUE
 #' )
 #' #> [1] "AGoodDayForKiteFlying"
