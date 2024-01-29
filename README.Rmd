@@ -79,6 +79,13 @@ str_glue(statement)
 ### Clean and transform strings
 
 ```{r}
+# Remove leading/trailing spaces and reduce middle spaces to one
+str_squish("  Too   much     space        ")
+
+# Append a specific number of characters
+writeLines(str_indent(c("Hello", "World"), 3))
+
+# Convert strings to different cases
 str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STRing!!")
 ```
 

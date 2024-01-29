@@ -4,16 +4,25 @@
 \alias{str_to_upper_case}
 \alias{str_to_lower_case}
 \alias{str_to_snake_case}
+\alias{str_to_camel_case}
 \title{Convert strings to different cases}
 \usage{
 str_to_upper_case(strings)
 
 str_to_lower_case(strings)
 
-str_to_snake_case(strings)
+str_to_snake_case(strings, split_on_capital = FALSE)
+
+str_to_camel_case(strings, capitalise_first = FALSE)
 }
 \arguments{
 \item{strings}{A character vector, where each element of the vector is a character string.}
+
+\item{split_on_capital}{\code{str_to_snake_case()} only: whether to treat every upper case letter as
+the start of a new word. This is for converting from camelCase.}
+
+\item{capitalise_first}{\code{str_to_camel_case()} only: whether the first letter of the first word
+in each string should be capitalised as in "PascalCase" not "camelCase".}
 }
 \value{
 \code{str_to_upper_case()}:
@@ -26,17 +35,13 @@ Returns \code{strings} with all upper case letters converted to lower case.
 Returns \code{strings} with all upper case letters converted to lower case,
 non-alphanumeric characters between words converted to an underscore "_",
 and all preceding/trailing non-alphanumeric characters removed.
-Any alternate word separations are replaced with an underscore,
-including as an insertion between words, for example,
-"camelCase" will be converted to "camel_case".
 }
 \description{
-Convert strings to "UPPER CASE", "lower case" or "snake_case".
-Snake case is particularly useful for clean and consistent \code{names()}.
-These functions are an example of assignment in snake case.
+Convert strings to "UPPER CASE", "lower case", "snake_case" or
+"camelCase".
 }
 \examples{
-string <- "A good day for kite_flying!"
+string <- "A good day for kite-flying!"
 
 str_to_upper_case(string)
 #> [1] "A GOOD DAY FOR KITE-FLYING!"
@@ -44,7 +49,25 @@ str_to_lower_case(string)
 #> [1] "a good day for kite-flying!"
 str_to_snake_case(string)
 #> [1] "a_good_day_for_kite_flying"
+str_to_camel_case(string)
+#> [1] "aGoodDayForKiteFlying"
+
+# Optionally convert from camelCase:
+str_to_snake_case(
+  str_to_camel_case(string),
+  split_on_capital = TRUE
+)
+#> [1] "a_good_day_for_kite_flying"
+
+# Optionally capitalise first letter of the word
+str_to_camel_case(
+  string,
+  capitalise_first = TRUE
+)
+#> [1] "AGoodDayForKiteFlying"
 }
 \seealso{
 \code{\link[=str_replace_all]{str_replace_all()}} for replacing specific characters with other characters.
+
+Base R \code{\link[=tolower]{tolower()}} and \code{\link[=toupper]{toupper()}}.
 }
