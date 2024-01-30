@@ -12,9 +12,9 @@ progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.reposta
 
 <!-- badges: end -->
 
-This is primarily a personal learning project. It aims to provide a
-comprehensive and convenient set of functions for working with strings
-in R. More specifically, for:
+This is primarily a personal learning project. It uses wrappers around
+base R string operations to provide a comprehensive and convenient set
+of functions for working with strings in R. More specifically, for:
 
 - Combining strings.
 - Cleaning and transforming strings.
@@ -52,8 +52,8 @@ dependencies to install.
 #### Concatenate strings
 
 ``` r
-str_concat("Mary", "had", "a", "little", "lamb", separator = " ")
-#> [1] "Mary had a little lamb"
+str_concat(c("Hello", "How are"), c("world!", "you?"), separator = " ")
+#> [1] "Hello world!" "How are you?"
 ```
 
 #### Evaluate R expression in strings
@@ -78,10 +78,6 @@ str_glue(statement)
 # Remove leading/trailing spaces and reduce middle spaces to one
 str_squish("  Too   much     space        ")
 #> [1] "Too much space"
-
-# Pad a string up to a minimum with
-str_pad(c("Hello", "World"), 10, "right", ".")
-#> [1] "Hello....." "World....."
 
 # Append a specific number of characters
 writeLines(str_indent(c("Hello", "World"), 3))
