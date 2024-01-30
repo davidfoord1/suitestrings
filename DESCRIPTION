@@ -1,10 +1,9 @@
 Package: suitestrings
-Title: What the Package Does (One Line, Title Case)
+Title: A consistent approach to common string operations
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("David", "Foord", , "david.foord@outlook.com", role = c("aut", "cre"))
+Description: Convenient wrappers around base R string manipulation functions, for cleaning, combining and transforming strings, operating on regular expression and reorganising character vectors.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -15,3 +14,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+URL: https://davidfoord1.github.io/suitestrings/, https://github.com/davidfoord1/suitestrings
+BugReports: https://github.com/davidfoord1/suitestrings/issues
