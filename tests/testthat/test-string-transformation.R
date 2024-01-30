@@ -170,3 +170,23 @@ test_that("str_pad only accepts one character for padding", {
   expect_error(str_pad("hello", pad = ""))
   expect_error(str_pad("hello", pad = character(0)))
 })
+
+# str_wrap ----------------------------------------------------------------
+
+test_that("str_wrap breaks up a string by width", {
+  expect_equal(str_wrap("Hello world", min_width = 5),
+               c("Hello", "world"))
+  expect_equal(str_wrap("Hello great world", min_width = 5),
+               c("Hello", "great", "world"))
+  expect_equal(str_wrap("Hello great world", min_width = 15),
+               c("Hello great", "world"))
+})
+
+test_that("str_wrap adds a prefix", {
+  expect_equal(str_wrap("Hello world", min_width = 5, prefix = "> "),
+               c("> Hello", "> world"))
+  expect_equal(str_wrap("Hello great world", min_width = 5),
+               c("> Hello", "> great", "> world"))
+  expect_equal(str_wrap("Hello great world", min_width = 15),
+               c("> Hello great", "> world"))
+})
