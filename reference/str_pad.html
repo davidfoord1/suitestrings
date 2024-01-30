@@ -30,7 +30,13 @@
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
-      <ul class="navbar-nav"></ul></div>
+      <ul class="navbar-nav"><li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/davidfoord1/suitestrings/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul></div>
 
     
   </div>
@@ -38,7 +44,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Pad a string to a minimum length</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/davidfoord1/suitestrings/blob/HEAD/R/string-transformation.R" class="external-link"><code>R/string-transformation.R</code></a></small>
       <div class="d-none name"><code>str_pad.Rd</code></div>
     </div>
 
@@ -89,8 +95,8 @@ is odd? Default to the right side.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A character vector equal in length to <code>strings</code>, with each string having a
-<code>str_length()</code> of <code>min_length</code>. Strings already longer than <code>min_length</code></p>
+<p>A character vector equal in length to <code>strings</code>, with each string having at
+least as many characters as <code>min_length</code>. Strings already longer than <code>min_length</code></p>
 
 
 <p>will be unchanged.</p>
@@ -139,7 +145,7 @@ is odd? Default to the right side.</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by First Last.</p>
+  <p></p><p>Developed by David Foord.</p>
 </div>
 
 <div class="pkgdown-footer-right">
