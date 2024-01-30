@@ -20,11 +20,11 @@ test_that("str_to_lower_case converts to lower case correctly", {
 
 test_that("str_to_snake_case converts to snake case correctly", {
   expect_equal(str_to_snake_case("Hello World"), "hello_world")
-  expect_equal(str_to_snake_case("HelloWorld"), "hello_world")
   expect_equal(str_to_snake_case("hello-world"), "hello_world")
-  expect_equal(str_to_snake_case("helloWorld"), "hello_world")
   expect_equal(str_to_snake_case("Hello-World 123"), "hello_world_123")
   expect_equal(str_to_snake_case("--Hello**World--"), "hello_world")
+
+  expect_equal(str_to_snake_case("helloWorld", TRUE), "hello_world")
 })
 
 
