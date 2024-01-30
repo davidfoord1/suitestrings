@@ -132,9 +132,9 @@ str_squish <- function(strings) {
 #' @examples
 #' str_indent(c("Hello", "World"), 3)
 #' #> [1] "   Hello" "   World"
-#' str_indent(c("Hello", "World"), 3, ".")
+#' str_indent(c("Hello", "World"), 3, indent = ".")
 #' #> [1] "...Hello" "...World"
-#' str_indent(c("Hello", "World"), 3, "-", "both")
+#' str_indent(c("Hello", "World"), 3, "both", "-")
 #' #> [1] "---Hello---" "---World---"
 #'
 #' # Get extra with it
