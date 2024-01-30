@@ -25,7 +25,8 @@ library(suitestrings)
 
 <!-- badges: end -->
 
-This is primarily a personal learning project. It aims to provide a comprehensive and convenient set of functions for working with strings in R. More specifically, for:
+This is primarily a personal learning project. It uses wrappers around base R string
+operations to provide a comprehensive and convenient set of functions for working with strings in R. More specifically, for:
 
 -   Combining strings.
 -   Cleaning and transforming strings.
@@ -59,7 +60,7 @@ This package is built with base R, so there are no additional dependencies to in
 #### Concatenate strings
 
 ```{r}
-str_concat("Mary", "had", "a", "little", "lamb", separator = " ")
+str_concat(c("Hello", "How are"), c("world!", "you?"), separator = " ")
 ```
 
 #### Evaluate R expression in strings

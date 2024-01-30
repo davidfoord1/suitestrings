@@ -24,6 +24,8 @@ test_that("str_to_snake_case converts to snake case correctly", {
   expect_equal(str_to_snake_case("hello-world"), "hello_world")
   expect_equal(str_to_snake_case("Hello-World 123"), "hello_world_123")
   expect_equal(str_to_snake_case("--Hello**World--"), "hello_world")
+
+  expect_equal(str_to_snake_case("helloWorld", TRUE), "hello_world")
 })
 
 ## str_to_camel_case -----------------------------------------------------
@@ -176,4 +178,24 @@ test_that("str_pad only accepts one character for padding", {
   expect_error(str_pad("hello", pad = ".."))
   expect_error(str_pad("hello", pad = ""))
   expect_error(str_pad("hello", pad = character(0)))
+})
+
+# str_wrap ----------------------------------------------------------------
+
+test_that("str_wrap breaks up a string by width", {
+  expect_equal(str_wrap("Hello world", min_width = 5),
+               c("Hello", "world"))
+  expect_equal(str_wrap("Hello great world", min_width = 5),
+               c("Hello", "great", "world"))
+  expect_equal(str_wrap("Hello great world", min_width = 15),
+               c("Hello great", "world"))
+})
+
+test_that("str_wrap adds a prefix", {
+  expect_equal(str_wrap("Hello world", min_width = 5, prefix = "> "),
+               c("> Hello", "> world"))
+  expect_equal(str_wrap("Hello great world", min_width = 5, prefix = "> "),
+               c("> Hello", "> great", "> world"))
+  expect_equal(str_wrap("Hello great world", min_width = 15, prefix = "> "),
+               c("> Hello great", "> world"))
 })
