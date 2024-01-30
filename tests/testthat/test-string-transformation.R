@@ -185,8 +185,8 @@ test_that("str_wrap breaks up a string by width", {
 test_that("str_wrap adds a prefix", {
   expect_equal(str_wrap("Hello world", min_width = 5, prefix = "> "),
                c("> Hello", "> world"))
-  expect_equal(str_wrap("Hello great world", min_width = 5),
+  expect_equal(str_wrap("Hello great world", min_width = 5, prefix = "> "),
                c("> Hello", "> great", "> world"))
-  expect_equal(str_wrap("Hello great world", min_width = 15),
+  expect_equal(str_wrap("Hello great world", min_width = 15, prefix = "> "),
                c("> Hello great", "> world"))
 })
