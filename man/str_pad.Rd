@@ -30,8 +30,8 @@ controlling where odd additions go.}
 is odd? Default to the right side.}
 }
 \value{
-A character vector equal in length to \code{strings}, with each string having a
-\code{\link[=str_length]{str_length()}} of \code{min_length}. Strings already longer than \code{min_length}
+A character vector equal in length to \code{strings}, with each string having at
+least as many characters as \code{min_length}. Strings already longer than \code{min_length}
 will be unchanged.
 }
 \description{

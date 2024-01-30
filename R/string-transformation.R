@@ -180,8 +180,8 @@ str_indent <- function(strings,
 #' is odd? Default to the right side.
 #'
 #' @return
-#' A character vector equal in length to `strings`, with each string having a
-#' [str_length()] of `min_length`. Strings already longer than `min_length`
+#' A character vector equal in length to `strings`, with each string having at
+#' least as many characters as `min_length`. Strings already longer than `min_length`
 #' will be unchanged.
 #'
 #' @export
