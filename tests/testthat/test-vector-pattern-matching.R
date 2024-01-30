@@ -5,6 +5,7 @@ test_that("chr_detect_any() identifies if any strings contain the pattern", {
   strings <- c("apple", "banana", "cherry")
 
   expect_equal(chr_detect_any(strings, "a"), TRUE)
+  expect_equal(chr_detect_any(strings, "z"), FALSE)
 })
 
 # chr_detect_all ------------------------------------------------
@@ -13,6 +14,7 @@ test_that("chr_detect_all() identifies if any strings contain the pattern", {
   strings <- c("apple", "banana", "cherry")
 
   expect_equal(chr_detect_all(strings, "a"), FALSE)
+  expect_equal(chr_detect_all(strings, "[aeiou]"), TRUE)
 })
 
 # str_which -----------------------------------------------------
@@ -26,6 +28,16 @@ test_that("chr_which() identifies the matching indices in a character vector", {
 
 test_that("chr_count_matches() counts the number of matching indices in a vector", {
   expect_equal(chr_count_matches(letters, "[aeiou]"), 5L)
+})
+
+
+# chr_extract_all ---------------------------------------------------------
+
+test_that("chr_extract_all gets all matches from a vector", {
+  expect_equal(chr_extract_all(letters, "[aeiou]"), c("a", "e", "i", "o", "u"))
+  expect_equal(chr_extract_all(1:9, "[12789]"), c("1", "2", "7", "8", "9"))
+  expect_equal(chr_extract_all(c("cat-sat-on-a-mat", "rat"), "\\wa\\w"),
+               c("cat", "sat", "mat", "rat"))
 })
 
 # chr_split -----------------------------------------------------
