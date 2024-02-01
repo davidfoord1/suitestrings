@@ -91,27 +91,22 @@ element indented as specified by the <code>times</code>, <code>indent</code>, an
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">str_indent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "   Hello" "   World"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "   Hello" "   World"</span></span></span>
-<span class="r-in"><span><span class="fu">str_indent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">3</span>, indent <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "...Hello" "...World"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "...Hello" "...World"</span></span></span>
-<span class="r-in"><span><span class="fu">str_indent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">3</span>, <span class="st">"both"</span>, <span class="st">"-"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "---Hello---" "---World---"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "---Hello---" "---World---"</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Get extra with it</span></span></span>
-<span class="r-in"><span><span class="st">"wow"</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">str_indent</span><span class="op">(</span>side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">3</span>, indent <span class="op">=</span> <span class="st">"-&gt;&gt;"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">3</span>,  side <span class="op">=</span> <span class="st">"right"</span>, indent <span class="op">=</span> <span class="st">"&lt;&lt;-"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">2</span>, side <span class="op">=</span> <span class="st">"both"</span>, indent <span class="op">=</span> <span class="st">"-||-"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">2</span>, indent <span class="op">=</span> <span class="st">"["</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">2</span>, side <span class="op">=</span> <span class="st">"right"</span>, indent <span class="op">=</span> <span class="st">"]"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "[[-||--||--&gt;&gt;-&gt;&gt;-&gt;&gt; wow &lt;&lt;-&lt;&lt;-&lt;&lt;--||--||-]]"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "[[-||--||--&gt;&gt;-&gt;&gt;-&gt;&gt; wow &lt;&lt;-&lt;&lt;-&lt;&lt;--||--||-]]"</span></span></span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">str_indent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "   Hello" "   World"</span></span>
+<span><span class="fu">str_indent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">3</span>, indent <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "...Hello" "...World"</span></span>
+<span><span class="fu">str_indent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">3</span>, <span class="st">"both"</span>, <span class="st">"-"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "---Hello---" "---World---"</span></span>
+<span></span>
+<span><span class="co"># Get extra with it</span></span>
+<span><span class="st">"wow"</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">str_indent</span><span class="op">(</span>side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">3</span>, indent <span class="op">=</span> <span class="st">"-&gt;&gt;"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">3</span>,  side <span class="op">=</span> <span class="st">"right"</span>, indent <span class="op">=</span> <span class="st">"&lt;&lt;-"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">2</span>, side <span class="op">=</span> <span class="st">"both"</span>, indent <span class="op">=</span> <span class="st">"-||-"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">2</span>, indent <span class="op">=</span> <span class="st">"["</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">str_indent</span><span class="op">(</span><span class="fl">2</span>, side <span class="op">=</span> <span class="st">"right"</span>, indent <span class="op">=</span> <span class="st">"]"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "[[-||--||--&gt;&gt;-&gt;&gt;-&gt;&gt; wow &lt;&lt;-&lt;&lt;-&lt;&lt;--||--||-]]"</span></span></code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

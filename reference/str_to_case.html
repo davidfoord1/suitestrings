@@ -111,37 +111,30 @@ and all preceding/trailing non-alphanumeric characters removed.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">string</span> <span class="op">&lt;-</span> <span class="st">"A good day for kite-flying!"</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">str_to_upper_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "A GOOD DAY FOR KITE-FLYING!"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "A GOOD DAY FOR KITE-FLYING!"</span></span></span>
-<span class="r-in"><span><span class="fu">str_to_lower_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a good day for kite-flying!"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "a good day for kite-flying!"</span></span></span>
-<span class="r-in"><span><span class="fu">str_to_snake_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a_good_day_for_kite_flying"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "a_good_day_for_kite_flying"</span></span></span>
-<span class="r-in"><span><span class="fu">str_to_camel_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "aGoodDayForKiteFlying"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "aGoodDayForKiteFlying"</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Optionally convert from camelCase:</span></span></span>
-<span class="r-in"><span><span class="fu">str_to_snake_case</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu">str_to_camel_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  split_on_capital <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a_good_day_for_kite_flying"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "a_good_day_for_kite_flying"</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Optionally capitalise first letter of the word</span></span></span>
-<span class="r-in"><span><span class="fu">str_to_camel_case</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">string</span>,</span></span>
-<span class="r-in"><span>  capitalise_first <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "AGoodDayForKiteFlying"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "AGoodDayForKiteFlying"</span></span></span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="va">string</span> <span class="op">&lt;-</span> <span class="st">"A good day for kite-flying!"</span></span>
+<span></span>
+<span><span class="fu">str_to_upper_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "A GOOD DAY FOR KITE-FLYING!"</span></span>
+<span><span class="fu">str_to_lower_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "a good day for kite-flying!"</span></span>
+<span><span class="fu">str_to_snake_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "a_good_day_for_kite_flying"</span></span>
+<span><span class="fu">str_to_camel_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "aGoodDayForKiteFlying"</span></span>
+<span></span>
+<span><span class="co"># Optionally convert from camelCase:</span></span>
+<span><span class="fu">str_to_snake_case</span><span class="op">(</span></span>
+<span>  <span class="fu">str_to_camel_case</span><span class="op">(</span><span class="va">string</span><span class="op">)</span>,</span>
+<span>  split_on_capital <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "a_good_day_for_kite_flying"</span></span>
+<span></span>
+<span><span class="co"># Optionally capitalise first letter of the word</span></span>
+<span><span class="fu">str_to_camel_case</span><span class="op">(</span></span>
+<span>  <span class="va">string</span>,</span>
+<span>  capitalise_first <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "AGoodDayForKiteFlying"</span></span></code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

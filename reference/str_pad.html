@@ -110,35 +110,29 @@ least as many characters as <code>min_length</code>. Strings already longer than
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] " Hello" " World"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] " Hello" " World"</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "     Hello" "     World"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "     Hello" "     World"</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        <span class="fl">10</span>,</span></span>
-<span class="r-in"><span>        side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "  Hello   " "  World   "</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "  Hello   " "  World   "</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        <span class="fl">10</span>,</span></span>
-<span class="r-in"><span>        side <span class="op">=</span> <span class="st">"both"</span>,</span></span>
-<span class="r-in"><span>        pad <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "..Hello..." "..World..."</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "..Hello..." "..World..."</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>        <span class="fl">10</span>,</span></span>
-<span class="r-in"><span>        side <span class="op">=</span> <span class="st">"both"</span>,</span></span>
-<span class="r-in"><span>        pad <span class="op">=</span> <span class="st">"."</span>,</span></span>
-<span class="r-in"><span>        prefer_side <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "...Hello.." "...World.."</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "...Hello.." "...World.."</span></span></span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] " Hello" " World"</span></span>
+<span></span>
+<span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "     Hello" "     World"</span></span>
+<span></span>
+<span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>,</span>
+<span>        <span class="fl">10</span>,</span>
+<span>        side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "  Hello   " "  World   "</span></span>
+<span></span>
+<span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>,</span>
+<span>        <span class="fl">10</span>,</span>
+<span>        side <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>        pad <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "..Hello..." "..World..."</span></span>
+<span></span>
+<span><span class="fu">str_pad</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>,</span>
+<span>        <span class="fl">10</span>,</span>
+<span>        side <span class="op">=</span> <span class="st">"both"</span>,</span>
+<span>        pad <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>        prefer_side <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "...Hello.." "...World.."</span></span></code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

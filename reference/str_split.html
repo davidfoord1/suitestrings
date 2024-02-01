@@ -139,34 +139,23 @@ For complete syntax details see <a href="https://www.pcre.org/current/doc/html/"
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">str_split_first</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "one" "abc"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "one" "abc"</span></span></span>
-<span class="r-in"><span><span class="fu">str_split_nth</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span>, <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "two" "def"</span>
-<span class="r-in"><span><span class="co">#&gt; [1] "two" "def"</span></span></span>
-<span class="r-in"><span><span class="fu">str_split_last</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "three" "ghi"  </span>
-<span class="r-in"><span><span class="co">#&gt; [1] "three" "ghi"</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">str_split_all</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "one"   "two"   "three"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "abc" "def" "ghi"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co">#&gt; [[1]]</span></span></span>
-<span class="r-in"><span><span class="co">#&gt; [1] "one"   "two"   "three"</span></span></span>
-<span class="r-in"><span><span class="co">#&gt;</span></span></span>
-<span class="r-in"><span><span class="co">#&gt; [[2]]</span></span></span>
-<span class="r-in"><span><span class="co">#&gt; [1] "abc" "def" "ghi"</span></span></span>
-<span class="r-in"><span><span class="fu">chr_split_all</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "one"   "two"   "three" "abc"   "def"   "ghi"  </span>
-<span class="r-in"><span><span class="co">#&gt; [1] "one"   "two"   "three" "abc"   "def"   "ghi"</span></span></span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span></span>
+<span><span class="fu">str_split_first</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "one" "abc"</span></span>
+<span><span class="fu">str_split_nth</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "two" "def"</span></span>
+<span><span class="fu">str_split_last</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "three" "ghi"</span></span>
+<span></span>
+<span><span class="fu">str_split_all</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; [1] "one"   "two"   "three"</span></span>
+<span><span class="co">#&gt;</span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; [1] "abc" "def" "ghi"</span></span>
+<span><span class="fu">chr_split_all</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one,two,three"</span>, <span class="st">"abc,def,ghi"</span><span class="op">)</span>, <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "one"   "two"   "three" "abc"   "def"   "ghi"</span></span>
+<span></span></code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
