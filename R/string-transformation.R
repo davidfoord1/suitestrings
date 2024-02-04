@@ -308,7 +308,7 @@ str_pad <- function(strings,
 #' and all subsequent lines of a paragraph can be controlled independently.
 #'
 #' @param strings
-#' #' A character vector, where each element of the vector is a character string.
+#' A character vector, where each element of the vector is a character string.
 #' @param min_width
 #' A positive integer giving the minimum line width for for wrapping lines in the output.
 #' @param indent
@@ -335,7 +335,6 @@ str_pad <- function(strings,
 #' writeLines(str_wrap(text, min_width = 60, indent = 5))
 #' writeLines(str_wrap(text, min_width = 60, exdent = 5))
 #' writeLines(str_wrap(text, min_width = 60, prefix = "> "))
-
 str_wrap <- function(strings,
                      min_width = 80,
                      indent = 0,
@@ -344,4 +343,162 @@ str_wrap <- function(strings,
                      initial = prefix
 ) {
   strwrap(strings, min_width, indent, exdent, prefix, initial = initial)
+}
+
+#' Get the length or width of strings
+#'
+#' @description Get the length in characters or width of strings, which differ where some
+#' characters take up multiple characters worth of space, like emojis.
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#'
+#' @return
+#' A numeric vector the same length as string.
+#'
+#' `str_length()`: The number of characters in a string.
+#'
+#' `str_width()`: The amount of space the string will take up when printed with
+#' a fixed-width font, such as in the console.
+#'
+#' @export
+#' @rdname str_length
+#'
+#' @seealso
+#' Base [nchar()] which these functions are built with.
+#'
+#' @examples
+#' str_length(c("Hello", "everyone"))
+#' #> [1] 5 8
+#'
+#' str_length("😊")
+#' #> [1] 1
+#' str_width("😊")
+#' #> [1] 2
+str_length <- function(strings) {
+  nchar(strings)
+}
+
+#' @export
+#' @rdname str_length
+str_width <- function(strings) {
+  nchar(strings, type = "width")
+}
+
+#' Repeat character sequences
+#'
+#' @description
+#' Repeat the contents of character strings a given number of times.
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param times
+#' The number of times each string should be repeated.
+#' @param separator
+#' A string to place in-between each repetition of the main string.
+#'
+#' @return
+#' A character vector the length of whichever is longest out of `strings`,
+#' `times` and `separator`, where the shorter vectors will be recycled.
+#'
+#'
+#' Each element in the result contains the same character sequence of the
+#' corresponding element in strings, repeated the given number of times.
+#'
+#' @export
+#'
+#' @seealso
+#' Base [strrep()] which this function wraps.
+#'
+#' @examples
+#' str_repeat("hello")
+#' #> [1] "hellohello"
+#' str_repeat("hello", 3)
+#' #> [1] "hellohellohello"
+#' str_repeat("hello", 3, ", ")
+#' #> [1] "hello, hello, hello"
+#'
+#' str_repeat(c("hello", "world"))
+#' #> [1] "hellohello" "worldworld"
+#' str_repeat(c("hello", "world"), c(3, 1))
+#' #> [1] "hellohellohello" "world"
+#'
+#' str_repeat(".", 0:3)
+#' #> [1] ""    "."   ".."  "..."
+str_repeat <- function(strings, times = 2, separator = "") {
+  stopifnot(times >= 0)
+
+  strings <- strrep(paste0(strings, separator), times)
+  return(substr(strings, 1, nchar(strings) - nchar(separator)))
+}
+
+#' Shorten a string to a specified size
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param length
+#' The maximum number of characters per string in the output vector.
+#' @param side
+#' Where the truncation should happen i.e. the location to remove characters from.
+#' @param ellipsis
+#' Characters to replace removed characters, indicating shortening, an ellipsis
+#' "..." by default
+#'
+#' @return
+#' A character vector equal in [length()] to `strings`, with each element equal
+#' or more characters than `length` shortened to that many characters.
+#' @export
+#'
+#' @seealso
+#' [str_pad()] for padding a string to a certain length.
+#'
+#' @examples
+#' str_truncate("Help me make this shorter", 15)
+#' #> [1] "Help me make..."
+#' str_truncate("Help me make this shorter", 15, "left")
+#' #> [1] "...this shorter"
+#' str_truncate("Help me make this shorter", 15, "center")
+#' #> [1] "Help m...horter"
+str_truncate <-
+  function(strings,
+           length,
+           side = c("right", "left", "center"),
+           ellipsis = "...") {
+  stopifnot(length >= 0)
+  stopifnot(length >= nchar(ellipsis))
+
+  side <- match.arg(side)
+
+  vapply(
+    strings,
+    function(string) {
+      if (nchar(string) <= length || nchar(ellipsis) >= nchar(string)) {
+        return(string)
+      }
+
+      switch(
+        side,
+        "right" = paste0(
+          substr(string, 1, length - nchar(ellipsis)),
+          ellipsis
+        ),
+        "left" = paste0(
+          ellipsis,
+          substr(
+            string,
+            nchar(strings) - length + nchar(ellipsis) + 1,
+            nchar(string)
+            )
+        ),
+        "center" = {
+          half_length <- (length - nchar(ellipsis)) %/% 2
+          start <- substr(string, 1, half_length)
+          end <- substr(string, nchar(string) - half_length + 1, nchar(string))
+          paste0(start, ellipsis, end)
+        }
+      )
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
 }

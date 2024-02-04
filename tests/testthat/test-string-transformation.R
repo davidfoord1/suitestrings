@@ -199,3 +199,91 @@ test_that("str_wrap adds a prefix", {
   expect_equal(str_wrap("Hello great world", min_width = 15, prefix = "> "),
                c("> Hello great", "> world"))
 })
+
+# str_length --------------------------------------------------------------
+
+test_that("str_length correctly returns the length of a string", {
+  # Single string
+  expect_equal(str_length("hello"), 5)
+  # String vector
+  expect_equal(str_length(c("Hello", "everyone")), c(5, 8))
+  # Greater width characters
+  expect_equal(str_length("😊"), 1)
+  # Empty string
+  expect_equal(str_length(""), 0)
+})
+
+# str_width ---------------------------------------------------------------
+
+test_that("str_width correctly returns the width of a string", {
+  # Single string
+  expect_equal(str_width("hello"), 5)
+  # String vector
+  expect_equal(str_width(c("Hello", "everyone")), c(5, 8))
+  # Greater width characters
+  expect_equal(str_width("😊"), 2)
+  # Empty string
+  expect_equal(str_width(""), 0)
+})
+
+# str_repeat --------------------------------------------------------------
+
+test_that("str_repeat correctly repeats strings", {
+  # Single string
+  expect_equal(str_repeat("hello"), "hellohello")
+  # Repeat specified number of times
+  expect_equal(str_repeat("hello", 3), "hellohellohello")
+  # Include a separator between repeated strings
+  expect_equal(str_repeat("hello", 3, ", "), "hello, hello, hello")
+
+  # Character vector
+  expect_equal(
+    str_repeat(c("hello", "world")),
+    c("hellohello", "worldworld")
+  )
+  # Specified vector number of times
+  expect_equal(
+    str_repeat(c("hello", "world"), c(3, 1)),
+    c("hellohellohello", "world")
+  )
+
+  # Repeat one time
+  expect_equal(str_repeat("hello", 1), "hello")
+  # Repeat 0 times
+  expect_equal(str_repeat("hello", 0), "")
+
+  # Invalid times value
+  expect_error(str_repeat("hello", -1))
+})
+
+# str_truncate ------------------------------------------------------------
+
+test_that("str_truncate correctly shortens a string", {
+  # Default indicator "..."
+  ## Default side
+  expect_equal(str_truncate("hello world", 5), "he...")
+  ## Right side
+  expect_equal(str_truncate("hello world", 5, "right"), "he...")
+  ## Left side
+  expect_equal(str_truncate("hello world", 5, "left"), "...ld")
+  ## Center
+  expect_equal(str_truncate("hello world", 5, "center"), "h...d")
+
+  # Custom indicator
+  ## Default side
+  expect_equal(str_truncate("hello world", 5, ellipsis = "-"), "hell-")
+  ## Right side
+  expect_equal(str_truncate("hello world", 5, "right", "-"), "hell-")
+  ## Left side
+  expect_equal(str_truncate("hello world", 5, "left", "-"), "-orld")
+  ## Center
+  expect_equal(str_truncate("hello world", 5, "center", "-"), "he-ld")
+
+  # Invalid length
+  ## Negative length
+  expect_error(str_truncate("hello world", -1))
+  ## Length shorter than ellipsis
+  expect_error(str_truncate("hello world", 1))
+  ## Custom ellipsis longer than length
+  expect_error(str_truncate("hello world", 5, ellipsis = "......."))
+})

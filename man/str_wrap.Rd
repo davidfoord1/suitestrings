@@ -14,7 +14,7 @@ str_wrap(
 )
 }
 \arguments{
-\item{strings}{#' A character vector, where each element of the vector is a character string.}
+\item{strings}{A character vector, where each element of the vector is a character string.}
 
 \item{min_width}{A positive integer giving the minimum line width for for wrapping lines in the output.}
 
