@@ -19,14 +19,11 @@ library(suitestrings)
 
 <!-- badges: start -->
 
-[![Repo status: work in progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) 
-[![R-CMD-check](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml) 
-[![codecov](https://codecov.io/gh/davidfoord1/suitestrings/graph/badge.svg?token=F41JP7X4YP)](https://codecov.io.gh.davidfoord1/suitestrings)
+[![Repo status: work in progress](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) [![R-CMD-check](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidfoord1/suitestrings/actions/workflows/R-CMD-check.yaml) [![codecov](https://codecov.io/gh/davidfoord1/suitestrings/graph/badge.svg?token=F41JP7X4YP)](https://codecov.io.gh.davidfoord1/suitestrings)
 
 <!-- badges: end -->
 
-This is primarily a personal learning project. It uses wrappers around base R string
-operations to provide a comprehensive and convenient set of functions for working with strings in R. More specifically, for:
+This is primarily a personal learning project. It uses wrappers around base R string operations to provide a comprehensive and convenient set of functions for working with strings in R. More specifically, for:
 
 -   Combining strings.
 -   Cleaning and transforming strings.
@@ -55,15 +52,13 @@ This package is built with base R, so there are no additional dependencies to in
 
 ## Examples
 
-### Combine strings together
-
-#### Concatenate strings
+### Combine strings
 
 ```{r}
 str_concat(c("Hello", "How are"), c("world!", "you?"), separator = " ")
 ```
 
-#### Evaluate R expression in strings
+#### With R expressions
 
 `str_glue()` treats text in braces `{}` like R code
 
@@ -79,15 +74,31 @@ str_glue(statement)
 
 ### Clean and transform strings
 
+#### Shorten strings
+
 ```{r}
-# Remove leading/trailing spaces and reduce middle spaces to one
+# Remove leading/trailing spaces and reduce middle spaces down to one
 str_squish("  Too   much     space        ")
 
-# Append a specific number of characters
-writeLines(str_indent(c("Hello", "World"), 3))
+# Reduce a string to a specified length
+str_truncate("This string is far too long, let's make it shorter", 20)
+```
 
+#### Extend strings
+
+```{r}
+# Append a specific number of characters
+str_indent(c("Hello", "World"), 3)
+
+# Repeat the contents of strings
+str_repeat("hello", 3, ", ")
+```
+
+#### Reformat strings
+
+```{r}
 # Convert strings to different cases
-str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STRing!!")
+str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STriNg!!")
 ```
 
 ### Manipulate strings based on regular expression patterns
@@ -123,6 +134,8 @@ str_remove_last(strings, pattern)
 
 #### Work with every occurrence of a pattern
 
+With suffix \_all
+
 ```{r}
 str_locate_all(strings, pattern)
 
@@ -131,6 +144,8 @@ str_extract_all(strings, pattern)
 ```
 
 #### Work on the character vector as a whole
+
+With prefix chr\_
 
 ```{r}
 # Get every match from `strings` into one character vector

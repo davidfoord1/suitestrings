@@ -47,16 +47,14 @@ dependencies to install.
 
 ## Examples
 
-### Combine strings together
-
-#### Concatenate strings
+### Combine strings
 
 ``` r
 str_concat(c("Hello", "How are"), c("world!", "you?"), separator = " ")
 #> [1] "Hello world!" "How are you?"
 ```
 
-#### Evaluate R expression in strings
+#### With R expressions
 
 `str_glue()` treats text in braces `{}` like R code
 
@@ -74,18 +72,35 @@ str_glue(statement)
 
 ### Clean and transform strings
 
+#### Shorten strings
+
 ``` r
-# Remove leading/trailing spaces and reduce middle spaces to one
+# Remove leading/trailing spaces and reduce middle spaces down to one
 str_squish("  Too   much     space        ")
 #> [1] "Too much space"
 
-# Append a specific number of characters
-writeLines(str_indent(c("Hello", "World"), 3))
-#>    Hello
-#>    World
+# Reduce a string to a specified length
+str_truncate("This string is far too long, let's make it shorter", 20)
+#> [1] "This string is fa..."
+```
 
+#### Extend strings
+
+``` r
+# Append a specific number of characters
+str_indent(c("Hello", "World"), 3)
+#> [1] "   Hello" "   World"
+
+# Repeat the contents of strings
+str_repeat("hello", 3, ", ")
+#> [1] "hello, hello, hello"
+```
+
+#### Reformat strings
+
+``` r
 # Convert strings to different cases
-str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STRing!!")
+str_to_snake_case("  This /IS/  a ->>!!GREAT!!<<-STriNg!!")
 #> [1] "this_is_a_great_string"
 ```
 
@@ -127,6 +142,8 @@ str_remove_last(strings, pattern)
 
 #### Work with every occurrence of a pattern
 
+With suffix \_all
+
 ``` r
 str_locate_all(strings, pattern)
 #> [[1]]
@@ -165,6 +182,8 @@ str_extract_all(strings, pattern)
 ```
 
 #### Work on the character vector as a whole
+
+With prefix chr\_
 
 ``` r
 # Get every match from `strings` into one character vector
