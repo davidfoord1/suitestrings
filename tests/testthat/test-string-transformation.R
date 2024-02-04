@@ -199,3 +199,16 @@ test_that("str_wrap adds a prefix", {
   expect_equal(str_wrap("Hello great world", min_width = 15, prefix = "> "),
                c("> Hello great", "> world"))
 })
+
+# str_length --------------------------------------------------------------
+
+test_that("str_length correctly returns the length of a string", {
+  # Single string
+  expect_equal(str_length("hello"), 5)
+  # String vector
+  expect_equal(str_length(c("Hello", "everyone")), c(5, 8))
+  # Greater width characters
+  expect_equal(str_length("😊"), 1)
+  # Empty string
+  expect_equal(str_length(""), 0)
+})
