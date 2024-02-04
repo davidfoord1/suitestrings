@@ -308,7 +308,7 @@ str_pad <- function(strings,
 #' and all subsequent lines of a paragraph can be controlled independently.
 #'
 #' @param strings
-#' #' A character vector, where each element of the vector is a character string.
+#' A character vector, where each element of the vector is a character string.
 #' @param min_width
 #' A positive integer giving the minimum line width for for wrapping lines in the output.
 #' @param indent
@@ -335,7 +335,6 @@ str_pad <- function(strings,
 #' writeLines(str_wrap(text, min_width = 60, indent = 5))
 #' writeLines(str_wrap(text, min_width = 60, exdent = 5))
 #' writeLines(str_wrap(text, min_width = 60, prefix = "> "))
-
 str_wrap <- function(strings,
                      min_width = 80,
                      indent = 0,
@@ -345,3 +344,44 @@ str_wrap <- function(strings,
 ) {
   strwrap(strings, min_width, indent, exdent, prefix, initial = initial)
 }
+
+#' Get the length or width of strings
+#'
+#' @description Get the length in characters or width of strings, which differ where some
+#' characters take up multiple characters worth of space, like emojis.
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#'
+#' @return
+#' A numeric vector the same length as string.
+#'
+#' `str_length()`: The number of characters in a string.
+#'
+#' `str_width()`: The amount of space the string will take up when printed with
+#' a fixed-width font, such as in the console.
+#'
+#' @export
+#' @rdname str_length
+#'
+#' @seealso
+#' Base [nchar()] which these functions are built with.
+#'
+#' @examples
+#' str_length(c("Hello", "everyone"))
+#' #> [1] 5 8
+#'
+#' str_length("😊")
+#' #> [1] 1
+#' str_width("😊")
+#' #> [1] 2
+str_length <- function(strings) {
+  nchar(strings)
+}
+
+#' @export
+#' @rdname str_length
+str_width <- function(strings) {
+  nchar(strings, type = "width")
+}
+
