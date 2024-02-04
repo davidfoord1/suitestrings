@@ -457,7 +457,7 @@ str_truncate <-
            side = c("right", "left", "center"),
            ellipsis = "...") {
   stopifnot(length >= 0)
-  stopifnot(length >= ellipsis)
+  stopifnot(length >= nchar(ellipsis))
 
   side <- match.arg(side)
 
