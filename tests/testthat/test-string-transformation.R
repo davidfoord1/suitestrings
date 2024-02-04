@@ -255,3 +255,35 @@ test_that("str_repeat correctly repeats strings", {
   # Invalid times value
   expect_error(str_repeat("hello", -1))
 })
+
+# str_truncate ------------------------------------------------------------
+
+test_that("str_truncate correctly shortens a string", {
+  # Default indicator "..."
+  ## Default side
+  expect_equal(str_truncate("hello world", 5), "he...")
+  ## Right side
+  expect_equal(str_truncate("hello world", 5, "right"), "he...")
+  ## Left side
+  expect_equal(str_truncate("hello world", 5, "left"), "...ld")
+  ## Center
+  expect_equal(str_truncate("hello world", 5, "center"), "h...d")
+
+  # Custom indicator
+  ## Default side
+  expect_equal(str_truncate("hello world", 5, ellipsis = "-"), "hell-")
+  ## Right side
+  expect_equal(str_truncate("hello world", 5, "right", "-"), "hell-")
+  ## Left side
+  expect_equal(str_truncate("hello world", 5, "left", "-"), "-orld")
+  ## Center
+  expect_equal(str_truncate("hello world", 5, "center", "-"), "he-ld")
+
+  # Invalid length
+  ## Negative length
+  expect_error(str_truncate("hello world", -1))
+  ## Length shorter than ellipsis
+  expect_error(str_truncate("hello world", 1))
+  ## Custom ellipsis longer than length
+  expect_error(str_truncate("hello world", 5, ellipsis = "......."))
+})
