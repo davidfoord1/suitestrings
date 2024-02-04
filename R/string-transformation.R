@@ -407,6 +407,9 @@ str_width <- function(strings) {
 #'
 #' @export
 #'
+#' @seealso
+#' Base [strrep()] which this function wraps.
+#'
 #' @examples
 #' str_repeat("hello")
 #' #> [1] "hellohello"
@@ -442,7 +445,12 @@ str_repeat <- function(strings, times = 2, separator = "") {
 #' "..." by default
 #'
 #' @return
+#' A character vector equal in [length()] to `strings`, with each element equal
+#' or more characters than `length` shortened to that many characters.
 #' @export
+#'
+#' @seealso
+#' [str_pad()] for padding a string to a certain length.
 #'
 #' @examples
 #' str_truncate("Help me make this shorter", 15)

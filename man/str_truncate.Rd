@@ -21,6 +21,10 @@ str_truncate(
 \item{ellipsis}{Characters to replace removed characters, indicating shortening, an ellipsis
 "..." by default}
 }
+\value{
+A character vector equal in \code{\link[=length]{length()}} to \code{strings}, with each element equal
+or more characters than \code{length} shortened to that many characters.
+}
 \description{
 Shorten a string to a specified size
 }
@@ -31,4 +35,7 @@ str_truncate("Help me make this shorter", 15, "left")
 #> [1] "...this shorter"
 str_truncate("Help me make this shorter", 15, "center")
 #> [1] "Help m...horter"
+}
+\seealso{
+\code{\link[=str_pad]{str_pad()}} for padding a string to a certain length.
 }

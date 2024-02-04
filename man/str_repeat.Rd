@@ -39,3 +39,6 @@ str_repeat(c("hello", "world"), c(3, 1))
 str_repeat(".", 0:3)
 #> [1] ""    "."   ".."  "..."
 }
+\seealso{
+Base \code{\link[=strrep]{strrep()}} which this function wraps.
+}
