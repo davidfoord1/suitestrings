@@ -212,3 +212,16 @@ test_that("str_length correctly returns the length of a string", {
   # Empty string
   expect_equal(str_length(""), 0)
 })
+
+# str_width ---------------------------------------------------------------
+
+test_that("str_width correctly returns the width of a string", {
+  # Single string
+  expect_equal(str_width("hello"), 5)
+  # String vector
+  expect_equal(str_width(c("Hello", "everyone")), c(5, 8))
+  # Greater width characters
+  expect_equal(str_width("😊"), 2)
+  # Empty string
+  expect_equal(str_width(""), 0)
+})
