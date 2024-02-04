@@ -237,9 +237,15 @@ test_that("str_repeat correctly repeats strings", {
   expect_equal(str_repeat("hello", 3, ", "), "hello, hello, hello")
 
   # Character vector
-  expect_equal(str_repeat(c("hello", "world")), c("hellohello", "worldworld"))
+  expect_equal(
+    str_repeat(c("hello", "world")),
+    c("hellohello", "worldworld")
+  )
   # Specified vector number of times
-  expect_equal(str_repeat(c("hello", "world"), c(3, 1)), c("hellohellohello", "world"))
+  expect_equal(
+    str_repeat(c("hello", "world"), c(3, 1)),
+    c("hellohellohello", "world")
+  )
 
   # Repeat one time
   expect_equal(str_repeat("hello", 1), "hello")
