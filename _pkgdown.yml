@@ -1,4 +1,45 @@
 url: https://davidfoord1.github.io/suitestrings/
 template:
   bootstrap: 5
+  bootswatch: flatly
+
+reference:
+- title: Pattern matching
+  desc: >
+    Manipulate strings based on regular expressions or literal strings as a pattern.
+  contents:
+  - str_detect
+  - str_extract
+  - str_locate
+  - str_replace
+  - str_remove
+  - str_split
+- subtitle: Vector only
+  contents:
+  - chr_which
+  - chr_subset
+  - chr_count_matches
+
+- title: Combining strings
+  contents:
+  - str_concat
+  - str_glue
+  - chr_collapse
+
+- title: Character-based
+  desc: >
+    Functions for cleaning and transforming strings with respect to characters.
+  contents:
+  - str_length
+  - str_to_case
+  - str_trim
+  - str_repeat
+  - str_pad
+  - str_indent
+  - str_wrap
+
+- title: Organise character vectors
+  contents:
+  - chr_sort
+  - chr_unique
 
