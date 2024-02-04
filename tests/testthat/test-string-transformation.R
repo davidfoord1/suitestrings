@@ -225,3 +225,27 @@ test_that("str_width correctly returns the width of a string", {
   # Empty string
   expect_equal(str_width(""), 0)
 })
+
+# str_repeat --------------------------------------------------------------
+
+test_that("str_repeat correctly repeats strings", {
+  # Single string
+  expect_equal(str_repeat("hello"), "hellohello")
+  # Repeat specified number of times
+  expect_equal(str_repeat("hello", 3), "hellohellohello")
+  # Include a separator between repeated strings
+  expect_equal(str_repeat("hello", 3, ", "), "hello, hello, hello")
+
+  # Character vector
+  expect_equal(str_repeat(c("hello", "world")), c("hellohello", "worldworld"))
+  # Specified vector number of times
+  expect_equal(str_repeat(c("hello", "world"), c(3, 1)), c("hellohellohello", "world"))
+
+  # Repeat one time
+  expect_equal(str_repeat("hello", 1), "hello")
+  # Repeat 0 times
+  expect_equal(str_repeat("hello", 0), "")
+
+  # Invalid times value
+  expect_error(str_repeat("hello", -1))
+})
