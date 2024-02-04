@@ -385,3 +385,41 @@ str_width <- function(strings) {
   nchar(strings, type = "width")
 }
 
+#' Repeat character sequences
+#'
+#' @description
+#' Repeat the contents of character strings a given number of times
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param times
+#' The number of times each string should be repeated.
+#' @param separator
+#' A string to place in-between each repetition of the main string.
+#'
+#' @return
+#' A character vector the length of `strings`, where each corresponding element
+#' contains the same character sequence, but repeated the given number of times
+#' @export
+#'
+#' @examples
+#' str_repeat("hello")
+#' #> [1] "hellohello"
+#' str_repeat("hello", 3)
+#' #> [1] "hellohellohello"
+#' str_repeat("hello", 3, ", ")
+#' #> [1] "hello, hello, hello"
+#'
+#' str_repeat(c("hello", "world"))
+#' #> [1] "hellohello" "worldworld"
+#' str_repeat(c("hello", "world"), c(3, 1))
+#' #> [1] "hellohellohello" "world"
+#'
+#' str_repeat(".", 1:3)
+#' #> [1] "."   ".."  "..."
+str_repeat <- function(strings, times = 2, separator = "") {
+  stopifnot(times >= 0)
+
+  strings <- strrep(paste0(strings, separator), times)
+  return(substr(strings, 1, nchar(strings) - nchar(separator)))
+}
