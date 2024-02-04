@@ -58,6 +58,9 @@
     <loc>https://davidfoord1.github.io/suitestrings/reference/str_indent.html</loc>
   </url>
   <url>
+    <loc>https://davidfoord1.github.io/suitestrings/reference/str_length.html</loc>
+  </url>
+  <url>
     <loc>https://davidfoord1.github.io/suitestrings/reference/str_locate.html</loc>
   </url>
   <url>
@@ -65,6 +68,9 @@
   </url>
   <url>
     <loc>https://davidfoord1.github.io/suitestrings/reference/str_remove.html</loc>
+  </url>
+  <url>
+    <loc>https://davidfoord1.github.io/suitestrings/reference/str_repeat.html</loc>
   </url>
   <url>
     <loc>https://davidfoord1.github.io/suitestrings/reference/str_replace.html</loc>
@@ -77,6 +83,9 @@
   </url>
   <url>
     <loc>https://davidfoord1.github.io/suitestrings/reference/str_trim.html</loc>
+  </url>
+  <url>
+    <loc>https://davidfoord1.github.io/suitestrings/reference/str_truncate.html</loc>
   </url>
   <url>
     <loc>https://davidfoord1.github.io/suitestrings/reference/str_wrap.html</loc>
