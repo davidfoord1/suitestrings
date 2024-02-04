@@ -1,0 +1,144 @@
+---
+title: "suitestrings"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{suitestrings}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(suitestrings)
+```
+
+# Introduction
+
+## Character Vector Basics
+
+This package is for operating on three key kinds of things.
+
+1.  **Characters** - specifically, individual unicode code points.
+
+```{r}
+"A"
+"\u42"
+# This includes non alpha-numeric characters, like whitespace and punctuation
+"\u020"
+```
+
+2.  **Strings** - sequences of characters.
+
+```{r}
+"Hello"
+
+# How many characters are in the string?
+str_length("\u42")
+str_length("\u020")
+str_length("Hello")
+```
+
+3.  **Character vectors** - sequences of strings.
+
+```{r}
+c("Hello", "world")
+
+# What is the object type?
+typeof(c("Hello", "world"))
+
+# How many elements are in the vector?
+length(c("Hello", "world"))
+```
+
+Our function names use a shorthand `char`, for characters, `str` for strings and `chr` for character vectors, with the significance of the distinctions detailed more in `vignette(suitestrings-conventions)`.
+
+It's useful to keep in mind that for many purposes the three are all the same; as R objects, they are all stored as character vectors i.e. a single string is simply a character vector of `length()` 1. Usually when we say something operates on a string, it will work on every individual string within a character vector.
+
+```{r}
+# Viewed for their vector properties,
+# a character and a string look much the same
+typeof("A")
+typeof("Hello")
+
+length("A")
+length("Hello")
+```
+
+## suitestrings operations
+
+We offer a few families of operations for working with strings:
+
+1.  Character-based transformation: Change strings based on individual characters within them. Extend strings by adding characters, shorten strings by removing them. Handle specific kinds of characters like whitespace.
+2.  String combination: Concatenate strings together, with other strings or even with the results of R expressions converted to characters,
+3.  Pattern matching operations: Manipulate strings based on a pattern of characters, which is usually defined by a regular expression.
+4.  Character vector organisation: Sort a character vector alphabetically or remove duplicate elements of a character vector.
+
+#### Character-based transformation
+
+There are some functions useful for quickly cleaning a string. `str_trim()` removes whitespace from the end and `str_squish()` additionally reduces whitespace in the middle to a single character:
+
+```{r}
+str_squish("  Get    these    spaces \u020         under       control    ")
+```
+
+The somewhat opposite functions `str_pad()` and `str_indent()` fill a string to a minimum length, and add a specific number of spaces, respectively.
+
+```{r}
+str_pad("hello", 10)
+str_indent("hello", 3)
+
+# Though they can both extend with other characters
+str_indent("hello", 3, indent = ".")
+```
+
+Functions to change case can help with consistent formatting:
+
+```{r}
+str_to_upper_case("hello")
+
+str_to_snake_case("hEllO  woRLd")
+```
+
+#### String combination
+
+Concatenate strings together with `str_concat()` or `str_glue()`.
+
+```{r}
+str_concat("abc", "def") 
+# Both can take a custom separator argument to place betwen strings
+str_glue("abc", "def", separator = " ")
+```
+
+They can also combine strings with R expressions (coerced to `as.character()`). `str_glue()` is designed to handle this more elegantly by treating text in curly braces `{}` as R code.
+
+```{r}
+str_concat(
+  "hello", 
+  10 * 10,
+  "worlds",
+  separator = " "
+)
+
+str_glue("hello {10*10} worlds")
+```
+
+Concatenate the elements of a character vector into a single string with `chr_collapse()`
+
+```{r}
+chr_collapse(c("abc", "def"))
+chr_collapse(1:5, separator = ", ")
+```
+
+#### Pattern matching operations
+
+We offer functions to **detect**, **locate**, **extract**, **replace**, **remove** and **split** patterns of characters in strings. Except for the detect family, suffixes `_first()`, `_nth()` and `last()` are used to specify pattern occurences within strings, and \_`all()` to work with every occurrences.
+
+A pattern by default is a regular expression, a type of string with a special set of characters defined that allow it to represent many different strings. If you wish to use a string literally as a position you can supply argument `fixed = TRUE`.
+
+#### Character vector organisation
