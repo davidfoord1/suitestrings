@@ -428,3 +428,69 @@ str_repeat <- function(strings, times = 2, separator = "") {
   strings <- strrep(paste0(strings, separator), times)
   return(substr(strings, 1, nchar(strings) - nchar(separator)))
 }
+
+#' Shorten a string to a specified size
+#'
+#' @param strings
+#' A character vector, where each element of the vector is a character string.
+#' @param length
+#' The maximum number of characters per string in the output vector.
+#' @param side
+#' Where the truncation should happen i.e. the location to remove characters from.
+#' @param ellipsis
+#' Characters to replace removed characters, indicating shortening, an ellipsis
+#' "..." by default
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' str_truncate("Help me make this shorter", 15)
+#' #> [1] "Help me make..."
+#' str_truncate("Help me make this shorter", 15, "left")
+#' #> [1] "...this shorter"
+#' str_truncate("Help me make this shorter", 15, "center")
+#' #> [1] "Help m...horter"
+str_truncate <-
+  function(strings,
+           length,
+           side = c("right", "left", "center"),
+           ellipsis = "...") {
+  stopifnot(length >= 0)
+  stopifnot(length >= ellipsis)
+
+  side <- match.arg(side)
+
+  vapply(
+    strings,
+    function(string) {
+      if (nchar(string) <= length || nchar(ellipsis) >= nchar(string)) {
+        return(string)
+      }
+
+      switch(
+        side,
+        "right" = paste0(
+          substr(string, 1, length - nchar(ellipsis)),
+          ellipsis
+        ),
+        "left" = paste0(
+          ellipsis,
+          substr(
+            string,
+            nchar(strings) - length + nchar(ellipsis) + 1,
+            nchar(string)
+            )
+        ),
+        "center" = {
+          half_length <- (length - nchar(ellipsis)) %/% 2
+          start <- substr(string, 1, half_length)
+          end <- substr(string, nchar(string) - half_length + 1, nchar(string))
+          paste0(start, ellipsis, end)
+        }
+      )
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+}
