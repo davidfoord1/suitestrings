@@ -18,33 +18,51 @@ knitr::opts_chunk$set(
 library(suitestrings)
 ```
 
-# Introduction
+## Character vector basics
 
-## Character Vector Basics
+This package is for operating on three key kinds of things:
 
-This package is for operating on three key kinds of things.
+### Strings
 
-1.  **Characters** - specifically, individual unicode code points.
-
-```{r}
-"A"
-"\u42"
-# This includes non alpha-numeric characters, like whitespace and punctuation
-"\u020"
-```
-
-2.  **Strings** - sequences of characters.
+Sequences of characters, delimited by either double (`"`) or single quotes (`'`).
 
 ```{r}
 "Hello"
-
-# How many characters are in the string?
-str_length("\u42")
-str_length("\u020")
-str_length("Hello")
+'Everyone'
 ```
 
-3.  **Character vectors** - sequences of strings.
+### Characters
+
+Any letter or number like `A` or `1`, but more specifically, any individual unicode code point:
+
+```{r}
+"A"
+
+# Whitespace and punctuation are characters too
+" "
+
+# Or even emojis...
+"😮"
+
+# There are other ways to represent a single character
+"\u42"
+```
+
+Of course, those were *all* strings.
+
+```{r}
+# How many characters are in each of these strings?
+str_length("Hello")
+str_length('Everyone')
+str_length("A")
+str_length(" ")
+str_length("😮")
+str_length("\u42")
+```
+
+### Character vectors
+
+Sequences of strings.
 
 ```{r}
 c("Hello", "world")
@@ -56,32 +74,35 @@ typeof(c("Hello", "world"))
 length(c("Hello", "world"))
 ```
 
-Our function names use a shorthand `char`, for characters, `str` for strings and `chr` for character vectors, with the significance of the distinctions detailed more in `vignette(suitestrings-conventions)`.
+Our function names use a shorthand `str` for strings and `chr` for character vectors, with the significance of the distinctions detailed more in `vignette(suitestrings-conventions)`.
 
-It's useful to keep in mind that for many purposes the three are all the same; as R objects, they are all stored as character vectors i.e. a single string is simply a character vector of `length()` 1. Usually when we say something operates on a string, it will work on every individual string within a character vector.
+It's useful to keep in mind that for many purposes the three are all the same; as R objects, they are all stored as character vectors i.e. a string is simply a character vector with a single element, which may contain no, one or many characters. Usually when we say something operates on a string, it will work on every individual string within a character vector.
 
 ```{r}
 # Viewed for their vector properties,
-# a character and a string look much the same
+# a character and a string look much the same:
+
+# A character vector
 typeof("A")
 typeof("Hello")
 
+# With one element
 length("A")
 length("Hello")
 ```
 
 ## suitestrings operations
 
-We offer a few families of operations for working with strings:
+There are a few families of operations for working with strings:
 
 1.  Character-based transformation: Change strings based on individual characters within them. Extend strings by adding characters, shorten strings by removing them. Handle specific kinds of characters like whitespace.
 2.  String combination: Concatenate strings together, with other strings or even with the results of R expressions converted to characters,
 3.  Pattern matching operations: Manipulate strings based on a pattern of characters, which is usually defined by a regular expression.
 4.  Character vector organisation: Sort a character vector alphabetically or remove duplicate elements of a character vector.
 
-#### Character-based transformation
+### Character-based transformation
 
-There are some functions useful for quickly cleaning a string. `str_trim()` removes whitespace from the end and `str_squish()` additionally reduces whitespace in the middle to a single character:
+There are some functions useful for quickly cleaning a string. `str_trim()` removes whitespace from the ends and `str_squish()` additionally reduces whitespace in the middle to a single character:
 
 ```{r}
 str_squish("  Get    these    spaces \u020         under       control    ")
@@ -91,7 +112,6 @@ The somewhat opposite functions `str_pad()` and `str_indent()` fill a string to 
 
 ```{r}
 str_pad("hello", 10)
-str_indent("hello", 3)
 
 # Though they can both extend with other characters
 str_indent("hello", 3, indent = ".")
@@ -102,16 +122,17 @@ Functions to change case can help with consistent formatting:
 ```{r}
 str_to_upper_case("hello")
 
-str_to_snake_case("hEllO  woRLd")
+str_to_snake_case("nO  FUNny  buSSIneSs")
 ```
 
-#### String combination
+### String combination
 
 Concatenate strings together with `str_concat()` or `str_glue()`.
 
 ```{r}
 str_concat("abc", "def") 
-# Both can take a custom separator argument to place betwen strings
+
+# Both can take a custom separator argument to place between strings
 str_glue("abc", "def", separator = " ")
 ```
 
@@ -135,10 +156,62 @@ chr_collapse(c("abc", "def"))
 chr_collapse(1:5, separator = ", ")
 ```
 
-#### Pattern matching operations
+### Pattern matching operations
 
-We offer functions to **detect**, **locate**, **extract**, **replace**, **remove** and **split** patterns of characters in strings. Except for the detect family, suffixes `_first()`, `_nth()` and `last()` are used to specify pattern occurences within strings, and \_`all()` to work with every occurrences.
+There are functions to **detect**, **locate**, **extract**, **replace**, **remove** and **split** patterns of characters in strings. Except for the detect family, suffixes `_first()`, `_nth()` and `last()` are used to specify pattern occurences within strings, and `_all()` to work with every occurrence.
 
 A pattern by default is a regular expression, a type of string with a special set of characters defined that allow it to represent many different strings. If you wish to use a string literally as a position you can supply argument `fixed = TRUE`.
 
-#### Character vector organisation
+To get started we'll just work with a simple pattern
+
+```{r}
+strings <- c(
+  "in the middle of the day, I eat lunch",
+  "today's the day, forget yesterday",
+  "only weeks to be found here",
+  "days like this make me love Thursdays"
+)
+
+# Define a regular expression pattern for words containing "day"
+pattern <- "\\w*day\\w*"
+```
+
+#### Detect
+
+```{r}
+# Does the string contain the pattern?
+str_detect(strings, pattern)
+str_detect_starts_with(strings, pattern)
+str_detect_ends_with(strings, pattern)
+```
+
+#### Extract
+
+```{r}
+# Pull out the matching words from each string
+str_extract_first(strings, pattern)
+str_extract_nth(strings, pattern, 2)
+str_extract_last(strings, pattern)
+str_extract_all(strings, pattern)
+```
+
+#### Replace and Remove
+```{r}
+str_remove_first(strings, pattern)
+
+str_replace_all(strings, pattern, "night")
+```
+
+#### Split
+``` {r}
+# Let's just split on spaces to get the words
+str_split_all(strings, " ")
+```
+
+### Character vector organisation
+
+Vectors are ordered, so you might like to reorder them.
+
+```{r}
+chr_sort(c("cherry", "apple", "banana"))
+```
