@@ -58,7 +58,7 @@ This package is built with base R, so there are no additional dependencies to in
 str_concat(c("Hello", "How are"), c("world!", "you?"), separator = " ")
 ```
 
-#### With R expressions
+**With R expressions**
 
 `str_glue()` treats text in braces `{}` like R code
 
