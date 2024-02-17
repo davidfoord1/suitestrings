@@ -3,7 +3,8 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   suitestrings-conventions: suitestrings-conventions.html
-last_built: 2024-02-04T14:33Z
+  suitestrings: suitestrings.html
+last_built: 2024-02-17T13:27Z
 urls:
   reference: https://davidfoord1.github.io/suitestrings/reference
   article: https://davidfoord1.github.io/suitestrings/articles

@@ -36,6 +36,9 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
+  <a class="nav-link" href="articles/suitestrings.html">Get started</a>
+</li>
+<li class="nav-item">
   <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
@@ -99,18 +102,12 @@
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <div class="section level3">
-<h3 id="combine-strings-together">Combine strings together<a class="anchor" aria-label="anchor" href="#combine-strings-together"></a>
+<h3 id="combine-strings">Combine strings<a class="anchor" aria-label="anchor" href="#combine-strings"></a>
 </h3>
-<div class="section level4">
-<h4 id="concatenate-strings">Concatenate strings<a class="anchor" aria-label="anchor" href="#concatenate-strings"></a>
-</h4>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/str_concat.html">str_concat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"How are"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"world!"</span>, <span class="st">"you?"</span><span class="op">)</span>, separator <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Hello world!" "How are you?"</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="evaluate-r-expression-in-strings">Evaluate R expression in strings<a class="anchor" aria-label="anchor" href="#evaluate-r-expression-in-strings"></a>
-</h4>
+<p><strong>With R expressions</strong></p>
 <p><code><a href="reference/str_glue.html">str_glue()</a></code> treats text in braces <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{}</a></code> like R code</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">statement</span> <span class="op">&lt;-</span> <span class="st">"{x} squared is {x^2} and its square root is {sqrt(x)}."</span></span>
@@ -123,28 +120,46 @@
 <span><span class="fu"><a href="reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="va">statement</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "16 squared is 256 and its square root is 4."</span></span></code></pre></div>
 </div>
-</div>
 <div class="section level3">
 <h3 id="clean-and-transform-strings">Clean and transform strings<a class="anchor" aria-label="anchor" href="#clean-and-transform-strings"></a>
 </h3>
+<div class="section level4">
+<h4 id="shorten-strings">Shorten strings<a class="anchor" aria-label="anchor" href="#shorten-strings"></a>
+</h4>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Remove leading/trailing spaces and reduce middle spaces to one</span></span>
+<code class="sourceCode R"><span><span class="co"># Remove leading/trailing spaces and reduce middle spaces down to one</span></span>
 <span><span class="fu"><a href="reference/str_trim.html">str_squish</a></span><span class="op">(</span><span class="st">"  Too   much     space        "</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Too much space"</span></span>
 <span></span>
-<span><span class="co"># Append a specific number of characters</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="reference/str_indent.html">str_indent</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    Hello</span></span>
-<span><span class="co">#&gt;    World</span></span>
+<span><span class="co"># Reduce a string to a specified length</span></span>
+<span><span class="fu"><a href="reference/str_truncate.html">str_truncate</a></span><span class="op">(</span><span class="st">"This string is far too long, let's make it shorter"</span>, <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "This string is fa..."</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="extend-strings">Extend strings<a class="anchor" aria-label="anchor" href="#extend-strings"></a>
+</h4>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Append a specific number of characters</span></span>
+<span><span class="fu"><a href="reference/str_indent.html">str_indent</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"World"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "   Hello" "   World"</span></span>
 <span></span>
-<span><span class="co"># Convert strings to different cases</span></span>
-<span><span class="fu"><a href="reference/str_to_case.html">str_to_snake_case</a></span><span class="op">(</span><span class="st">"  This /IS/  a -&gt;&gt;!!GREAT!!&lt;&lt;-STRing!!"</span><span class="op">)</span></span>
+<span><span class="co"># Repeat the contents of strings</span></span>
+<span><span class="fu"><a href="reference/str_repeat.html">str_repeat</a></span><span class="op">(</span><span class="st">"hello"</span>, <span class="fl">3</span>, <span class="st">", "</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "hello, hello, hello"</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="reformat-strings">Reformat strings<a class="anchor" aria-label="anchor" href="#reformat-strings"></a>
+</h4>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Convert strings to different cases</span></span>
+<span><span class="fu"><a href="reference/str_to_case.html">str_to_snake_case</a></span><span class="op">(</span><span class="st">"  This /IS/  a -&gt;&gt;!!GREAT!!&lt;&lt;-STriNg!!"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "this_is_a_great_string"</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="manipulate-strings-based-on-regular-expression-patterns">Manipulate strings based on regular expression patterns<a class="anchor" aria-label="anchor" href="#manipulate-strings-based-on-regular-expression-patterns"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Prepare an example character vector.</span></span>
 <span><span class="va">strings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"flat-hat"</span>, <span class="st">"backpack"</span>, <span class="st">"roll"</span>, <span class="st">"cat-sat-on-a-mat"</span><span class="op">)</span></span>
 <span><span class="co"># Define a pattern for a three letter sequence with "a" in the middle.</span></span>
@@ -152,7 +167,7 @@
 <div class="section level4">
 <h4 id="detect-extract-and-replace-patterns-in-strings">Detect, extract and replace patterns in strings<a class="anchor" aria-label="anchor" href="#detect-extract-and-replace-patterns-in-strings"></a>
 </h4>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Does a string contain a match?</span></span>
 <span><span class="fu"><a href="reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">strings</span>, <span class="va">pattern</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1]  TRUE  TRUE FALSE  TRUE</span></span>
@@ -167,7 +182,7 @@
 <h4 id="work-with-specific-occurrences-of-patterns">Work with specific occurrences of patterns<a class="anchor" aria-label="anchor" href="#work-with-specific-occurrences-of-patterns"></a>
 </h4>
 <p>Using suffixes _first, _nth and _last</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get the second match for each string</span></span>
 <span><span class="fu"><a href="reference/str_extract.html">str_extract_nth</a></span><span class="op">(</span><span class="va">strings</span>, <span class="va">pattern</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "hat" "pac" NA    "sat"</span></span>
@@ -178,7 +193,8 @@
 <div class="section level4">
 <h4 id="work-with-every-occurrence-of-a-pattern">Work with every occurrence of a pattern<a class="anchor" aria-label="anchor" href="#work-with-every-occurrence-of-a-pattern"></a>
 </h4>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>With suffix _all</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/str_locate.html">str_locate_all</a></span><span class="op">(</span><span class="va">strings</span>, <span class="va">pattern</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [[1]]</span></span>
 <span><span class="co">#&gt;      start end</span></span>
@@ -217,7 +233,8 @@
 <div class="section level4">
 <h4 id="work-on-the-character-vector-as-a-whole">Work on the character vector as a whole<a class="anchor" aria-label="anchor" href="#work-on-the-character-vector-as-a-whole"></a>
 </h4>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>With prefix chr_</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get every match from `strings` into one character vector</span></span>
 <span><span class="fu"><a href="reference/str_extract.html">chr_extract_all</a></span><span class="op">(</span><span class="va">strings</span>, <span class="va">pattern</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "lat" "hat" "bac" "pac" "cat" "sat" "mat"</span></span>
