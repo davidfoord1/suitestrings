@@ -102,12 +102,25 @@ There are a few families of operations for working with strings:
 
 ### Character-based transformation
 
+#### Shortern strings
+
 There are some functions useful for quickly cleaning a string. `str_trim()` removes whitespace from the ends and `str_squish()` additionally reduces whitespace in the middle to a single character:
 
 ```{r}
+str_trim("  Get rid of spaces at the ends          ")
 str_squish("  Get    these    spaces \u020         under       control    ")
 ```
 
+If you want cut a string down to size, but also to have the string indicate that it has been shortened, you can **truncate** it down to a specified number of characters:
+
+```{r}
+str_truncate("Sometimes we just need to make a string smaller", 20)
+
+# To cut it off without an ellipsis
+str_truncate("Sometimes we just need to make a string smaller", 20, ellipsis = "")
+```
+
+#### Extend strings
 The somewhat opposite functions `str_pad()` and `str_indent()` fill a string to a minimum length, and add a specific number of spaces, respectively.
 
 ```{r}
@@ -117,12 +130,13 @@ str_pad("hello", 10)
 str_indent("hello", 3, indent = ".")
 ```
 
+#### Convert Case
 Functions to change case can help with consistent formatting:
 
 ```{r}
 str_to_upper_case("hello")
 
-str_to_snake_case("nO  FUNny  buSSIneSs")
+str_to_snake_case(c("nO  FUNny  buSSIneSs", "    TIDY  this  UP  "))
 ```
 
 ### String combination
@@ -213,5 +227,5 @@ str_split_all(strings, " ")
 Vectors are ordered, so you might like to reorder them.
 
 ```{r}
-chr_sort(c("cherry", "apple", "banana"))
+chr_sort(c("cherry", "apple", "date", "banana"))
 ```
