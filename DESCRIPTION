@@ -1,6 +1,6 @@
 Package: suitestrings
 Title: A consistent approach to common string operations
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("David", "Foord", , "david.foord@outlook.com", role = c("aut", "cre"))
 Description: Convenient wrappers around base R string manipulation functions, for cleaning, combining and transforming strings, operating on regular expression and reorganising character vectors.
